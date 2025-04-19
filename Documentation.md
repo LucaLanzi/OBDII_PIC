@@ -19,7 +19,7 @@
     * Potential to design and manufacture a little PCB that holds the pic together with its necessary connectors to communicate to the board.
 
 ### Design Notes: ###
-
+* test notes here
 
 ### Reference Documents and Useful Links: ###
 * [Original Project Documentation - OBDII Data Logger Cornell University Project](https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/s2012/ppv5/index.html)

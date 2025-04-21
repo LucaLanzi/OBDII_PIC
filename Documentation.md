@@ -37,8 +37,9 @@ The STN1110 is what we will be interfacing with in order to pull OBDII codes fro
 
 
 ### Reference Documents and Useful Links: ###
+
+# OBDII-UART Documentation: #
 * [Original Project Documentation - OBDII Data Logger Cornell University Project](https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/s2012/ppv5/index.html)
-* [PIC18F46K22 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/PIC18(L)F2X-4XK22-Data-Sheet-40001412H.pdf)
 * [Sparkfun OBD-II to UART board](https://www.sparkfun.com/sparkfun-obd-ii-uart.html)
 * [Sparkfun OBD-II to UART board schematic](https://cdn.sparkfun.com/assets/2/4/d/c/d/520ab4c5757b7f5e0acc8c0e.pdf)
 * [Sparkfun OBD-II to UART Implementation Guide SUPER USEFUL](https://learn.sparkfun.com/tutorials/obd-ii-uart-hookup-guide/all)
@@ -47,3 +48,5 @@ The STN1110 is what we will be interfacing with in order to pull OBDII codes fro
 * [Display Hookup Guide](https://learn.sparkfun.com/tutorials/basic-character-lcd-hookup-guide)
 * [Github Syntax and Formatting](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 
+# PIC18F46K22 UART Documentation: #
+* [PIC18F46K22 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/PIC18(L)F2X-4XK22-Data-Sheet-40001412H.pdf) (Page 259)

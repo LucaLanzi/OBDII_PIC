@@ -21,58 +21,73 @@
 ## Design Notes: ##
 
 ### Startup Sequence: ###
-    * Welcome Display, OBDII-PIC, created by Luca and Zihong
-    Example:
-        Welcome to OBDII-PIC
-        By Luca and Zihong      V1.0
-    (waits 1 second, use TMR on pic)
 
-    * Detects which ISO standard is being used
-        * Wait for serial 'OK' once board has detected OBDII standard
-        * Notify user "OBDII-PIC Configured"
-        * SAE ISO version: xxxxxxxx
-    (waits 1 second)
+* Welcome Screen
+    
+        Example:
+        
+        **Welcome to OBDII-PIC**
+        By Luca and Zihong  V1.0
 
-### Standard Operation Mode ###
-    * To be displayed on a 2x16 LCD Display using the PIC18F46K22
+    (1 second delay)
 
-    * Goes to a menu where you can do the following:
-        Using a D-PAD style button layout, you can move a cursor and select:
-        The Cursor should be flashing in the position it is in. Controls are Left, Right, Enter and Back
+* Detects which ISO standard is being used
+    * Wait for serial 'OK' once board has detected OBDII standard
+    * Notify user "OBDII-PIC Configured"
+    * SAE ISO version: xxxxxxxx
+
+            Example:
+
+            OBDII-PIC Configured
+            SAE ISO Ver: xxxxxxx
+
+
+    (1 second delay)
+
+### Standard Operation Mode: ###
+
+* *note:* To be displayed on a 2x16 LCD Display using the PIC18F46K22
+
+* Goes to a menu where you can do the following:
+* Using a D-PAD style button layout, you can move a cursor and select:
+The Cursor should be flashing in the position it is in. Controls are Left, Right, Enter and Back, where each acronym is an example of the 4 modes of operation
+        
         Example:
 
         Menu
             L.R  S.E.C  C.E.C  S.I
 
-        * Each acronym is an example of the 4 modes of operation
-
-        * Live readings:
-            * Preset: RPM, Oil Pressure, Battery Voltage, Fuel Percentage (Live display on 1st row of LCD)
-            Example: 
+* Live readings: RPM, Air Intake temp, Coolant Temp, Battery Voltage
+        
+        Example: 
 
             Live Reading Mode:
-                RPM     Oil     Batt. V  Fuel %
-                1000    xxPSI   12.4V      30%
+                RPM     A.I. Temp  C. Temp   Batt. V    
+                1000    xxF        xx.F    12.4V  
 
-        * Scan Error Codes (OBDII/AT values/codes)
-            Example:
+* Scan Error Codes (OBDII/AT values/codes)(User can use up and down keys to navigate through them)
+        
+        Example:
             
             Error Code Mode:
                 Error Code(s): xxxxxxx
-            (User can use up and down keys to navigate through them)
 
-        * Clear Error Codes (Clear Code Signal)
-            Example:
-                Clear Error Code(s)? Y/N
-            (Cursor Should blink over the selection preference)
+* Clear Error Codes (Cursor Should blink over the selection preference)
+        
+        Example:
 
-        * Get System info (ISO Standard and Firmware version)
-            Example:
+                Clear Error Code(s)? Y/N    
+
+* Get System info (ISO Standard and Firmware version)
+        
+        Example:
 
             System Info Mode:
                 ISO Ver: xxxxxx, Firm. V: xxxxx
+
 ### Shut Down Operation: ###
-    * Just unplug the damn thing
+
+* Just unplug the damn thing
 
 
 ### OBDII-UART ###
@@ -80,18 +95,18 @@
 * The UART to OBD-II board uses the following 2 chips:
     * STN1110 for OBD-II, and MCP2551 for CAN
 The STN1110 is what we will be interfacing with in order to pull OBDII codes from the car, these are commands that we can extract via the following:
-    * The DB9 to OBDII supplies power and serial interfacing from the car to the board, the microcontroller must be wired seperately
-    * The OBDII to UART board uses Tx, Rx, and GND which go to the PIC
-    * One incredibly important aspect about the OBDII to UART board is that it automatically detects which OBDII protocol to use when it initializes with your car
-        * When the car is set to the first position and the OBDII connector is hooked up, the car tells the device what ISO standard it is using, and the device automatically configures itself.
-    * The existing documentation uses an FTDI board, which is a serial to USB interface device, the documentation utilizes:
-        * BAUD: 9600 bps
-        * Data bits: 8
-        * Stop bits: 1
-        * Parity bits: no parity
+* The DB9 to OBDII supplies power and serial interfacing from the car to the board, the microcontroller must be wired seperately
+* The OBDII to UART board uses Tx, Rx, and GND which go to the PIC
+* One incredibly important aspect about the OBDII to UART board is that it automatically detects which OBDII protocol to use when it initializes with your car
+* When the car is set to the first position and the OBDII connector is hooked up, the car tells the device what ISO standard it is using, and the device automatically configures itself.
+* The existing documentation uses an FTDI board, which is a serial to USB interface device, the documentation utilizes:
+    * BAUD: 9600 bps
+    * Data bits: 8
+    * Stop bits: 1
+    * Parity bits: no parity
         My Assumption is that this UART configuration can be set for the PIC18F46K22 and can therefore read and write to the serial buffer of the STN1110.
         Making it easy to send and recieve commands, essentially we just need to establish a way to send and recieve information using the AT protocol, and then display it on an LCD
-    * The PIC must send AT commands, a type of syntax/protocol for the STN1110/ELM327DSI to recieve commands from devices, the list of commands are available [here](https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf)
+* The PIC must send AT commands, a type of syntax/protocol for the STN1110/ELM327DSI to recieve commands from devices, the list of commands are available [here](https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf)
     
 ### Reference Documents and Useful Links: ###
 

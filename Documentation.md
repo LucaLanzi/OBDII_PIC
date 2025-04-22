@@ -19,6 +19,13 @@
     * Potential to design and manufacture a little PCB that holds the pic together with its necessary connectors to communicate to the board.
 
 # Design Notes: #
+## System Block Diagram: ##
+
+![System Block Diagram](Images/OBDII_UARTBlockDiagram.png)
+
+## System State Diagram: ## 
+
+![System State Diagram](Images/SystemStateDiagram.jpg)
 
 ## Startup Sequence: ##
 
@@ -65,7 +72,8 @@ The Cursor should be flashing in the position it is in. Controls are Left, Right
         Menu
             L.R.  S.E.C  C.E.C  S.I
 
-### Live readings: RPM, Air Intake temp, Coolant Temp, Battery Voltage ###
+### Live readings: ###
+* DIsplay RPM, Air Intake temp, Coolant Temp, Battery Voltage
         
         Example: 
 
@@ -75,7 +83,8 @@ The Cursor should be flashing in the position it is in. Controls are Left, Right
 
     Code Chunk:
 
-### Scan Error Codes: (OBDII/AT values/codes)(User can use up and down keys to navigate through them) ###
+### Scan Error Codes: ###
+* Display OBDII PID Error Codes (User can use up and down keys to navigate through them) 
         
         Example:
             
@@ -85,8 +94,9 @@ The Cursor should be flashing in the position it is in. Controls are Left, Right
     Code Chunk:
            
 
-### Clear Error Codes: (Cursor Should blink over the selection preference) ###
-        
+### Clear Error Codes: ###
+* Cursor Should blink over the selection preference
+
         Example:
 
                 Clear Error Code(s)? Y/N    
@@ -107,14 +117,13 @@ Refer to pg 10. of the [ELM327 Datasheet](https://cdn.sparkfun.com/assets/learn_
 * Here it states, by sending the following:
     "AT DP" over serial the IC intepreter will send the command 'Describe the current protocol' to the STN1110 and will forward that as an OBDII PID request to the vehicle
     what will be returned is a string of some type with the ISO standard desription.
-
     By using this we can, at the request of the user, when they navigate to the proper setting and hit enter, send the AT command over serial and display the result on the LCD
 
 
-### Shut Down Operation: ###
+## Shut Down Operation: ##
 * Just unplug the damn thing
 
-### LCD User Interaction Configuration ###
+### LCD User Interaction Configuration: ###
 * The user must be able to navigate left and right on the 2x16 LCD utilizing a cursor and to be able to select a mode of operation, and exit a current mode
 * The LCD.h and LCD.c header and source files respectively provide us with the functionality of a blinking cursor, allowing the user to see where their cursor position is
 * By creating a command function that keeps track of where this cursor is, we can increment and decrement the position of the cursor respectively to where the user would like it to be, and by utilizing simple integer variables, we can keep track of where within the sub menus we are.

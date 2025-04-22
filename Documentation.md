@@ -31,7 +31,7 @@
         Example:
         
         **Welcome to OBDII-PIC**
-        By Luca and Zihong  V1.0
+        https://github.com/LucaLanzi/OBDII_PIC
         // 1s delay
 
         Code Chunk:
@@ -146,6 +146,8 @@ The STN1110 is what we will be interfacing with in order to pull OBDII codes fro
         My Assumption is that this UART configuration can be set for the PIC18F46K22 and can therefore read and write to the serial buffer of the STN1110.
         Making it easy to send and recieve commands, essentially we just need to establish a way to send and recieve information using the AT protocol, and then display it on an LCD
 * The PIC must send AT commands, a type of syntax/protocol for the STN1110/ELM327DSI to recieve commands from devices, the list of commands are available [here](https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf)
+
+    Code Chunk:
     
 ### Reference Documents and Useful Links: ###
 

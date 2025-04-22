@@ -18,35 +18,43 @@
 * PCB: 
     * Potential to design and manufacture a little PCB that holds the pic together with its necessary connectors to communicate to the board.
 
-## Design Notes: ##
+# Design Notes: #
 
-### Startup Sequence: ###
+## Startup Sequence: ##
 
-* Welcome Screen
-    
+### Welcome Screen ###
+* *note:* To be displayed on a 2x16 LCD Display using the PIC18F46K22    
+
+* Write to the LCD upon startup the following string in the example below, then use TMR0 set with the proper clock frequency and calculation to create a 1 second delay
+  Be sure to include the LCD.h file as well as the LCD.c file to ensure proper LCD use.
+
         Example:
         
         **Welcome to OBDII-PIC**
         By Luca and Zihong  V1.0
+        // 1s delay
 
-    (1 second delay)
+        Code Chunk:
 
 * Detects which ISO standard is being used
     * Wait for serial 'OK' once board has detected OBDII standard
+    Use an if/else statement that is constantly being checked with a flag of some kind, so we always wait for the IC to initiate until the 'ok' command is sent, we can poll for this.
+    Once this poll flag has been cleared (while loop with a flag command) we can notify the user that the device has been configured.
     * Notify user "OBDII-PIC Configured"
     * SAE ISO version: xxxxxxxx
+    Here we can utilized the 'AT DP' command to Display the Protocol being used, then store it, and display it in the next splash screen sequence, after which we can meet it with another 1 second delay caused by the TMR0 of the PIC.
 
             Example:
 
             OBDII-PIC Configured
             SAE ISO Ver: xxxxxxx
+            // 1s delay
 
 
-    (1 second delay)
+        Code Chunk:
+    
 
-### Standard Operation Mode: ###
-
-* *note:* To be displayed on a 2x16 LCD Display using the PIC18F46K22
+## Standard Operation Mode: ##
 
 * Goes to a menu where you can do the following:
 * Using a D-PAD style button layout, you can move a cursor and select:
@@ -55,9 +63,9 @@ The Cursor should be flashing in the position it is in. Controls are Left, Right
         Example:
 
         Menu
-            L.R  S.E.C  C.E.C  S.I
+            L.R.  S.E.C  C.E.C  S.I
 
-* Live readings: RPM, Air Intake temp, Coolant Temp, Battery Voltage
+### Live readings: RPM, Air Intake temp, Coolant Temp, Battery Voltage ###
         
         Example: 
 
@@ -65,29 +73,60 @@ The Cursor should be flashing in the position it is in. Controls are Left, Right
                 RPM     A.I. Temp  C. Temp   Batt. V    
                 1000    xxF        xx.F    12.4V  
 
-* Scan Error Codes (OBDII/AT values/codes)(User can use up and down keys to navigate through them)
+    Code Chunk:
+
+### Scan Error Codes: (OBDII/AT values/codes)(User can use up and down keys to navigate through them) ###
         
         Example:
             
             Error Code Mode:
                 Error Code(s): xxxxxxx
 
-* Clear Error Codes (Cursor Should blink over the selection preference)
+    Code Chunk:
+           
+
+### Clear Error Codes: (Cursor Should blink over the selection preference) ###
         
         Example:
 
                 Clear Error Code(s)? Y/N    
+    
+    Code Chunk:
 
-* Get System info (ISO Standard and Firmware version)
+### Get System info: (ISO Standard and Firmware version) ###
         
         Example:
 
             System Info Mode:
                 ISO Ver: xxxxxx, Firm. V: xxxxx
 
-### Shut Down Operation: ###
+    Code Chunk:
 
+* This is entirely possible over the serial interface by sending an AT command, utilizing the ELM327 command set
+Refer to pg 10. of the [ELM327 Datasheet](https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf)
+* Here it states, by sending the following:
+    "AT DP" over serial the IC intepreter will send the command 'Describe the current protocol' to the STN1110 and will forward that as an OBDII PID request to the vehicle
+    what will be returned is a string of some type with the ISO standard desription.
+
+    By using this we can, at the request of the user, when they navigate to the proper setting and hit enter, send the AT command over serial and display the result on the LCD
+
+
+### Shut Down Operation: ###
 * Just unplug the damn thing
+
+### LCD User Interaction Configuration ###
+* The user must be able to navigate left and right on the 2x16 LCD utilizing a cursor and to be able to select a mode of operation, and exit a current mode
+* The LCD.h and LCD.c header and source files respectively provide us with the functionality of a blinking cursor, allowing the user to see where their cursor position is
+* By creating a command function that keeps track of where this cursor is, we can increment and decrement the position of the cursor respectively to where the user would like it to be, and by utilizing simple integer variables, we can keep track of where within the sub menus we are.
+
+To do this we need:
+* Define the Menu options (we can use an array)
+* We draw the Menu, and with each user input we can determine where we are flashing the cursor along this array
+* When the user hits the 'enter' button, we set which value of the menu we want to excecute, triggering something like a switch case to display the menu we would like to enter
+* If we are in a sub menu, we can use the 'back' button to trigger us out of the switch case and go back to the main screen.
+
+    Code Chunk: 
+
 
 
 ### OBDII-UART ###

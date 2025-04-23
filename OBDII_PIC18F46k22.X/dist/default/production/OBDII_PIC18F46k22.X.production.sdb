@@ -53,9 +53,9 @@
 [v _LCD_write_char LCD_write_char `(v  1 e 1 0 ]
 "392
 [v _LCD_write_variable LCD_write_variable `(v  1 e 1 0 ]
-"7 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"8 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _welcomeSplash welcomeSplash `(v  1 e 1 0 ]
-"18
+"22
 [v _main main `(v  1 e 1 0 ]
 [s S82 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
@@ -119,15 +119,15 @@
 [v _LCD_display_control LCD_display_control `uc  1 s 1 LCD_display_control ]
 "27
 [v _LCD_entry_mode LCD_entry_mode `uc  1 s 1 LCD_entry_mode ]
-"18 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"22 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _main main `(v  1 e 1 0 ]
 {
-"30
+"37
 } 0
-"7
+"8
 [v _welcomeSplash welcomeSplash `(v  1 e 1 0 ]
 {
-"15
+"16
 } 0
 "362 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_write_string LCD_write_string `(v  1 e 1 0 ]

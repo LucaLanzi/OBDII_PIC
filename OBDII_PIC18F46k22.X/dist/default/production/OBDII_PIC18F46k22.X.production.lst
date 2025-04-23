@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V3.00 build 20241204225717 
-                                                                                               Tue Apr 22 18:32:59 2025
+                                                                                               Tue Apr 22 19:43:11 2025
 
 Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1 
      1                           	processor	18F46K22
@@ -635,41 +635,41 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    621   001000                     __psmallconst:
    622                           	callstack 0
    623   001000  00                 	db	0
-   624   001001                     STR_1:
+   624   001001                     STR_2:
    625   001001  2A                 	db	42
    626   001002  2A                 	db	42
    627   001003  2A                 	db	42
-   628   001004  20                 	db	32
-   629   001005  4F                 	db	79	;'O'
-   630   001006  42                 	db	66	;'B'
-   631   001007  44                 	db	68	;'D'
-   632   001008  49                 	db	73	;'I'
-   633   001009  49                 	db	73	;'I'
-   634   00100A  50                 	db	80	;'P'
-   635   00100B  49                 	db	73	;'I'
-   636   00100C  43                 	db	67	;'C'
-   637   00100D  20                 	db	32
+   628   001004  3E                 	db	62	;'>'
+   629   001005  3E                 	db	62	;'>'
+   630   001006  20                 	db	32
+   631   001007  56                 	db	86	;'V'
+   632   001008  31                 	db	49	;'1'
+   633   001009  2E                 	db	46
+   634   00100A  30                 	db	48	;'0'
+   635   00100B  20                 	db	32
+   636   00100C  3C                 	db	60	;'<'
+   637   00100D  3C                 	db	60	;'<'
    638   00100E  2A                 	db	42
    639   00100F  2A                 	db	42
    640   001010  2A                 	db	42
    641   001011  00                 	db	0
-   642   001012                     STR_2:
-   643   001012  45                 	db	69	;'E'
-   644   001013  43                 	db	67	;'C'
-   645   001014  45                 	db	69	;'E'
-   646   001015  33                 	db	51	;'3'
-   647   001016  33                 	db	51	;'3'
-   648   001017  30                 	db	48	;'0'
-   649   001018  31                 	db	49	;'1'
-   650   001019  4C                 	db	76	;'L'
-   651   00101A  20                 	db	32
+   642   001012                     STR_1:
+   643   001012  3E                 	db	62	;'>'
+   644   001013  3E                 	db	62	;'>'
+   645   001014  3E                 	db	62	;'>'
+   646   001015  20                 	db	32
+   647   001016  4F                 	db	79	;'O'
+   648   001017  42                 	db	66	;'B'
+   649   001018  44                 	db	68	;'D'
+   650   001019  49                 	db	73	;'I'
+   651   00101A  49                 	db	73	;'I'
    652   00101B  50                 	db	80	;'P'
-   653   00101C  72                 	db	114	;'r'
-   654   00101D  6F                 	db	111	;'o'
-   655   00101E  6A                 	db	106	;'j'
-   656   00101F  65                 	db	101	;'e'
-   657   001020  63                 	db	99	;'c'
-   658   001021  74                 	db	116	;'t'
+   653   00101C  49                 	db	73	;'I'
+   654   00101D  43                 	db	67	;'C'
+   655   00101E  20                 	db	32
+   656   00101F  3C                 	db	60	;'<'
+   657   001020  3C                 	db	60	;'<'
+   658   001021  3C                 	db	60	;'<'
    659   001022  00                 	db	0
    660   001023  00                 	db	0	; dummy byte at the end
    661   001000                     __smallconst    set	__psmallconst
@@ -772,7 +772,7 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    758 ;;
    759 ;; *************** function _main *****************
    760 ;; Defined at:
-   761 ;;		line 18 in file "OBCII_PIC18F46K22.c"
+   761 ;;		line 22 in file "OBCII_PIC18F46K22.c"
    762 ;; Parameters:    Size  Location     Type
    763 ;;		None
    764 ;; Auto vars:     Size  Location     Type
@@ -812,21 +812,21 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    793   0013AC                     _main:
    794                           	callstack 27
    795   0013AC                     
-   796                           ;OBCII_PIC18F46K22.c: 20:     OSCCON = 0b01110000;
+   796                           ;OBCII_PIC18F46K22.c: 25:     OSCCON = 0b01110000;
    797   0013AC  0E70               	movlw	112
    798   0013AE  6ED3               	movwf	211,c	;volatile
    799   0013B0                     
-   800                           ;OBCII_PIC18F46K22.c: 21:     OSCTUNEbits.PLLEN = 1;
+   800                           ;OBCII_PIC18F46K22.c: 26:     OSCTUNEbits.PLLEN = 1;
    801   0013B0  8C9B               	bsf	155,6,c	;volatile
    802   0013B2                     
-   803                           ;OBCII_PIC18F46K22.c: 22:     LCD_init();
+   803                           ;OBCII_PIC18F46K22.c: 29:     LCD_init();
    804   0013B2  EC0E  F009         	call	_LCD_init	;wreg free
    805   0013B6                     
-   806                           ;OBCII_PIC18F46K22.c: 23:     LCD_clear();
+   806                           ;OBCII_PIC18F46K22.c: 30:     LCD_clear();
    807   0013B6  ECC7  F009         	call	_LCD_clear	;wreg free
    808   0013BA                     l1106:
    809                           
-   810                           ;OBCII_PIC18F46K22.c: 26:     welcomeSplash();
+   810                           ;OBCII_PIC18F46K22.c: 33:     welcomeSplash();
    811   0013BA  ECB4  F009         	call	_welcomeSplash	;wreg free
    812   0013BE  EFDD  F009         	goto	l1106
    813   0013C2  EFFE  F07F         	goto	start
@@ -835,7 +835,7 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    816                           
    817 ;; *************** function _welcomeSplash *****************
    818 ;; Defined at:
-   819 ;;		line 7 in file "OBCII_PIC18F46K22.c"
+   819 ;;		line 8 in file "OBCII_PIC18F46K22.c"
    820 ;; Parameters:    Size  Location     Type
    821 ;;		None
    822 ;; Auto vars:     Size  Location     Type
@@ -875,25 +875,25 @@ Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1
    851   001368                     _welcomeSplash:
    852                           	callstack 27
    853   001368                     
-   854                           ;OBCII_PIC18F46K22.c: 10:     LCD_cursor_set(1,1);
+   854                           ;OBCII_PIC18F46K22.c: 11:     LCD_cursor_set(1,1);
    855   001368  0E01               	movlw	1
    856   00136A  6E04               	movwf	LCD_cursor_set@column^0,c
    857   00136C  0E01               	movlw	1
    858   00136E  EC50  F009         	call	_LCD_cursor_set
    859   001372                     
-   860                           ;OBCII_PIC18F46K22.c: 11:     LCD_write_string("*** OBDIIPIC ***");
-   861   001372  0E01               	movlw	low STR_1
+   860                           ;OBCII_PIC18F46K22.c: 12:     LCD_write_string(">>> OBDIIPIC <<<");
+   861   001372  0E12               	movlw	low STR_1
    862   001374  6E04               	movwf	LCD_write_string@string^0,c
    863   001376  EC80  F009         	call	_LCD_write_string	;wreg free
    864   00137A                     
-   865                           ;OBCII_PIC18F46K22.c: 12:     LCD_cursor_set(2,1);
+   865                           ;OBCII_PIC18F46K22.c: 13:     LCD_cursor_set(2,1);
    866   00137A  0E01               	movlw	1
    867   00137C  6E04               	movwf	LCD_cursor_set@column^0,c
    868   00137E  0E02               	movlw	2
    869   001380  EC50  F009         	call	_LCD_cursor_set
    870                           
-   871                           ;OBCII_PIC18F46K22.c: 13:     LCD_write_string("ECE3301L Project");
-   872   001384  0E12               	movlw	low STR_2
+   871                           ;OBCII_PIC18F46K22.c: 14:     LCD_write_string("***>> V1.0 <<***");
+   872   001384  0E01               	movlw	low STR_2
    873   001386  6E04               	movwf	LCD_write_string@string^0,c
    874   001388  EC80  F009         	call	_LCD_write_string	;wreg free
    875   00138C  0012               	return		;funcret
@@ -2149,7 +2149,7 @@ DATA                 0      0      12      0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V3.00 build 20241204225717 
-Symbol Table                                                                                   Tue Apr 22 18:32:59 2025
+Symbol Table                                                                                   Tue Apr 22 19:43:11 2025
 
                        l15 138C                         l40 13D2                         l43 121A  
                        l52 12B6                         l53 12CC                         l54 12E2  
@@ -2181,8 +2181,8 @@ Symbol Table                                                                    
                      l1074 12B2                       l1090 131A                       l1076 12C8  
                      l1084 1300                       l1092 1368                       l1078 12DE  
                      l1086 1306                       l1094 1372                       l1088 1318  
-                     l1096 137A                       l1098 13AC                       STR_1 1001  
-                     STR_2 1012                       _main 13AC                       start FFFC  
+                     l1096 137A                       l1098 13AC                       STR_1 1012  
+                     STR_2 1001                       _main 13AC                       start FFFC  
              ___param_bank 0000           __end_of_LCD_init 12A0                      ?_main 0001  
           ??_welcomeSplash 0007                      tablat 0FF5                      status 0FD8  
           __initialization 133A               __end_of_main 13C6          ?_LCD_write_string 0004  

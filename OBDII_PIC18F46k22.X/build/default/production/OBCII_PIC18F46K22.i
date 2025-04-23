@@ -9755,53 +9755,34 @@ unsigned char __t3rd16on(void);
 
 
 
-char message[] = " Hello from PIC18F46K22!   ";
-
-int startIndex = 0;
-
 
 void welcomeSplash(void){
 
 
     LCD_cursor_set(1,1);
-    LCD_write_string("*** OBDIIPIC ***");
+    LCD_write_string(">>> OBDIIPIC <<<");
     LCD_cursor_set(2,1);
-    LCD_write_string("ECE3301L Project");
+    LCD_write_string("***>> V1.0 <<***");
 
 }
 
-void LCD_DisplayWindow(char* msg, int start) {
-    char window[16 + 1];
-    int len = strlen(msg);
-
-    for (int i = 0; i < 16; i++) {
-        window[i] = msg[(start + i) % len];
-    }
-    window[16] = '\0';
-
-    LCD_SetCursor(1, 1);
-    LCD_WriteString(window);
-}
 
 
 
 
 void main(void) {
 
+
     OSCCON = 0b01110000;
     OSCTUNEbits.PLLEN = 1;
+
+
     LCD_init();
     LCD_clear();
 
-    while (1) {
-        LCD_DisplayWindow(message, startIndex);
-        _delay((unsigned long)((300)*(64000000/4000.0)));
-        startIndex++;
-        if (startIndex >= strlen(message)) {
-            startIndex = 0;
-        }
+    while(1){
+    welcomeSplash();
     }
-
 
     return;
 }

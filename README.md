@@ -4,9 +4,11 @@
 ### Assignment Requirements: ###
 * Final Project Must Use:
     * Serial Communication: UART/I2C/SPI
+        * Setup UART Communication for the PIC with the correct values, and ensure that the pic can send and recieve commands
     * CCP Module
+        * Use compare module to count to 30s, if the device hasnt been plugged in to the OBDII port till then, trigger an interrupt and request the user to plug in the device
     * Timer
-    * Interrupt
+        * Delays
 
 *Abstract:*
 * [*Link to original Cornell Project*](https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/s2012/ppv5/index.html)

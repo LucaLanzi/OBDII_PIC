@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\OBDII_PIC18F46k22.X.production.hex">
+  <executable name="dist/default/debug\OBDII_PIC18F46k22.X.debug.hex">
     <memory name="program">
       <units>bytes</units>
       <length>65536</length>
-      <used>1336</used>
-      <free>64200</free>
+      <used>1098</used>
+      <free>64438</free>
     </memory>
     <memory name="data">
       <units>bytes</units>

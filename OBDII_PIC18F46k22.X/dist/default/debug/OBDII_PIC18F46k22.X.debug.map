@@ -4,13 +4,12 @@ Linker command line:
 
 -W-3 \
   --edf=C:\Program Files\Microchip\xc8\v3.00\pic\dat\20241204225717_en.msgs \
-  -cn -h+dist/default/production\OBDII_PIC18F46k22.X.production.sym \
-  --cmf=dist/default/production\OBDII_PIC18F46k22.X.production.cmf -z \
-  -Q18F46K22 \
-  -oC:\Users\LUCALA~1\AppData\Local\Temp\xcAs1768.\driver_tmp_3.o \
+  -cn -h+dist/default/debug\OBDII_PIC18F46k22.X.debug.sym \
+  --cmf=dist/default/debug\OBDII_PIC18F46k22.X.debug.cmf -z -Q18F46K22 \
+  -oC:\Users\LUCALA~1\AppData\Local\Temp\xcAs12mg.\driver_tmp_3.o \
   --defsym=__MPLAB_BUILD=1 --fixupoverflow=error \
-  -Mdist/default/production/OBDII_PIC18F46k22.X.production.map \
-  --md=C:\Users\LUCALA~1\AppData\Local\Temp\xcAs1768.\driver_tmp_0.dat -E1 \
+  -Mdist/default/debug/OBDII_PIC18F46k22.X.debug.map \
+  --md=C:\Users\LUCALA~1\AppData\Local\Temp\xcAs12mg.\driver_tmp_0.dat -E1 \
   -ver=XC8 Compiler -ACODE=00h-0FFFFh -ACONST=00h-0FFFFh \
   -ASMALLCONST=01000h-010FFhx240 -AMEDIUMCONST=01000h-0FFFFh \
   -ACOMRAM=01h-05Fh -AABS1=00h-0F37h -ABIGRAM=01h-0F37h \
@@ -30,8 +29,8 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\LUCALA~1\AppData\Local\Temp\xcAs1768.\driver_tmp_9.o \
-  dist/default/production\OBDII_PIC18F46k22.X.production.o 
+  C:\Users\LUCALA~1\AppData\Local\Temp\xcAs12mg.\driver_tmp_9.o \
+  dist/default/debug\OBDII_PIC18F46k22.X.debug.o 
 
 Object code version is 3.11
 
@@ -40,56 +39,52 @@ Machine type is 18F46K22
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\LUCALA~1\AppData\Local\Temp\xcAs1768.\driver_tmp_9.o
+C:\Users\LUCALA~1\AppData\Local\Temp\xcAs12mg.\driver_tmp_9.o
                 config                           300000   300000        E        0       4
                 init                               FFFC     FFFC        4     7FFE       0
                 reset_vec                             0        0        4        0       0
-dist/default/production\OBDII_PIC18F46k22.X.production.o
+dist/default/debug\OBDII_PIC18F46k22.X.debug.o
                 config                           300000   300000        E        0       4
-                smallconst                         1000     1000       12      800       0
-                text12                             1522     1522        C      809       0
-                text11                             110E     110E       FC      809       0
-                text10                             14F0     14F0       1C      809       0
-                text9                              12A8     12A8       7C      809       0
-                text8                              14A0     14A0       2C      809       0
-                text7                              139C     139C       60      809       0
-                text6                              1012     1012       FC      809       0
-                text5                              1470     1470       30      809       0
-                text4                              14CC     14CC       24      809       0
-                text3                              120A     120A       9E      809       0
-                text2                              150C     150C       16      809       0
-                text1                              13FC     13FC       42      809       0
-                text0                              1324     1324       78      809       0
+                smallconst                         1000     1000        2      800       0
+                text10                             1434     1434        C      801       0
+                text9                              10FE     10FE       FC      801       0
+                text8                              1418     1418       1C      801       0
+                text7                              11FA     11FA       7C      801       0
+                text6                              13A0     13A0       2C      801       0
+                text5                              12DE     12DE       60      801       0
+                text4                              1002     1002       FC      801       0
+                text3                              1370     1370       30      801       0
+                text2                              13F6     13F6       22      801       0
+                text1                              1276     1276       68      801       0
+                text0                              133E     133E       32      801       0
                 cstackCOMRAM                         27       27        8        1       1
                 dataCOMRAM                           2F       2F        2        1       1
                 bssCOMRAM                             1        1       26        1       1
-                cinit                              143E     143E       32      809       0
-                idataCOMRAM                        152E     152E        2      809       0
+                cinit                              13CC     13CC       2A      801       0
+                idataCOMRAM                        1440     1440        2      801       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
                 init                               FFFC     FFFC        4         0
                 reset_vec                             0        0        4         0
-                text12                             1522     1522        C         0
-                text11                             110E     110E       FC         0
-                text10                             14F0     14F0       1C         0
-                text9                              12A8     12A8       7C         0
-                text8                              14A0     14A0       2C         0
-                text7                              139C     139C       60         0
-                text6                              1012     1012       FC         0
-                text5                              1470     1470       30         0
-                text4                              14CC     14CC       24         0
-                text3                              120A     120A       9E         0
-                text2                              150C     150C       16         0
-                text1                              13FC     13FC       42         0
-                text0                              1324     1324       78         0
-                cinit                              143E     143E       32         0
-                idataCOMRAM                        152E     152E        2         0
+                text10                             1434     1434        C         0
+                text9                              10FE     10FE       FC         0
+                text8                              1418     1418       1C         0
+                text7                              11FA     11FA       7C         0
+                text6                              13A0     13A0       2C         0
+                text5                              12DE     12DE       60         0
+                text4                              1002     1002       FC         0
+                text3                              1370     1370       30         0
+                text2                              13F6     13F6       22         0
+                text1                              1276     1276       68         0
+                text0                              133E     133E       32         0
+                cinit                              13CC     13CC       2A         0
+                idataCOMRAM                        1440     1440        2         0
 
         CLASS   CONST          
 
         CLASS   SMALLCONST     
-                smallconst                         1000     1000       12         0
+                smallconst                         1000     1000        2         0
 
         CLASS   MEDIUMCONST    
 
@@ -159,8 +154,8 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
 
                 reset_vec                      000000  000004  000004         0       0  CODE    
                 bssCOMRAM                      000001  000030  000031         1       1  COMRAM  
-                smallconst                     001000  000012  001012       800       0  SMALLCON
-                text6                          001012  00051E  001530       809       0  CODE    
+                smallconst                     001000  000002  001002       800       0  SMALLCON
+                text4                          001002  000440  001442       801       0  CODE    
                 init                           00FFFC  000004  010000      7FFE       0  CODE    
 
 
@@ -186,16 +181,16 @@ UNUSED ADDRESS RANGES
         BIGRAM           000031-000F37              F07
         BIGSFR           000F38-000FFF               C8
         CODE             000004-000FFF              FFC
-                         001530-00FFFB             EACC
+                         001442-00FFFB             EBBA
         COMRAM           000031-00005F               2F
         CONST            000004-000FFF              FFC
-                         001530-00FFFB             EACC
+                         001442-00FFFB             EBBA
         EEDATA           F00000-F003FF              400
         IDLOC            200000-200007                8
-        MEDIUMCONST      001530-00FFFB             EACC
+        MEDIUMCONST      001442-00FFFB             EBBA
         RAM              000060-000F37              100
         SFR              000F38-000FFF               28
-        SMALLCONST       001530-00FFFB              100
+        SMALLCONST       001442-00FFFB              100
 
                                   Symbol Table
 
@@ -205,26 +200,22 @@ LCD_write_command@command  cstackCOMRAM 000029
 LCD_write_data@data        cstackCOMRAM 000029
 LCD_write_string@i         cstackCOMRAM 00002B
 LCD_write_string@string    cstackCOMRAM 00002A
-UART1_SendChar@c           cstackCOMRAM 000027
-UART1_SendString@i         cstackCOMRAM 00002A
-UART1_SendString@string    cstackCOMRAM 000028
 _ANSELC                    (abs)        000F3A
 _BAUDCON1bits              (abs)        000FB8
 _INTCONbits                (abs)        000FF2
 _LATDbits                  (abs)        000F8C
-_LCD_clear                 text10       0014F0
-_LCD_cursor_set            text7        00139C
+_LCD_clear                 text8        001418
+_LCD_cursor_set            text5        0012DE
 _LCD_display_control       dataCOMRAM   000030
 _LCD_entry_mode            dataCOMRAM   00002F
-_LCD_init                  text9        0012A8
-_LCD_pulse_clock           text12       001522
-_LCD_write_command         text11       00110E
-_LCD_write_data            text6        001012
-_LCD_write_string          text5        001470
+_LCD_init                  text7        0011FA
+_LCD_pulse_clock           text10       001434
+_LCD_write_command         text9        0010FE
+_LCD_write_data            text4        001002
+_LCD_write_string          text3        001370
 _OSCCON                    (abs)        000FD3
 _PIE1bits                  (abs)        000F9D
 _PIR1bits                  (abs)        000F9E
-_RCREG1                    (abs)        000FAE
 _RCSTA1bits                (abs)        000FAB
 _RCSTAbits                 (abs)        000FAB
 _RX_char                   bssCOMRAM    000005
@@ -235,11 +226,9 @@ _TRISDbits                 (abs)        000F95
 _TXREG                     (abs)        000FAD
 _TXSTA1bits                (abs)        000FAC
 _TXSTAbits                 (abs)        000FAC
-_UART1_Init                text8        0014A0
-_UART1_Read                text4        0014CC
-_UART1_Save_Buffer         text3        00120A
-_UART1_SendChar            text2        00150C
-_UART1_SendString          text1        0013FC
+_UART1_Init                text6        0013A0
+_UART1_Read                text2        0013F6
+_UART1_Save_Buffer         text1        001276
 __HRAM                     (abs)        000000
 __H__absolute__            __absolute__ 000000
 __Habs1                    abs1         000000
@@ -306,7 +295,7 @@ __Hrparam                  rparam       000000
 __Hsfr                     sfr          000000
 __Hsivt_hi                 sivt_hi      000000
 __Hsivt_lo                 sivt_lo      000018
-__Hsmallconst              smallconst   001012
+__Hsmallconst              smallconst   001002
 __Hspace_0                 (abs)        010000
 __Hspace_1                 (abs)        000031
 __Hspace_2                 (abs)        000000
@@ -318,8 +307,6 @@ __Htext                    text         000000
 __Htext0                   text0        000000
 __Htext1                   text1        000000
 __Htext10                  text10       000000
-__Htext11                  text11       000000
-__Htext12                  text12       000000
 __Htext2                   text2        000000
 __Htext3                   text3        000000
 __Htext4                   text4        000000
@@ -406,8 +393,6 @@ __Ltext                    text         000000
 __Ltext0                   text0        000000
 __Ltext1                   text1        000000
 __Ltext10                  text10       000000
-__Ltext11                  text11       000000
-__Ltext12                  text12       000000
 __Ltext2                   text2        000000
 __Ltext3                   text3        000000
 __Ltext4                   text4        000000
@@ -434,48 +419,44 @@ ___sp                      stack        000000
 ___stack_hi                stack        000000
 ___stack_lo                stack        000000
 __accesstop                (abs)        000060
-__activetblptr             (abs)        000001
-__end_of_LCD_clear         text10       00150C
-__end_of_LCD_cursor_set    text7        0013FC
-__end_of_LCD_init          text9        001324
-__end_of_LCD_pulse_clock   text12       00152E
-__end_of_LCD_write_command text11       00120A
-__end_of_LCD_write_data    text6        00110E
-__end_of_LCD_write_string  text5        0014A0
-__end_of_UART1_Init        text8        0014CC
-__end_of_UART1_Read        text4        0014F0
-__end_of_UART1_Save_Buffer text3        0012A8
-__end_of_UART1_SendChar    text2        001522
-__end_of_UART1_SendString  text1        00143E
-__end_of__initialization   cinit        001462
-__end_of_main              text0        00139C
-__initialization           cinit        00143E
+__activetblptr             (abs)        000000
+__end_of_LCD_clear         text8        001434
+__end_of_LCD_cursor_set    text5        00133E
+__end_of_LCD_init          text7        001276
+__end_of_LCD_pulse_clock   text10       001440
+__end_of_LCD_write_command text9        0011FA
+__end_of_LCD_write_data    text4        0010FE
+__end_of_LCD_write_string  text3        0013A0
+__end_of_UART1_Init        text6        0013CC
+__end_of_UART1_Read        text2        001418
+__end_of_UART1_Save_Buffer text1        0012DE
+__end_of__initialization   cinit        0013F0
+__end_of_main              text0        001370
+__initialization           cinit        0013CC
 __mediumconst              smallconst   001000
 __pbssCOMRAM               bssCOMRAM    000001
-__pcinit                   cinit        00143E
+__pcinit                   cinit        0013CC
 __pcstackCOMRAM            cstackCOMRAM 000027
 __pdataCOMRAM              dataCOMRAM   00002F
-__pidataCOMRAM             idataCOMRAM  00152E
+__pidataCOMRAM             idataCOMRAM  001440
 __psmallconst              smallconst   001000
-__ptext0                   text0        001324
-__ptext1                   text1        0013FC
-__ptext10                  text10       0014F0
-__ptext11                  text11       00110E
-__ptext12                  text12       001522
-__ptext2                   text2        00150C
-__ptext3                   text3        00120A
-__ptext4                   text4        0014CC
-__ptext5                   text5        001470
-__ptext6                   text6        001012
-__ptext7                   text7        00139C
-__ptext8                   text8        0014A0
-__ptext9                   text9        0012A8
+__ptext0                   text0        00133E
+__ptext1                   text1        001276
+__ptext10                  text10       001434
+__ptext2                   text2        0013F6
+__ptext3                   text3        001370
+__ptext4                   text4        001002
+__ptext5                   text5        0012DE
+__ptext6                   text6        0013A0
+__ptext7                   text7        0011FA
+__ptext8                   text8        001418
+__ptext9                   text9        0010FE
 __ramtop                   ramtop       001000
 __smallconst               smallconst   001000
 _buffer                    bssCOMRAM    000007
 _buffer_count              bssCOMRAM    000006
-_main                      text0        001324
-end_of_initialization      cinit        001462
+_main                      text0        00133E
+end_of_initialization      cinit        0013F0
 intlevel0                  text         000000
 intlevel1                  text         000000
 intlevel2                  text         000000
@@ -485,35 +466,33 @@ isa$xinst                  (abs)        000000
 stackhi                    (abs)        000000
 stacklo                    (abs)        000000
 start                      init         00FFFC
-start_initialization       cinit        00143E
+start_initialization       cinit        0013CC
 
 
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 OBCII_PIC18F46K22.c
-		_main          		CODE           	1324	0000	120
-		_UART1_SendString		CODE           	13FC	0000	66
-		_UART1_Init    		CODE           	14A0	0000	44
-		_UART1_SendChar		CODE           	150C	0000	22
-		_UART1_Save_Buffer		CODE           	120A	0000	158
-		_UART1_Read    		CODE           	14CC	0000	36
+		_main          		CODE           	133E	0000	50
+		_UART1_Init    		CODE           	13A0	0000	44
+		_UART1_Save_Buffer		CODE           	1276	0000	104
+		_UART1_Read    		CODE           	13F6	0000	34
 
-OBCII_PIC18F46K22.c estimated size: 446
+OBCII_PIC18F46K22.c estimated size: 232
 
 shared
-		__initialization		CODE           	143E	0000	36
+		__initialization		CODE           	13CC	0000	36
 
 shared estimated size: 36
 
 LCD.c
-		_LCD_clear     		CODE           	14F0	0000	28
-		_LCD_cursor_set		CODE           	139C	0000	96
-		_LCD_write_string		CODE           	1470	0000	48
-		_LCD_write_command		CODE           	110E	0000	252
-		_LCD_init      		CODE           	12A8	0000	124
-		_LCD_write_data		CODE           	1012	0000	252
-		_LCD_pulse_clock		CODE           	1522	0000	12
+		_LCD_clear     		CODE           	1418	0000	28
+		_LCD_cursor_set		CODE           	12DE	0000	96
+		_LCD_write_string		CODE           	1370	0000	48
+		_LCD_write_command		CODE           	10FE	0000	252
+		_LCD_init      		CODE           	11FA	0000	124
+		_LCD_write_data		CODE           	1002	0000	252
+		_LCD_pulse_clock		CODE           	1434	0000	12
 
 LCD.c estimated size: 812
 

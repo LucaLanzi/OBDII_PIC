@@ -21,7 +21,7 @@
     #define LCD_D6_LAT LATDbits.LATD6  //LAT bit of the pin connected to "D6"
     #define LCD_D7_LAT LATDbits.LATD7  //LAT bit of the pin connected to "D7"
 
-    #define _XTAL_FREQ 64000000  //Frequency of the sytem clock
+    #define _XTAL_FREQ 16000000  //Frequency of the sytem clock
 
     /**************************************************************************/
     /*************************** Necessary includes ***************************/

@@ -9766,11 +9766,10 @@ char RX_char;
 void UART1_Init(void);
 char UART1_Read(void);
 void UART1_Save_Buffer(void);
-void UART1_SendString(char string[]);
-void UART1_SendChar(char c);
+void UART1_SendString(const char string[]);
+void UART_SendChar(char c);
 
 void main(void){
-
     OSCCON = 0b01110000;
 
 
@@ -9778,17 +9777,18 @@ void main(void){
     LCD_clear();
     UART1_Init();
 
-    _delay((unsigned long)((2000)*(16000000/4000.0)));
-    UART1_SendString("ATZ\r");
     _delay((unsigned long)((500)*(16000000/4000.0)));
-    UART1_SendString("ATE0\r");
-    _delay((unsigned long)((500)*(16000000/4000.0)));
-    UART1_SendString("ATI\r");
 
     while(1){
-        UART1_Save_Buffer();
-    }
 
+
+        UART1_Save_Buffer();
+        _delay((unsigned long)((500)*(16000000/4000.0)));
+
+
+
+
+    }
 
 }
 
@@ -9838,38 +9838,32 @@ char UART1_Read(void) {
         RCSTAbits.CREN = 0;
         RCSTAbits.CREN = 1;
     }
-    return RCREG1;
+    char RCREG1;
 }
 
 void UART1_Save_Buffer(void){
     while (PIR1bits.RC1IF) {
-
         RX_char = UART1_Read();
-
-        if (RX_char >= 32 && RX_char <= 126) {
-            buffer[buffer_count++] = RX_char;
-        }
+        buffer[buffer_count] = RX_char;
+        buffer_count++;
 
 
-
-        if (RX_char == '>' || RX_char == '\n' || buffer_count >= 32 -1) {
+        if (RX_char == '>' || buffer_count >= 32 -1) {
             buffer[buffer_count] = '\0';
             buffer_count = 0;
-
-            LCD_clear();
             LCD_cursor_set(1,1);
             LCD_write_string(buffer);
         }
     }
 }
 
-void UART1_SendString(char string[]) {
-    for (unsigned int i = 0; string[i] != '\0'; i++){
-        UART1_SendChar(string[i]);
-    }
-}
-
 void UART1_SendChar(char c){
     while (!TXSTAbits.TRMT);
         TXREG = c;
+}
+
+void UART1_SendString(const char string[]) {
+    for (unsigned int i = 0; string[i] != '\0'; i++){
+        UART1_SendChar(string[i]);
+    }
 }

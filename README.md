@@ -35,7 +35,7 @@
 
 ## System State Diagram: ## 
 
-![System State Diagram](Images/SystemStateDiagram.jpg)
+![System State Diagram](Images/SystemStateDiagram.drawio%20(1).png)
 
 ## Startup Sequence: ##
 
@@ -150,24 +150,62 @@ To do this we need:
 
 ### OBDII-UART ###
 
-* The UART to OBD-II board uses the following 2 chips:
-    * STN1110 for OBD-II, and MCP2551 for CAN
-The STN1110 is what we will be interfacing with in order to pull OBDII codes from the car, these are commands that we can extract via the following:
-* The DB9 to OBDII supplies power and serial interfacing from the car to the board, the microcontroller must be wired seperately
-* The OBDII to UART board uses Tx, Rx, and GND which go to the PIC
-* One incredibly important aspect about the OBDII to UART board is that it automatically detects which OBDII protocol to use when it initializes with your car
-* When the car is set to the first position and the OBDII connector is hooked up, the car tells the device what ISO standard it is using, and the device automatically configures itself.
-* The existing documentation uses an FTDI board, which is a serial to USB interface device, the documentation utilizes:
-    * BAUD: 9600 bps
-    * Data bits: 8
-    * Stop bits: 1
-    * Parity bits: no parity
-        My Assumption is that this UART configuration can be set for the PIC18F46K22 and can therefore read and write to the serial buffer of the STN1110.
-        Making it easy to send and recieve commands, essentially we just need to establish a way to send and recieve information using the AT protocol, and then display it on an LCD
-* The PIC must send AT commands, a type of syntax/protocol for the STN1110/ELM327DSI to recieve commands from devices, the list of commands are available [here](https://cdn.sparkfun.com/assets/learn_tutorials/8/3/ELM327DS.pdf)
+* UART and BAUDCON Setup:
+Setup for UART Transmit/Recieve: [Page 272](https://ww1.microchip.com/downloads/en/DeviceDoc/PIC18(L)F2X-4XK22-Data-Sheet-40001412H.pdf)
 
-    Code Chunk:
+BAUD Rate is 9600 bps for OBDII-UART Sparkfun Board
+Setup for BAUD Rate:
+16-bit asynchronous, using the high speed Baud rate generator, and the 16 bit baud register
+for this, SYNC = 0 (for asynchronous), BRG16 = 1 (using the 16 bit high speed baud rate generator), BRGH = 1 for setting the value for the 16 bit register.
+
+To set BAUD rate:
+16Mhz FOSC
+Use 16-bit/Asynchronous for Sync = 0, BRG16 = 1, BRGH = 1:
+Desired Baud Rate: FOSC/4[(n+1)]
+where n = 416
+BAUD RATE = 16,000,000/(4(416+1)) = 9592.32
+
+Code Chunk for UART Setup:
+
+ANSELC = 0; //ensure all outputs are digital on PORTC
     
+    //Configure I/O
+    TRISCbits.TRISC6 = 0;  //Sets the Tx output
+    TRISCbits.TRISC7 = 1;  //Set the Rx input
+
+
+    //Configure EUSART1 Transmit Bits
+    TXSTA1bits.TXEN = 1; //Enable the UART Transmit
+    TXSTA1bits.TX9 = 0; //Enable 8-bit transmission mode
+    TXSTA1bits.SYNC = 0; //Set communication to be asynchronous
+    //For 16Mhz FOSC
+    TXSTA1bits.BRGH = 1;    //Enables the high speed Baud Rate Generator
+    BAUDCON1bits.BRG16 = 1; //Enables the 16 bit Baud Rate Generator
+
+    //Actual rate is 9592 with these settings, very low error
+    SPBRGH1 = 0b00000001; //  Higher Byte of the Baud Rate Generator, set to 1 which is 256 in 16 bit; 256+160 = 416
+    SPBRG1 = 0b10100000;  // Lower Byte of the Baud Rate Generator -> SPBRGH:SPBRGX, 16 bit register; set to 160
+    
+    //Default for STN1110 w ELM327 Protocol
+    BAUDCON1bits.CKTXP = 0; //Idle State for Transmit is high
+    BAUDCON1bits.DTRXP = 0; //Data Receive Polarity bit is not inverted (active high)
+
+    //Configure EUSART1 Recieve Bits
+    RCSTA1bits.SPEN = 1; //Enables EUSART, automatically sets the I/O configuration
+    RCSTA1bits.CREN = 1; //Enable the Continuous Recieve
+    RCSTA1bits.RX9 = 0; //Enable 8 bit reception
+    
+    //Interrupt Settings
+    PIE1bits.RC1IE = 0;   // Disable UART receive interrupt
+    INTCONbits.PEIE = 0;  // Disable peripheral interrupts
+    INTCONbits.GIE = 0;   // Disable global interrupts
+
+* UART Tx/RX Parser:
+Because we are sending and receiving data over UART, we need to be able to recieve one byte at a time, store it somewhere, and then move along and store the next byte. We also need to know when this starts and stops. For this we need to do the following
+
+* Define when we are receiving data: 
+    Data is recieved in the RCREG1, when a byte is sent and recieved, the RC1IF interrupt flag in the PIR1 register is set to 1. RC1IF = 1 means a byte was recieved.
+
 ### Reference Documents and Useful Links: ###
 
 # OBDII-UART Documentation: #
@@ -181,4 +219,10 @@ The STN1110 is what we will be interfacing with in order to pull OBDII codes fro
 * [Github Syntax and Formatting](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 
 # PIC18F46K22 UART Documentation: #
-* [PIC18F46K22 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/PIC18(L)F2X-4XK22-Data-Sheet-40001412H.pdf) (Page 259)
+* [PIC18F46K22 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/PIC18(L)F2X-4XK22-Data-Sheet-40001412H.pdf)
+
+
+### To Do Notes ###
+* Setup UART to talk to the STN1110
+
+* Display the UART out from the STN1110 on the LCD

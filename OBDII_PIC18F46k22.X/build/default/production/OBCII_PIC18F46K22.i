@@ -9662,6 +9662,159 @@ unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include/xc.h" 2 3
 # 2 "OBCII_PIC18F46K22.c" 2
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 1 3
+# 24 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 3
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 1 3
+# 12 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 3
+typedef void * va_list[1];
+
+
+
+
+typedef void * __isoc_va_list[1];
+# 143 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 3
+typedef __int24 ssize_t;
+# 255 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 3
+typedef long long off_t;
+# 409 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 3
+typedef struct _IO_FILE FILE;
+# 25 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 2 3
+# 52 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/stdio.h" 3
+typedef union _G_fpos64_t {
+ char __opaque[16];
+ double __align;
+} fpos_t;
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
+
+
+
+
+
+FILE *fopen(const char *restrict, const char *restrict);
+FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
+int fclose(FILE *);
+
+int remove(const char *);
+int rename(const char *, const char *);
+
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+void clearerr(FILE *);
+
+int fseek(FILE *, long, int);
+long ftell(FILE *);
+void rewind(FILE *);
+
+int fgetpos(FILE *restrict, fpos_t *restrict);
+int fsetpos(FILE *, const fpos_t *);
+
+size_t fread(void *restrict, size_t, size_t, FILE *restrict);
+size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+
+int fgetc(FILE *);
+int getc(FILE *);
+int getchar(void);
+
+
+
+
+
+int ungetc(int, FILE *);
+int getch(void);
+
+int fputc(int, FILE *);
+int putc(int, FILE *);
+int putchar(int);
+
+
+
+
+
+void putch(char);
+
+char *fgets(char *restrict, int, FILE *restrict);
+
+char *gets(char *);
+
+
+int fputs(const char *restrict, FILE *restrict);
+int puts(const char *);
+
+__attribute__((__format__(__printf__, 1, 2)))
+int printf(const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int fprintf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int sprintf(char *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 3, 4)))
+int snprintf(char *restrict, size_t, const char *restrict, ...);
+
+__attribute__((__format__(__printf__, 1, 0)))
+int vprintf(const char *restrict, __isoc_va_list);
+int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 2, 0)))
+int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 3, 0)))
+int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
+
+__attribute__((__format__(__scanf__, 1, 2)))
+int scanf(const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int fscanf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int sscanf(const char *restrict, const char *restrict, ...);
+
+__attribute__((__format__(__scanf__, 1, 0)))
+int vscanf(const char *restrict, __isoc_va_list);
+int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__scanf__, 2, 0)))
+int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
+
+void perror(const char *);
+
+int setvbuf(FILE *restrict, char *restrict, int, size_t);
+void setbuf(FILE *restrict, char *restrict);
+
+char *tmpnam(char *);
+FILE *tmpfile(void);
+
+
+
+
+FILE *fmemopen(void *restrict, size_t, const char *restrict);
+FILE *open_memstream(char **, size_t *);
+FILE *fdopen(int, const char *);
+FILE *popen(const char *, const char *);
+int pclose(FILE *);
+int fileno(FILE *);
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+int dprintf(int, const char *restrict, ...);
+int vdprintf(int, const char *restrict, __isoc_va_list);
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
+ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
+int renameat(int, const char *, int, const char *);
+char *ctermid(char *);
+
+
+
+
+
+
+
+char *tempnam(const char *, const char *);
+# 3 "OBCII_PIC18F46K22.c" 2
 # 1 "./PIC18F46K22-Config.h" 1
 
 
@@ -9729,7 +9882,7 @@ unsigned char __t3rd16on(void);
 
 
 #pragma config EBTRB = OFF
-# 3 "OBCII_PIC18F46K22.c" 2
+# 4 "OBCII_PIC18F46K22.c" 2
 # 1 "./LCD.h" 1
 # 37 "./LCD.h"
     void LCD_init(void);
@@ -9751,7 +9904,7 @@ unsigned char __t3rd16on(void);
     void LCD_write_char(char);
     void LCD_write_variable(int32_t, uint8_t);
     void LCD_write_float(float, uint8_t, uint8_t);
-# 4 "OBCII_PIC18F46K22.c" 2
+# 5 "OBCII_PIC18F46K22.c" 2
 
 
 
@@ -9760,14 +9913,19 @@ unsigned char __t3rd16on(void);
 char buffer[32];
 unsigned char buffer_count = 0;
 char RX_char;
+volatile char message_complete = 0;
 
 
 
 void UART1_Init(void);
-char UART1_Read(void);
-void UART1_Save_Buffer(void);
 void UART1_SendString(char string[]);
 void UART1_SendChar(char c);
+
+
+void print_RPM(void);
+void print_Vbatt(void);
+void print_AI_Temp(void);
+unsigned char hex_char_to_value(char c);
 
 void main(void){
 
@@ -9779,17 +9937,17 @@ void main(void){
     UART1_Init();
 
     _delay((unsigned long)((2000)*(16000000/4000.0)));
-    UART1_SendString("ATZ\r");
-    _delay((unsigned long)((500)*(16000000/4000.0)));
     UART1_SendString("ATE0\r");
     _delay((unsigned long)((500)*(16000000/4000.0)));
-    UART1_SendString("ATI\r");
+    LCD_clear();
 
     while(1){
-        UART1_Save_Buffer();
+            print_RPM();
+            print_Vbatt();
+
+
+
     }
-
-
 }
 
 
@@ -9805,6 +9963,7 @@ void UART1_Init(void) {
     TXSTA1bits.TXEN = 1;
     TXSTA1bits.TX9 = 0;
     TXSTA1bits.SYNC = 0;
+
 
     TXSTA1bits.BRGH = 1;
     BAUDCON1bits.BRG16 = 1;
@@ -9823,42 +9982,30 @@ void UART1_Init(void) {
     RCSTA1bits.RX9 = 0;
 
 
-    PIE1bits.RC1IE = 0;
-    INTCONbits.PEIE = 0;
-    INTCONbits.GIE = 0;
+    PIE1bits.RC1IE = 1;
+    INTCONbits.PEIE = 1;
+    INTCONbits.GIE = 1;
 }
 
-char UART1_Read(void) {
+void __attribute__((picinterrupt(("")))) UART_ISR(void) {
+    if (PIE1bits.RC1IE && PIR1bits.RC1IF) {
+        RX_char = RCREG1;
 
 
-    while (!PIR1bits.RCIF);
-
-
-    if (RCSTAbits.OERR) {
-        RCSTAbits.CREN = 0;
-        RCSTAbits.CREN = 1;
-    }
-    return RCREG1;
-}
-
-void UART1_Save_Buffer(void){
-    while (PIR1bits.RC1IF) {
-
-        RX_char = UART1_Read();
-
-        if (RX_char >= 32 && RX_char <= 126) {
-            buffer[buffer_count++] = RX_char;
+        if (RCSTAbits.OERR) {
+            RCSTAbits.CREN = 0;
+            RCSTAbits.CREN = 1;
         }
 
 
+        if ((RX_char >= 32 && RX_char <= 126) && RX_char != '>') {
+            buffer[buffer_count] = RX_char;
+            buffer_count++;
+        }
 
         if (RX_char == '>' || RX_char == '\n' || buffer_count >= 32 -1) {
             buffer[buffer_count] = '\0';
-            buffer_count = 0;
-
-            LCD_clear();
-            LCD_cursor_set(1,1);
-            LCD_write_string(buffer);
+            message_complete = 1;
         }
     }
 }
@@ -9872,4 +10019,64 @@ void UART1_SendString(char string[]) {
 void UART1_SendChar(char c){
     while (!TXSTAbits.TRMT);
         TXREG = c;
+}
+
+
+
+
+
+unsigned char hex_char_to_value(char c) {
+    if (c >= '0' && c <= '9') return c - '0';
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+    return 0;
+}
+
+void print_RPM(void){
+
+    UART1_SendString("010C\r");
+    while(!message_complete) {
+
+    }
+
+    unsigned int A = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+    unsigned int B = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
+    unsigned int RPM = ((A * 256) + B) / 4;
+
+    char rpm_string[16];
+    sprintf(rpm_string, "%u", RPM);
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("RPM");
+    LCD_cursor_set(2,1);
+    LCD_write_string(rpm_string);
+
+    buffer_count = 0;
+    message_complete = 0;
+
+    _delay((unsigned long)((500)*(16000000/4000.0)));
+}
+
+void print_Vbatt(void) {
+
+    UART1_SendString("ATRV\r");
+    while(!message_complete) {
+
+    }
+
+    LCD_cursor_set(1,7);
+    LCD_write_string("VBatt");
+    LCD_cursor_set(2,7);
+    LCD_write_string(buffer);
+    LCD_cursor_set(2,12);
+    LCD_write_string("     ");
+
+    buffer_count = 0;
+    message_complete = 0;
+
+    _delay((unsigned long)((500)*(16000000/4000.0)));
+}
+
+void print_AI_Temp(void){
+
 }

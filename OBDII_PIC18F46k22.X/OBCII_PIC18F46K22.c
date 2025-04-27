@@ -1,4 +1,5 @@
 #include <xc.h>
+#include <stdio.h>
 #include "PIC18F46K22-Config.h"
 #include "LCD.h"
 
@@ -9,14 +10,19 @@
 char buffer[BUFFER_SIZE]; //Define a character array to hold the incoming bytes from Rx
 unsigned char buffer_count = 0; //a counter for the array index
 char RX_char; //variable to store the byte read from the RCREG
+volatile char message_complete = 0; // flag for completing UART message
 
 
-//Function Prototypes
+//UART Function Prototypes
 void UART1_Init(void); //initialize UART1
-char UART1_Read(void); //Read the UART RX, return the RCREG1 byte
-void UART1_Save_Buffer(void); //Save RCREG to the UART1 buffer array
 void UART1_SendString(char string[]); //Function to send string to ELM327
 void UART1_SendChar(char c); //Function to break down the string and send one character at a time to the ELM327
+
+//Read RPM Function Prototypes
+void print_RPM(void);
+void print_Vbatt(void);
+void print_AI_Temp(void);
+unsigned char hex_char_to_value(char c);
 
 void main(void){
 
@@ -28,20 +34,20 @@ void main(void){
     UART1_Init(); //initialize UART1
 
     __delay_ms(2000);
-    UART1_SendString("ATZ\r"); //resets the ELM327
+    UART1_SendString("ATE0\r"); //Turn off Echo from ELM327
     __delay_ms(500);
-    UART1_SendString("ATE0\r"); //turns off echo
-    __delay_ms(500);
-    UART1_SendString("ATI\r"); //
+    LCD_clear();
 
     while(1){
-        UART1_Save_Buffer(); //save the incoming result and print it
+            print_RPM(); //Print RPM Values
+            print_Vbatt(); //Print Vbatt;
+        
+
+        //other program stuff here
     }
-
-
 }
 
-
+// ########  Beginning of UART CONFIGURATION AND SETUP BLOCK ######
 void UART1_Init(void) {
     ANSELC = 0; //ensure all outputs are digital on PORTC
     
@@ -73,42 +79,30 @@ void UART1_Init(void) {
     RCSTA1bits.RX9 = 0; //Enable 8 bit reception
     
     //Interrupt Settings
-    PIE1bits.RC1IE = 0;   // Disable UART receive interrupt
-    INTCONbits.PEIE = 0;  // Disable peripheral interrupts
-    INTCONbits.GIE = 0;   // Disable global interrupts
+    PIE1bits.RC1IE = 1;   // Disable UART receive interrupt
+    INTCONbits.PEIE = 1;  // Disable peripheral interrupts
+    INTCONbits.GIE = 1;   // Disable global interrupts
 }
 
-char UART1_Read(void) {
+void __interrupt() UART_ISR(void) { //using an interrupt service routine for when a byte is recieved
+    if (PIE1bits.RC1IE && PIR1bits.RC1IF) { // If UART1 is on and the recive interrupt is high, meaning it is full
+        RX_char = RCREG1; // Read byte immediately to clear RCIF
 
-    // Wait here until the flag goes, high, this means that a byte was sent over to the RX pin
-    while (!PIR1bits.RCIF);
-
-    // Handle overrun error by resetting receiver
-    if (RCSTAbits.OERR) { //This checks to see if a third character was received before we attempted to read it, therefore it clears it and resets
-        RCSTAbits.CREN = 0; //turns off the continuous receive, clears the values in it
-        RCSTAbits.CREN = 1; //turns it back on
-    }
-    return RCREG1;  // Set the RX_char variable to the byte recieved at the RCREG
-}
-
-void UART1_Save_Buffer(void){
-    while (PIR1bits.RC1IF) { //RCREG1 is returned but not read, so the flag is set to '1', meaning we need to access its value
-
-        RX_char = UART1_Read(); //Save the value in the RCREG1 to the RX_char variable
-
-        if (RX_char >= 32 && RX_char <= 126) { //LCD has a set group of printable ASCII characters, here we check if the ones we recieve are printable or not
-            buffer[buffer_count++] = RX_char; //Add that byte character received from the RX_Char variable to the buffer array
+        // Handle overrun error if necessary
+        if (RCSTAbits.OERR) {
+            RCSTAbits.CREN = 0;
+            RCSTAbits.CREN = 1;
         }
-        
 
-        // If the incoming character is an end of line from the ELM327 ">" or our buffer is full, add a "\0" to the last buffer space to make it a C-string
-        if (RX_char == '>' || RX_char == '\n' || buffer_count >= BUFFER_SIZE-1) {
-            buffer[buffer_count] = '\0'; // '\0' creates a character array into a c-strings
-            buffer_count = 0; //reset the buffer count
+        // Filter out the non displayable characters, and make sure the character being sent isnt a ">" so that we know its a full line we want
+        if ((RX_char >= 32 && RX_char <= 126) && RX_char != '>') {
+            buffer[buffer_count] = RX_char; //set the RX_char value to a value in the buffer array, increment each time
+            buffer_count++;
+        }
 
-            LCD_clear();
-            LCD_cursor_set(1,1);
-            LCD_write_string(buffer); //print the string from the buffer array to the LCD
+        if (RX_char == '>' || RX_char == '\n' || buffer_count >= BUFFER_SIZE-1) { //if the character coming in is ">", or "\n" or the buffer count is at its max, end the string
+            buffer[buffer_count] = '\0'; // Null-terminate
+            message_complete = 1;        // Set flag to display later
         }
     }
 }
@@ -124,4 +118,63 @@ void UART1_SendChar(char c){ //Function that takes in a character
         TXREG = c;
 }
 
+// ######## END OF UART CONFIGURATION AND SETUP BLOCK ######
+
+// Request RPM Code
+
+unsigned char hex_char_to_value(char c) { 
+    if (c >= '0' && c <= '9') return c - '0'; //if the character is between 0 and 9, (ASCII codes 48-57) subtract 0 to get its actual value
+    if (c >= 'A' && c <= 'F') return c - 'A' + 10; //if the character is between A and F (ASCII codes 65-70) subtract A (which is 10 in hex) and add 10
+    if (c >= 'a' && c <= 'f') return c - 'a' + 10; //if the character is between a and f (ASCII codes 97-102) subtract a and add 10
+    return 0; // Error case if nothing matches in these places, return an error value of zero
+}
+
+void print_RPM(void){
+
+    UART1_SendString("010C\r"); // Request RPM OBDII PID
+    while(!message_complete) {
+        // Wait here until full reply received
+    }
+
+    unsigned int A = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]); //go to the 4th in
+    unsigned int B = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
+    unsigned int RPM = ((A * 256) + B) / 4;
+    
+    char rpm_string[16]; //create a string call it rpm_string
+    sprintf(rpm_string, "%u", RPM); // Turn RPM number we grabbed from converted hex values into a string
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("RPM");
+    LCD_cursor_set(2,1);
+    LCD_write_string(rpm_string);
+
+    buffer_count = 0;     // Clear buffer for next message
+    message_complete = 0; // Ready for next
+
+    __delay_ms(500);
+}
+
+void print_Vbatt(void) {
+
+    UART1_SendString("ATRV\r"); // Request Battery Voltage using AT command
+    while(!message_complete) {
+        // Wait here until full reply received
+    }
+    
+    LCD_cursor_set(1,7);
+    LCD_write_string("VBatt");
+    LCD_cursor_set(2,7);
+    LCD_write_string(buffer);
+    LCD_cursor_set(2,12);
+    LCD_write_string("     ");
+
+    buffer_count = 0;     // Clear buffer for next message
+    message_complete = 0; // Ready for next
+
+    __delay_ms(500);
+}
+
+void print_AI_Temp(void){
+
+}
 

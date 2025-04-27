@@ -9,8 +9,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "44
 [; ;./LCD.h: 44:     void LCD_clear(void);
 [v _LCD_clear `(v ~T0 @X0 0 ef ]
-"15 OBCII_PIC18F46K22.c
-[; ;OBCII_PIC18F46K22.c: 15: void UART1_Init(void);
+"17 OBCII_PIC18F46K22.c
+[; ;OBCII_PIC18F46K22.c: 17: void UART1_Init(void);
 [v _UART1_Init `(v ~T0 @X0 0 ef ]
 [v F205 `(v ~T0 @X0 1 tf1`ul ]
 "20 C:\Program Files\Microchip\xc8\v3.00\pic\include/builtins.h
@@ -19,9 +19,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "18 OBCII_PIC18F46K22.c
 [; ;OBCII_PIC18F46K22.c: 18: void UART1_SendString(char string[]);
 [v _UART1_SendString `(v ~T0 @X0 0 ef1`*uc ]
-"17
-[; ;OBCII_PIC18F46K22.c: 17: void UART1_Save_Buffer(void);
-[v _UART1_Save_Buffer `(v ~T0 @X0 0 ef ]
+"22
+[; ;OBCII_PIC18F46K22.c: 22: void print_RPM(void);
+[v _print_RPM `(v ~T0 @X0 0 ef ]
+"23
+[; ;OBCII_PIC18F46K22.c: 23: void print_Vbatt(void);
+[v _print_Vbatt `(v ~T0 @X0 0 ef ]
 "147 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 147: extern volatile unsigned char ANSELC __attribute__((address(0xF3A)));
 [v _ANSELC `Vuc ~T0 @X0 0 e@3898 ]
@@ -165,6 +168,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "16958
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 16958: extern volatile INTCONbits_t INTCONbits __attribute__((address(0xFF2)));
 [v _INTCONbits `VS825 ~T0 @X0 0 e@4082 ]
+[t ~ __interrupt . k ]
+[t T1 __interrupt ]
 "9497
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 9497:     struct {
 [s S441 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -180,6 +185,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "9513
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 9513: extern volatile PIR1bits_t PIR1bits __attribute__((address(0xF9E)));
 [v _PIR1bits `VS440 ~T0 @X0 0 e@3998 ]
+"11288
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 11288: extern volatile unsigned char RCREG1 __attribute__((address(0xFAE)));
+[v _RCREG1 `Vuc ~T0 @X0 0 e@4014 ]
 "10541
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 10541:     struct {
 [s S489 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -211,15 +219,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "10579
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 10579: extern volatile RCSTAbits_t RCSTAbits __attribute__((address(0xFAB)));
 [v _RCSTAbits `VS488 ~T0 @X0 0 e@4011 ]
-"11288
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 11288: extern volatile unsigned char RCREG1 __attribute__((address(0xFAE)));
-[v _RCREG1 `Vuc ~T0 @X0 0 e@4014 ]
-"38 ./LCD.h
-[; ;./LCD.h: 38:     void LCD_cursor_set(uint8_t, uint8_t);
-[v _LCD_cursor_set `(v ~T0 @X0 0 ef2`uc`uc ]
-"52
-[; ;./LCD.h: 52:     void LCD_write_string(char*);
-[v _LCD_write_string `(v ~T0 @X0 0 ef1`*uc ]
 "19 OBCII_PIC18F46K22.c
 [; ;OBCII_PIC18F46K22.c: 19: void UART1_SendChar(char c);
 [v _UART1_SendChar `(v ~T0 @X0 0 ef1`uc ]
@@ -245,6 +244,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "11215
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 11215: extern volatile unsigned char TXREG __attribute__((address(0xFAD)));
 [v _TXREG `Vuc ~T0 @X0 0 e@4013 ]
+"121 C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/stdio.h
+[; ;C:\Program Files\Microchip\xc8\v3.00\pic\include\c99/stdio.h: 121: int sprintf(char *restrict, const char *restrict, ...);
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
+"38 ./LCD.h
+[; ;./LCD.h: 38:     void LCD_cursor_set(uint8_t, uint8_t);
+[v _LCD_cursor_set `(v ~T0 @X0 0 ef2`uc`uc ]
+"52
+[; ;./LCD.h: 52:     void LCD_write_string(char*);
+[v _LCD_write_string `(v ~T0 @X0 0 ef1`*uc ]
 "54 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f46k22.h: 54: __asm("ANSELA equ 0F38h");
 [; <" ANSELA equ 0F38h ;# ">
@@ -1080,282 +1088,420 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p x EBTR3  =  OFF       ]
 "66
 [p x EBTRB  =  OFF       ]
-"9 OBCII_PIC18F46K22.c
-[; ;OBCII_PIC18F46K22.c: 9: char buffer[32];
+"10 OBCII_PIC18F46K22.c
+[; ;OBCII_PIC18F46K22.c: 10: char buffer[32];
 [v _buffer `uc ~T0 @X0 -> 32 `i e ]
-"10
-[; ;OBCII_PIC18F46K22.c: 10: unsigned char buffer_count = 0;
+"11
+[; ;OBCII_PIC18F46K22.c: 11: unsigned char buffer_count = 0;
 [v _buffer_count `uc ~T0 @X0 1 e ]
 [i _buffer_count
 -> -> 0 `i `uc
 ]
-"11
-[; ;OBCII_PIC18F46K22.c: 11: char RX_char;
+"12
+[; ;OBCII_PIC18F46K22.c: 12: char RX_char;
 [v _RX_char `uc ~T0 @X0 1 e ]
+"13
+[; ;OBCII_PIC18F46K22.c: 13: volatile char message_complete = 0;
+[v _message_complete `Vuc ~T0 @X0 1 e ]
+[i _message_complete
+-> -> 0 `i `uc
+]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"21
-[; ;OBCII_PIC18F46K22.c: 21: void main(void){
+"27
+[; ;OBCII_PIC18F46K22.c: 27: void main(void){
 [v _main `(v ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"23
-[; ;OBCII_PIC18F46K22.c: 23:     OSCCON = 0b01110000;
+"29
+[; ;OBCII_PIC18F46K22.c: 29:     OSCCON = 0b01110000;
 [e = _OSCCON -> -> 112 `i `uc ]
-"26
-[; ;OBCII_PIC18F46K22.c: 26:     LCD_init();
-[e ( _LCD_init ..  ]
-"27
-[; ;OBCII_PIC18F46K22.c: 27:     LCD_clear();
-[e ( _LCD_clear ..  ]
-"28
-[; ;OBCII_PIC18F46K22.c: 28:     UART1_Init();
-[e ( _UART1_Init ..  ]
-"30
-[; ;OBCII_PIC18F46K22.c: 30:     _delay((unsigned long)((2000)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"31
-[; ;OBCII_PIC18F46K22.c: 31:     UART1_SendString("ATZ\r");
-[e ( _UART1_SendString (1 :s 1C ]
 "32
-[; ;OBCII_PIC18F46K22.c: 32:     _delay((unsigned long)((500)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;OBCII_PIC18F46K22.c: 32:     LCD_init();
+[e ( _LCD_init ..  ]
 "33
-[; ;OBCII_PIC18F46K22.c: 33:     UART1_SendString("ATE0\r");
-[e ( _UART1_SendString (1 :s 2C ]
+[; ;OBCII_PIC18F46K22.c: 33:     LCD_clear();
+[e ( _LCD_clear ..  ]
 "34
-[; ;OBCII_PIC18F46K22.c: 34:     _delay((unsigned long)((500)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"35
-[; ;OBCII_PIC18F46K22.c: 35:     UART1_SendString("ATI\r");
-[e ( _UART1_SendString (1 :s 3C ]
+[; ;OBCII_PIC18F46K22.c: 34:     UART1_Init();
+[e ( _UART1_Init ..  ]
+"36
+[; ;OBCII_PIC18F46K22.c: 36:     _delay((unsigned long)((2000)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 "37
-[; ;OBCII_PIC18F46K22.c: 37:     while(1){
-[e :U 856 ]
-{
+[; ;OBCII_PIC18F46K22.c: 37:     UART1_SendString("ATE0\r");
+[e ( _UART1_SendString (1 :s 1C ]
 "38
-[; ;OBCII_PIC18F46K22.c: 38:         UART1_Save_Buffer();
-[e ( _UART1_Save_Buffer ..  ]
+[; ;OBCII_PIC18F46K22.c: 38:     _delay((unsigned long)((500)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 "39
-[; ;OBCII_PIC18F46K22.c: 39:     }
-}
-[e :U 855 ]
-[e $U 856  ]
-[e :U 857 ]
+[; ;OBCII_PIC18F46K22.c: 39:     LCD_clear();
+[e ( _LCD_clear ..  ]
+"41
+[; ;OBCII_PIC18F46K22.c: 41:     while(1){
+[e :U 858 ]
+{
 "42
-[; ;OBCII_PIC18F46K22.c: 42: }
-[e :UE 854 ]
+[; ;OBCII_PIC18F46K22.c: 42:             print_RPM();
+[e ( _print_RPM ..  ]
+"43
+[; ;OBCII_PIC18F46K22.c: 43:             print_Vbatt();
+[e ( _print_Vbatt ..  ]
+"47
+[; ;OBCII_PIC18F46K22.c: 47:     }
 }
-"45
-[; ;OBCII_PIC18F46K22.c: 45: void UART1_Init(void) {
+[e :U 857 ]
+[e $U 858  ]
+[e :U 859 ]
+"48
+[; ;OBCII_PIC18F46K22.c: 48: }
+[e :UE 856 ]
+}
+"51
+[; ;OBCII_PIC18F46K22.c: 51: void UART1_Init(void) {
 [v _UART1_Init `(v ~T0 @X0 1 ef ]
 {
 [e :U _UART1_Init ]
 [f ]
-"46
-[; ;OBCII_PIC18F46K22.c: 46:     ANSELC = 0;
+"52
+[; ;OBCII_PIC18F46K22.c: 52:     ANSELC = 0;
 [e = _ANSELC -> -> 0 `i `uc ]
-"49
-[; ;OBCII_PIC18F46K22.c: 49:     TRISCbits.TRISC6 = 0;
-[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
-"50
-[; ;OBCII_PIC18F46K22.c: 50:     TRISCbits.TRISC7 = 1;
-[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
-"54
-[; ;OBCII_PIC18F46K22.c: 54:     TXSTA1bits.TXEN = 1;
-[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
 "55
-[; ;OBCII_PIC18F46K22.c: 55:     TXSTA1bits.TX9 = 0;
-[e = . . _TXSTA1bits 0 6 -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 55:     TRISCbits.TRISC6 = 0;
+[e = . . _TRISCbits 0 6 -> -> 0 `i `uc ]
 "56
-[; ;OBCII_PIC18F46K22.c: 56:     TXSTA1bits.SYNC = 0;
-[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
-"58
-[; ;OBCII_PIC18F46K22.c: 58:     TXSTA1bits.BRGH = 1;
-[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
-"59
-[; ;OBCII_PIC18F46K22.c: 59:     BAUDCON1bits.BRG16 = 1;
-[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 56:     TRISCbits.TRISC7 = 1;
+[e = . . _TRISCbits 0 7 -> -> 1 `i `uc ]
+"60
+[; ;OBCII_PIC18F46K22.c: 60:     TXSTA1bits.TXEN = 1;
+[e = . . _TXSTA1bits 0 5 -> -> 1 `i `uc ]
+"61
+[; ;OBCII_PIC18F46K22.c: 61:     TXSTA1bits.TX9 = 0;
+[e = . . _TXSTA1bits 0 6 -> -> 0 `i `uc ]
 "62
-[; ;OBCII_PIC18F46K22.c: 62:     SPBRGH1 = 0b00000001;
-[e = _SPBRGH1 -> -> 1 `i `uc ]
-"63
-[; ;OBCII_PIC18F46K22.c: 63:     SPBRG1 = 0b10100000;
-[e = _SPBRG1 -> -> 160 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 62:     TXSTA1bits.SYNC = 0;
+[e = . . _TXSTA1bits 0 4 -> -> 0 `i `uc ]
+"65
+[; ;OBCII_PIC18F46K22.c: 65:     TXSTA1bits.BRGH = 1;
+[e = . . _TXSTA1bits 0 2 -> -> 1 `i `uc ]
 "66
-[; ;OBCII_PIC18F46K22.c: 66:     BAUDCON1bits.CKTXP = 0;
-[e = . . _BAUDCON1bits 0 4 -> -> 0 `i `uc ]
-"67
-[; ;OBCII_PIC18F46K22.c: 67:     BAUDCON1bits.DTRXP = 0;
-[e = . . _BAUDCON1bits 0 5 -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 66:     BAUDCON1bits.BRG16 = 1;
+[e = . . _BAUDCON1bits 0 3 -> -> 1 `i `uc ]
+"69
+[; ;OBCII_PIC18F46K22.c: 69:     SPBRGH1 = 0b00000001;
+[e = _SPBRGH1 -> -> 1 `i `uc ]
 "70
-[; ;OBCII_PIC18F46K22.c: 70:     RCSTA1bits.SPEN = 1;
-[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
-"71
-[; ;OBCII_PIC18F46K22.c: 71:     RCSTA1bits.CREN = 1;
-[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
-"72
-[; ;OBCII_PIC18F46K22.c: 72:     RCSTA1bits.RX9 = 0;
-[e = . . _RCSTA1bits 0 6 -> -> 0 `i `uc ]
-"75
-[; ;OBCII_PIC18F46K22.c: 75:     PIE1bits.RC1IE = 0;
-[e = . . _PIE1bits 0 5 -> -> 0 `i `uc ]
-"76
-[; ;OBCII_PIC18F46K22.c: 76:     INTCONbits.PEIE = 0;
-[e = . . _INTCONbits 1 6 -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 70:     SPBRG1 = 0b10100000;
+[e = _SPBRG1 -> -> 160 `i `uc ]
+"73
+[; ;OBCII_PIC18F46K22.c: 73:     BAUDCON1bits.CKTXP = 0;
+[e = . . _BAUDCON1bits 0 4 -> -> 0 `i `uc ]
+"74
+[; ;OBCII_PIC18F46K22.c: 74:     BAUDCON1bits.DTRXP = 0;
+[e = . . _BAUDCON1bits 0 5 -> -> 0 `i `uc ]
 "77
-[; ;OBCII_PIC18F46K22.c: 77:     INTCONbits.GIE = 0;
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 77:     RCSTA1bits.SPEN = 1;
+[e = . . _RCSTA1bits 0 7 -> -> 1 `i `uc ]
 "78
-[; ;OBCII_PIC18F46K22.c: 78: }
-[e :UE 858 ]
-}
-"80
-[; ;OBCII_PIC18F46K22.c: 80: char UART1_Read(void) {
-[v _UART1_Read `(uc ~T0 @X0 1 ef ]
-{
-[e :U _UART1_Read ]
-[f ]
+[; ;OBCII_PIC18F46K22.c: 78:     RCSTA1bits.CREN = 1;
+[e = . . _RCSTA1bits 0 4 -> -> 1 `i `uc ]
+"79
+[; ;OBCII_PIC18F46K22.c: 79:     RCSTA1bits.RX9 = 0;
+[e = . . _RCSTA1bits 0 6 -> -> 0 `i `uc ]
+"82
+[; ;OBCII_PIC18F46K22.c: 82:     PIE1bits.RC1IE = 1;
+[e = . . _PIE1bits 0 5 -> -> 1 `i `uc ]
 "83
-[; ;OBCII_PIC18F46K22.c: 83:     while (!PIR1bits.RCIF);
-[e $U 860  ]
-[e :U 861 ]
-[e :U 860 ]
-[e $ ! != -> . . _PIR1bits 1 3 `i -> 0 `i 861  ]
-[e :U 862 ]
-"86
-[; ;OBCII_PIC18F46K22.c: 86:     if (RCSTAbits.OERR) {
+[; ;OBCII_PIC18F46K22.c: 83:     INTCONbits.PEIE = 1;
+[e = . . _INTCONbits 1 6 -> -> 1 `i `uc ]
+"84
+[; ;OBCII_PIC18F46K22.c: 84:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+"85
+[; ;OBCII_PIC18F46K22.c: 85: }
+[e :UE 860 ]
+}
+[v $root$_UART_ISR `(v ~T0 @X0 0 e ]
+"87
+[; ;OBCII_PIC18F46K22.c: 87: void __attribute__((picinterrupt(("")))) UART_ISR(void) {
+[v _UART_ISR `(v ~T1 @X0 1 ef ]
+{
+[e :U _UART_ISR ]
+[f ]
+"88
+[; ;OBCII_PIC18F46K22.c: 88:     if (PIE1bits.RC1IE && PIR1bits.RC1IF) {
+[e $ ! && != -> . . _PIE1bits 0 5 `i -> 0 `i != -> . . _PIR1bits 0 5 `i -> 0 `i 862  ]
+{
+"89
+[; ;OBCII_PIC18F46K22.c: 89:         RX_char = RCREG1;
+[e = _RX_char -> _RCREG1 `uc ]
+"92
+[; ;OBCII_PIC18F46K22.c: 92:         if (RCSTAbits.OERR) {
 [e $ ! != -> . . _RCSTAbits 0 1 `i -> 0 `i 863  ]
 {
-"87
-[; ;OBCII_PIC18F46K22.c: 87:         RCSTAbits.CREN = 0;
+"93
+[; ;OBCII_PIC18F46K22.c: 93:             RCSTAbits.CREN = 0;
 [e = . . _RCSTAbits 0 4 -> -> 0 `i `uc ]
-"88
-[; ;OBCII_PIC18F46K22.c: 88:         RCSTAbits.CREN = 1;
+"94
+[; ;OBCII_PIC18F46K22.c: 94:             RCSTAbits.CREN = 1;
 [e = . . _RCSTAbits 0 4 -> -> 1 `i `uc ]
-"89
-[; ;OBCII_PIC18F46K22.c: 89:     }
+"95
+[; ;OBCII_PIC18F46K22.c: 95:         }
 }
 [e :U 863 ]
-"90
-[; ;OBCII_PIC18F46K22.c: 90:     return RCREG1;
-[e ) -> _RCREG1 `uc ]
-[e $UE 859  ]
-"91
-[; ;OBCII_PIC18F46K22.c: 91: }
-[e :UE 859 ]
-}
-"93
-[; ;OBCII_PIC18F46K22.c: 93: void UART1_Save_Buffer(void){
-[v _UART1_Save_Buffer `(v ~T0 @X0 1 ef ]
-{
-[e :U _UART1_Save_Buffer ]
-[f ]
-"94
-[; ;OBCII_PIC18F46K22.c: 94:     while (PIR1bits.RC1IF) {
-[e $U 865  ]
-[e :U 866 ]
-{
-"96
-[; ;OBCII_PIC18F46K22.c: 96:         RX_char = UART1_Read();
-[e = _RX_char ( _UART1_Read ..  ]
 "98
-[; ;OBCII_PIC18F46K22.c: 98:         if (RX_char >= 32 && RX_char <= 126) {
-[e $ ! && >= -> _RX_char `i -> 32 `i <= -> _RX_char `i -> 126 `i 868  ]
+[; ;OBCII_PIC18F46K22.c: 98:         if ((RX_char >= 32 && RX_char <= 126) && RX_char != '>') {
+[e $ ! && && >= -> _RX_char `i -> 32 `i <= -> _RX_char `i -> 126 `i != -> _RX_char `ui -> 62 `ui 864  ]
 {
 "99
-[; ;OBCII_PIC18F46K22.c: 99:             buffer[buffer_count++] = RX_char;
-[e = *U + &U _buffer * -> ++ _buffer_count -> -> 1 `i `uc `ux -> -> # *U &U _buffer `ui `ux _RX_char ]
+[; ;OBCII_PIC18F46K22.c: 99:             buffer[buffer_count] = RX_char;
+[e = *U + &U _buffer * -> _buffer_count `ux -> -> # *U &U _buffer `ui `ux _RX_char ]
 "100
-[; ;OBCII_PIC18F46K22.c: 100:         }
+[; ;OBCII_PIC18F46K22.c: 100:             buffer_count++;
+[e ++ _buffer_count -> -> 1 `i `uc ]
+"101
+[; ;OBCII_PIC18F46K22.c: 101:         }
 }
-[e :U 868 ]
-"104
-[; ;OBCII_PIC18F46K22.c: 104:         if (RX_char == '>' || RX_char == '\n' || buffer_count >= 32 -1) {
-[e $ ! || || == -> _RX_char `ui -> 62 `ui == -> _RX_char `ui -> 10 `ui >= -> _buffer_count `i - -> 32 `i -> 1 `i 869  ]
+[e :U 864 ]
+"103
+[; ;OBCII_PIC18F46K22.c: 103:         if (RX_char == '>' || RX_char == '\n' || buffer_count >= 32 -1) {
+[e $ ! || || == -> _RX_char `ui -> 62 `ui == -> _RX_char `ui -> 10 `ui >= -> _buffer_count `i - -> 32 `i -> 1 `i 865  ]
 {
-"105
-[; ;OBCII_PIC18F46K22.c: 105:             buffer[buffer_count] = '\0';
+"104
+[; ;OBCII_PIC18F46K22.c: 104:             buffer[buffer_count] = '\0';
 [e = *U + &U _buffer * -> _buffer_count `ux -> -> # *U &U _buffer `ui `ux -> -> 0 `ui `uc ]
+"105
+[; ;OBCII_PIC18F46K22.c: 105:             message_complete = 1;
+[e = _message_complete -> -> 1 `i `uc ]
 "106
-[; ;OBCII_PIC18F46K22.c: 106:             buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"108
-[; ;OBCII_PIC18F46K22.c: 108:             LCD_clear();
-[e ( _LCD_clear ..  ]
-"109
-[; ;OBCII_PIC18F46K22.c: 109:             LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"110
-[; ;OBCII_PIC18F46K22.c: 110:             LCD_write_string(buffer);
-[e ( _LCD_write_string (1 &U _buffer ]
-"111
-[; ;OBCII_PIC18F46K22.c: 111:         }
-}
-[e :U 869 ]
-"112
-[; ;OBCII_PIC18F46K22.c: 112:     }
+[; ;OBCII_PIC18F46K22.c: 106:         }
 }
 [e :U 865 ]
-"94
-[; ;OBCII_PIC18F46K22.c: 94:     while (PIR1bits.RC1IF) {
-[e $ != -> . . _PIR1bits 0 5 `i -> 0 `i 866  ]
-[e :U 867 ]
-"113
-[; ;OBCII_PIC18F46K22.c: 113: }
-[e :UE 864 ]
+"107
+[; ;OBCII_PIC18F46K22.c: 107:     }
 }
-"115
-[; ;OBCII_PIC18F46K22.c: 115: void UART1_SendString(char string[]) {
+[e :U 862 ]
+"108
+[; ;OBCII_PIC18F46K22.c: 108: }
+[e :UE 861 ]
+}
+"110
+[; ;OBCII_PIC18F46K22.c: 110: void UART1_SendString(char string[]) {
 [v _UART1_SendString `(v ~T0 @X0 1 ef1`*uc ]
 {
 [e :U _UART1_SendString ]
 [v _string `*uc ~T0 @X0 1 r1 ]
 [f ]
-"116
-[; ;OBCII_PIC18F46K22.c: 116:     for (unsigned int i = 0; string[i] != '\0'; i++){
+"111
+[; ;OBCII_PIC18F46K22.c: 111:     for (unsigned int i = 0; string[i] != '\0'; i++){
 {
 [v _i `ui ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `ui ]
-[e $U 874  ]
-[e :U 871 ]
+[e $U 870  ]
+[e :U 867 ]
 {
-"117
-[; ;OBCII_PIC18F46K22.c: 117:         UART1_SendChar(string[i]);
+"112
+[; ;OBCII_PIC18F46K22.c: 112:         UART1_SendChar(string[i]);
 [e ( _UART1_SendChar (1 *U + _string * -> _i `ux -> -> # *U _string `ui `ux ]
-"118
-[; ;OBCII_PIC18F46K22.c: 118:     }
+"113
+[; ;OBCII_PIC18F46K22.c: 113:     }
 }
 [e ++ _i -> -> 1 `i `ui ]
-[e :U 874 ]
-[e $ != -> *U + _string * -> _i `ux -> -> # *U _string `ui `ux `ui -> 0 `ui 871  ]
-[e :U 872 ]
+[e :U 870 ]
+[e $ != -> *U + _string * -> _i `ux -> -> # *U _string `ui `ux `ui -> 0 `ui 867  ]
+[e :U 868 ]
 }
-"119
-[; ;OBCII_PIC18F46K22.c: 119: }
-[e :UE 870 ]
+"114
+[; ;OBCII_PIC18F46K22.c: 114: }
+[e :UE 866 ]
 }
-"121
-[; ;OBCII_PIC18F46K22.c: 121: void UART1_SendChar(char c){
+"116
+[; ;OBCII_PIC18F46K22.c: 116: void UART1_SendChar(char c){
 [v _UART1_SendChar `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _UART1_SendChar ]
 [v _c `uc ~T0 @X0 1 r1 ]
 [f ]
-"122
-[; ;OBCII_PIC18F46K22.c: 122:     while (!TXSTAbits.TRMT);
-[e $U 876  ]
-[e :U 877 ]
-[e :U 876 ]
-[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 877  ]
-[e :U 878 ]
-"123
-[; ;OBCII_PIC18F46K22.c: 123:         TXREG = c;
+"117
+[; ;OBCII_PIC18F46K22.c: 117:     while (!TXSTAbits.TRMT);
+[e $U 872  ]
+[e :U 873 ]
+[e :U 872 ]
+[e $ ! != -> . . _TXSTAbits 0 1 `i -> 0 `i 873  ]
+[e :U 874 ]
+"118
+[; ;OBCII_PIC18F46K22.c: 118:         TXREG = c;
 [e = _TXREG -> _c `uc ]
-"124
-[; ;OBCII_PIC18F46K22.c: 124: }
+"119
+[; ;OBCII_PIC18F46K22.c: 119: }
+[e :UE 871 ]
+}
+"125
+[; ;OBCII_PIC18F46K22.c: 125: unsigned char hex_char_to_value(char c) {
+[v _hex_char_to_value `(uc ~T0 @X0 1 ef1`uc ]
+{
+[e :U _hex_char_to_value ]
+[v _c `uc ~T0 @X0 1 r1 ]
+[f ]
+"126
+[; ;OBCII_PIC18F46K22.c: 126:     if (c >= '0' && c <= '9') return c - '0';
+[e $ ! && >= -> _c `ui -> 48 `ui <= -> _c `ui -> 57 `ui 876  ]
+[e ) -> - -> _c `ui -> 48 `ui `uc ]
+[e $UE 875  ]
+[e :U 876 ]
+"127
+[; ;OBCII_PIC18F46K22.c: 127:     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+[e $ ! && >= -> _c `ui -> 65 `ui <= -> _c `ui -> 70 `ui 877  ]
+[e ) -> + - -> _c `ui -> 65 `ui -> -> 10 `i `ui `uc ]
+[e $UE 875  ]
+[e :U 877 ]
+"128
+[; ;OBCII_PIC18F46K22.c: 128:     if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+[e $ ! && >= -> _c `ui -> 97 `ui <= -> _c `ui -> 102 `ui 878  ]
+[e ) -> + - -> _c `ui -> 97 `ui -> -> 10 `i `ui `uc ]
+[e $UE 875  ]
+[e :U 878 ]
+"129
+[; ;OBCII_PIC18F46K22.c: 129:     return 0;
+[e ) -> -> 0 `i `uc ]
+[e $UE 875  ]
+"130
+[; ;OBCII_PIC18F46K22.c: 130: }
 [e :UE 875 ]
 }
-[a 1C 65 84 90 13 0 ]
-[a 3C 65 84 73 13 0 ]
-[a 2C 65 84 69 48 13 0 ]
+"132
+[; ;OBCII_PIC18F46K22.c: 132: void print_RPM(void){
+[v _print_RPM `(v ~T0 @X0 1 ef ]
+{
+[e :U _print_RPM ]
+[f ]
+"134
+[; ;OBCII_PIC18F46K22.c: 134:     UART1_SendString("010C\r");
+[e ( _UART1_SendString (1 :s 2C ]
+"135
+[; ;OBCII_PIC18F46K22.c: 135:     while(!message_complete) {
+[e $U 880  ]
+[e :U 881 ]
+{
+"137
+[; ;OBCII_PIC18F46K22.c: 137:     }
+}
+[e :U 880 ]
+"135
+[; ;OBCII_PIC18F46K22.c: 135:     while(!message_complete) {
+[e $ ! != -> _message_complete `i -> 0 `i 881  ]
+[e :U 882 ]
+"139
+[; ;OBCII_PIC18F46K22.c: 139:     unsigned int A = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+[v _A `ui ~T0 @X0 1 a ]
+[e = _A -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
+"140
+[; ;OBCII_PIC18F46K22.c: 140:     unsigned int B = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
+[v _B `ui ~T0 @X0 1 a ]
+[e = _B -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 7 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
+"141
+[; ;OBCII_PIC18F46K22.c: 141:     unsigned int RPM = ((A * 256) + B) / 4;
+[v _RPM `ui ~T0 @X0 1 a ]
+[e = _RPM / + * _A -> -> 256 `i `ui _B -> -> 4 `i `ui ]
+"143
+[; ;OBCII_PIC18F46K22.c: 143:     char rpm_string[16];
+[v _rpm_string `uc ~T0 @X0 -> 16 `i a ]
+"144
+[; ;OBCII_PIC18F46K22.c: 144:     sprintf(rpm_string, "%u", RPM);
+[e ( _sprintf (1 , (. , &U _rpm_string :s 3C _RPM ]
+"146
+[; ;OBCII_PIC18F46K22.c: 146:     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+"147
+[; ;OBCII_PIC18F46K22.c: 147:     LCD_write_string("RPM");
+[e ( _LCD_write_string (1 :s 4C ]
+"148
+[; ;OBCII_PIC18F46K22.c: 148:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"149
+[; ;OBCII_PIC18F46K22.c: 149:     LCD_write_string(rpm_string);
+[e ( _LCD_write_string (1 &U _rpm_string ]
+"151
+[; ;OBCII_PIC18F46K22.c: 151:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"152
+[; ;OBCII_PIC18F46K22.c: 152:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"154
+[; ;OBCII_PIC18F46K22.c: 154:     _delay((unsigned long)((500)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+"155
+[; ;OBCII_PIC18F46K22.c: 155: }
+[e :UE 879 ]
+}
+"157
+[; ;OBCII_PIC18F46K22.c: 157: void print_Vbatt(void) {
+[v _print_Vbatt `(v ~T0 @X0 1 ef ]
+{
+[e :U _print_Vbatt ]
+[f ]
+"159
+[; ;OBCII_PIC18F46K22.c: 159:     UART1_SendString("ATRV\r");
+[e ( _UART1_SendString (1 :s 5C ]
+"160
+[; ;OBCII_PIC18F46K22.c: 160:     while(!message_complete) {
+[e $U 884  ]
+[e :U 885 ]
+{
+"162
+[; ;OBCII_PIC18F46K22.c: 162:     }
+}
+[e :U 884 ]
+"160
+[; ;OBCII_PIC18F46K22.c: 160:     while(!message_complete) {
+[e $ ! != -> _message_complete `i -> 0 `i 885  ]
+[e :U 886 ]
+"164
+[; ;OBCII_PIC18F46K22.c: 164:     LCD_cursor_set(1,7);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 7 `i `uc ]
+"165
+[; ;OBCII_PIC18F46K22.c: 165:     LCD_write_string("VBatt");
+[e ( _LCD_write_string (1 :s 6C ]
+"166
+[; ;OBCII_PIC18F46K22.c: 166:     LCD_cursor_set(2,7);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 7 `i `uc ]
+"167
+[; ;OBCII_PIC18F46K22.c: 167:     LCD_write_string(buffer);
+[e ( _LCD_write_string (1 &U _buffer ]
+"168
+[; ;OBCII_PIC18F46K22.c: 168:     LCD_cursor_set(2,12);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 12 `i `uc ]
+"169
+[; ;OBCII_PIC18F46K22.c: 169:     LCD_write_string("     ");
+[e ( _LCD_write_string (1 :s 7C ]
+"171
+[; ;OBCII_PIC18F46K22.c: 171:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"172
+[; ;OBCII_PIC18F46K22.c: 172:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"174
+[; ;OBCII_PIC18F46K22.c: 174:     _delay((unsigned long)((500)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+"175
+[; ;OBCII_PIC18F46K22.c: 175: }
+[e :UE 883 ]
+}
+"177
+[; ;OBCII_PIC18F46K22.c: 177: void print_AI_Temp(void){
+[v _print_AI_Temp `(v ~T0 @X0 1 ef ]
+{
+[e :U _print_AI_Temp ]
+[f ]
+"179
+[; ;OBCII_PIC18F46K22.c: 179: }
+[e :UE 887 ]
+}
+[p f _sprintf 8389632 ]
+[a 3C 37 117 0 ]
+[a 6C 86 66 97 116 116 0 ]
+[a 4C 82 80 77 0 ]
+[a 7C 32 32 32 32 32 0 ]
+[a 5C 65 84 82 86 13 0 ]
+[a 2C 48 49 48 67 13 0 ]
+[a 1C 65 84 69 48 13 0 ]

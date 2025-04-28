@@ -23,6 +23,11 @@ void ADC_init(void);
     void UART1_SendString(char string[]); //Function to send string to ELM327
     void UART1_SendChar(char c); //Function to break down the string and send one character at a time to the ELM327
 
+// ## Welcome Splash and Disconnect Flag Function Prototypes
+    void welcome_splash(void);
+    void ccp1_init(void); //Use CCP1 special event interrupt to trigger after 3s of being on and not plugged in
+    void tmr1_init(void);
+
 // ## Main Menu Function Prototypes
     unsigned int readADC(); //For Pot input readings
     void display_mm(void);
@@ -53,7 +58,7 @@ void ADC_init(void);
     void print_SAEVer(void);
     void display_system_info(void);         
 
-
+    // MAIN loop
     void main(void){
 
     //OSCCON setup
@@ -72,7 +77,8 @@ void ADC_init(void);
     __delay_ms(short_delay_preset);
 
         while(1){
-                main_menu();
+                welcome_splash(); //welcomes the user to OBDIIPIC, handles case if user doesnt have the OBDIIUART plugged in
+                main_menu(); //holds all the menu options and modes
             }
 
 }
@@ -168,6 +174,73 @@ void UART1_SendString(char string[]) { //User inputs desired string in the array
 void UART1_SendChar(char c){ //Function that takes in a character
     while (!TXSTAbits.TRMT); //while the Transmist Shifter Register Status bit is empty, wait here, once its full, set the value of the char c to the value of the TXREG
         TXREG = c;
+}
+
+// ######## WELCOME SPLASH/DISCONNECT HANDLE ######
+void ccp1_init(void){
+    CCP1CONbits.CCP1M3 = 1; //Compare Mode: Special Event Trigger
+    CCP1CONbits.CCP1M2 = 0;
+    CCP1CONbits.CCP1M1 = 1;
+    CCP1CONbits.CCP1M0 = 1;
+
+    //Using 16Mhz FOSC, we can count up to .1 Seconds
+    //@16Mhz FOSC, 1:8 Prescalar, CCPR1 = 50,000 counts = 10 ms
+    CCPR1H = 195;
+    CCPR1L = 80;
+
+}
+
+void tmr1_init(void){
+    // timer 1 setup for CCP1 Use
+    T1CONbits.T1CKPS1 = 1; // Prescaler bits: 1:8
+    T1CONbits.T1CKPS0 = 1; 
+    T1CONbits.T1OSCEN = 0; // Timer1 Oscillator OFF
+    T1CONbits.T1SYNC = 1;  // Do not synchronize external clock input
+    T1CONbits.TMR1CS1 = 0; // Clock source = Fosc/4
+    T1CONbits.TMR1CS0 = 0;
+    T1CONbits.TMR1ON = 1;  // Enable Timer1
+}
+
+void welcome_splash(void) {
+    volatile bool plug_flag = false; // Flag to flip once we are plugged in
+    volatile uint8_t ccp1if_counter = 0; // Counter to count CCP1IF trips
+
+    // Splash Screen for when the OBDIIPIC turns on
+    LCD_cursor_set(1, 1);   
+    LCD_write_string(">>> OBDIIPIC <<<");
+    LCD_cursor_set(2, 1);
+    LCD_write_string(">>>>> V1.0 <<<<<");
+
+    ccp1_init(); // Setup the compare module
+    tmr1_init(); // Start counting
+
+    while (plug_flag == false) { // Since this is on first boot we need to know if we are plugged in or not
+        UART1_SendString("ATI\r"); // Request AT Information Request
+
+        if (!message_complete) { // If we haven't received a message complete flag yet
+            if (PIR1bits.CCP1IF) { // Check if CCP1IF triggered
+                PIR1bits.CCP1IF = 0; // Clear the CCP1 interrupt flag manually
+                ccp1if_counter++; // Increment the counter
+                
+                if (ccp1if_counter >= 30) { // 3 seconds passed (0.1s * 30)
+                    LCD_clear();
+                    LCD_cursor_set(1, 1);
+                    LCD_write_string("Plug in OBDIIPIC");
+                }
+            } 
+            
+            else { // While waiting for CCP1IF trips
+                LCD_cursor_set(1, 1);   
+                LCD_write_string(">>> OBDIIPIC <<<");
+                LCD_cursor_set(2, 1);
+                LCD_write_string(">> Detecting <<<");
+            }
+        }
+
+        if (message_complete) { // If we do get a complete reply from ELM
+            plug_flag = true;
+        }
+    }
 }
 
 
@@ -300,7 +373,6 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
     }
 }
 
-
 // ######## LIVE READING MODE BLOCK ######
 unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
     if (c >= '0' && c <= '9') return c - '0'; //if the character is between 0 and 9, (ASCII codes 48-57) subtract 0 to get its actual value
@@ -308,7 +380,6 @@ unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
     if (c >= 'a' && c <= 'f') return c - 'a' + 10; //if the character is between a and f (ASCII codes 97-102) subtract a and add 10
     return 0; // Error case if nothing matches in these places, return an error value of zero
 }
-
 
 void print_RPM(void){ // Request and display RPM OBDII PID
 
@@ -335,7 +406,6 @@ void print_RPM(void){ // Request and display RPM OBDII PID
     message_complete = 0; // Ready for next
 }
 
-
 void print_Vbatt(void) { // Request and display VBatt AT Command
 
     UART1_SendString("ATRV\r"); // Request Battery Voltage using AT command
@@ -360,7 +430,6 @@ void print_Vbatt(void) { // Request and display VBatt AT Command
     buffer_count = 0;     // Clear buffer for next message
     message_complete = 0; // Ready for next
 }
-
 
 void print_AI_Temp(void){ //Request and display Air Intake Temp PID
 
@@ -392,8 +461,8 @@ void live_reading_mode(void){ //Function that calls all three from above
             print_RPM(); //Print RPM Values
             print_Vbatt(); //Print Vbatt;
             print_AI_Temp(); //Print Air Intake Temperature
+            __delay_ms(short_delay_preset);
 }
-
 
 // ## DISPLAY SYSTEM INFORMATION MODE BLOCK ##
 void print_ELMVer(void) {
@@ -433,7 +502,6 @@ void display_system_info (void){
     print_ELMVer();
     print_SAEVer();
 }
-
 
 // ######## BEGINNING OF READ DIAGNOSTIC ERROR CODE BLOCK #####
 void read_diagnostic_codes(void){

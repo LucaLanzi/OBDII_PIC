@@ -9815,6 +9815,64 @@ char *ctermid(char *);
 
 char *tempnam(const char *, const char *);
 # 3 "OBCII_PIC18F46K22.c" 2
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/string.h" 1 3
+# 25 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/string.h" 3
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 1 3
+# 421 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/bits/alltypes.h" 3
+typedef struct __locale_struct * locale_t;
+# 26 "C:\\Program Files\\Microchip\\xc8\\v3.00\\pic\\include\\c99/string.h" 2 3
+
+void *memcpy (void *restrict, const void *restrict, size_t);
+void *memmove (void *, const void *, size_t);
+void *memset (void *, int, size_t);
+int memcmp (const void *, const void *, size_t);
+void *memchr (const void *, int, size_t);
+
+char *strcpy (char *restrict, const char *restrict);
+char *strncpy (char *restrict, const char *restrict, size_t);
+
+char *strcat (char *restrict, const char *restrict);
+char *strncat (char *restrict, const char *restrict, size_t);
+
+int strcmp (const char *, const char *);
+int strncmp (const char *, const char *, size_t);
+
+int strcoll (const char *, const char *);
+size_t strxfrm (char *restrict, const char *restrict, size_t);
+
+char *strchr (const char *, int);
+char *strrchr (const char *, int);
+
+size_t strcspn (const char *, const char *);
+size_t strspn (const char *, const char *);
+char *strpbrk (const char *, const char *);
+char *strstr (const char *, const char *);
+char *strtok (char *restrict, const char *restrict);
+
+size_t strlen (const char *);
+
+char *strerror (int);
+
+
+
+
+char *strtok_r (char *restrict, const char *restrict, char **restrict);
+int strerror_r (int, char *, size_t);
+char *stpcpy(char *restrict, const char *restrict);
+char *stpncpy(char *restrict, const char *restrict, size_t);
+size_t strnlen (const char *, size_t);
+char *strdup (const char *);
+char *strndup (const char *, size_t);
+char *strsignal(int);
+char *strerror_l (int, locale_t);
+int strcoll_l (const char *, const char *, locale_t);
+size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
+
+
+
+
+void *memccpy (void *restrict, const void *restrict, int, size_t);
+# 4 "OBCII_PIC18F46K22.c" 2
 # 1 "./PIC18F46K22-Config.h" 1
 
 
@@ -9882,7 +9940,7 @@ char *tempnam(const char *, const char *);
 
 
 #pragma config EBTRB = OFF
-# 4 "OBCII_PIC18F46K22.c" 2
+# 5 "OBCII_PIC18F46K22.c" 2
 # 1 "./LCD.h" 1
 # 37 "./LCD.h"
     void LCD_init(void);
@@ -9904,50 +9962,101 @@ char *tempnam(const char *, const char *);
     void LCD_write_char(char);
     void LCD_write_variable(int32_t, uint8_t);
     void LCD_write_float(float, uint8_t, uint8_t);
-# 5 "OBCII_PIC18F46K22.c" 2
+# 6 "OBCII_PIC18F46K22.c" 2
 
 
 
 
 
-char buffer[32];
-unsigned char buffer_count = 0;
-char RX_char;
-volatile char message_complete = 0;
+
+
+void input_init(void);
+void ADC_init(void);
 
 
 
-void UART1_Init(void);
-void UART1_SendString(char string[]);
-void UART1_SendChar(char c);
+    char buffer[32];
+    unsigned char buffer_count = 0;
+    char RX_char;
+    volatile char message_complete = 0;
+    void UART1_Init(void);
+    void UART1_SendString(char string[]);
+    void UART1_SendChar(char c);
 
 
-void print_RPM(void);
-void print_Vbatt(void);
-void print_AI_Temp(void);
-unsigned char hex_char_to_value(char c);
+    unsigned int readADC();
+    void display_mm(void);
+    void main_menu(void);
 
-void main(void){
+
+
+    void live_reading_mode(void);
+    void print_RPM(void);
+    void print_Vbatt(void);
+    unsigned char hex_char_to_value(char c);
+    unsigned int A_rpm;
+    unsigned int B_rpm;
+    unsigned int RPM;
+    char rpm_string[16];
+
+    void print_AI_Temp(void);
+    char air_intake_string[16];
+    unsigned int A_air_intake;
+    unsigned int air_intake_temp;
+
+
+
+
+
+
+    void print_ELMVer(void);
+    void print_SAEVer(void);
+    void display_system_info(void);
+
+
+    void main(void){
+
 
     OSCCON = 0b01110000;
 
 
+
     LCD_init();
     LCD_clear();
+    input_init();
+    ADC_init();
     UART1_Init();
 
     _delay((unsigned long)((2000)*(16000000/4000.0)));
     UART1_SendString("ATE0\r");
-    _delay((unsigned long)((500)*(16000000/4000.0)));
-    LCD_clear();
+    _delay((unsigned long)((50)*(16000000/4000.0)));
 
-    while(1){
-            print_RPM();
-            print_Vbatt();
+        while(1){
+                main_menu();
+            }
+
+}
 
 
+void input_init(void){
 
-    }
+
+    TRISBbits.TRISB4 = 1;
+    ANSELBbits.ANSB4 = 0;
+
+    TRISCbits.TRISC5 = 1;
+    ANSELCbits.ANSC5 = 0;
+
+    TRISAbits.TRISA0 = 1;
+    ANSELAbits.ANSA0 = 1;
+}
+
+
+void ADC_init(void){
+
+    ADCON0 = 0b00000001;
+    ADCON1 = 0b00000000;
+    ADCON2 = 0b10101010;
 }
 
 
@@ -10023,6 +10132,134 @@ void UART1_SendChar(char c){
 
 
 
+unsigned int readADC() {
+    ADCON0bits.GO = 1;
+    while (ADCON0bits.GO);
+    _delay((unsigned long)((10)*(16000000/4000.0)));
+    return ((ADRESH << 8) | ADRESL);
+}
+
+void display_mm(void){
+    LCD_cursor_set(1,1);
+    LCD_write_string("MENU<<OBDIIPIC>>");
+    LCD_cursor_set(2,1);
+    LCD_write_string("LRM RDC CDC DSI");
+}
+
+void main_menu(void){
+
+
+    unsigned int result;
+    int menu_sel = -1;
+
+    LCD_clear();
+    display_mm();
+
+    while(1){
+        result = readADC();
+        if(result >= 0 && result <= 255){
+            menu_sel = 0;
+            LCD_cursor_set(2,1);
+
+        }
+        if(result >= 256 && result <=511){
+            menu_sel = 1;
+            LCD_cursor_set(2,5);
+
+        }
+        if(result >=512 && result <=767){
+            menu_sel = 2;
+            LCD_cursor_set(2,9);
+        }
+        if(result >= 768 && result <=1023 ){
+            menu_sel = 3;
+            LCD_cursor_set(2,13);
+        }
+        LCD_configure_cursor_blink(1);
+
+        if (PORTBbits.RB4 == 0) {
+            _delay((unsigned long)((20)*(16000000/4000.0)));
+            if (PORTBbits.RB4 == 0) {
+                LCD_configure_cursor_blink(0);
+                LCD_clear();
+
+
+                switch (menu_sel) {
+                    case 0:
+                        while (1) {
+                            live_reading_mode();
+
+                            if (PORTCbits.RC5 == 0) {
+                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 1:
+                        while (1) {
+
+
+
+                            if (PORTCbits.RC5 == 0) {
+                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        while (1) {
+
+
+                            if (PORTCbits.RC5 == 0) {
+                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 3:
+                        while (1) {
+                            display_system_info();
+
+                            if (PORTCbits.RC5 == 0) {
+                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        _delay((unsigned long)((50)*(16000000/4000.0)));
+    }
+}
+
 
 
 unsigned char hex_char_to_value(char c) {
@@ -10032,6 +10269,7 @@ unsigned char hex_char_to_value(char c) {
     return 0;
 }
 
+
 void print_RPM(void){
 
     UART1_SendString("010C\r");
@@ -10039,12 +10277,14 @@ void print_RPM(void){
 
     }
 
-    unsigned int A = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    unsigned int B = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
-    unsigned int RPM = ((A * 256) + B) / 4;
+    A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+    B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
+    RPM = ((A_rpm * 256) + B_rpm) / 4;
 
-    char rpm_string[16];
     sprintf(rpm_string, "%u", RPM);
+
+    LCD_cursor_set(2,1);
+    LCD_write_string("     ");
 
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
@@ -10053,9 +10293,8 @@ void print_RPM(void){
 
     buffer_count = 0;
     message_complete = 0;
-
-    _delay((unsigned long)((500)*(16000000/4000.0)));
 }
+
 
 void print_Vbatt(void) {
 
@@ -10064,19 +10303,103 @@ void print_Vbatt(void) {
 
     }
 
+    LCD_cursor_set(2,7);
+    LCD_write_string("     ");
+
     LCD_cursor_set(1,7);
     LCD_write_string("VBatt");
     LCD_cursor_set(2,7);
+
+    if (!strchr(buffer, 'V')) {
+        LCD_write_string("N/A");
+    }
+    else {
     LCD_write_string(buffer);
-    LCD_cursor_set(2,12);
-    LCD_write_string("     ");
+    }
 
     buffer_count = 0;
     message_complete = 0;
-
-    _delay((unsigned long)((500)*(16000000/4000.0)));
 }
 
+
 void print_AI_Temp(void){
+
+    UART1_SendString("010F\r");
+     while(!message_complete) {
+
+    }
+
+    LCD_cursor_set(2,14);
+    LCD_write_string("   ");
+
+    A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+    air_intake_temp = A_air_intake - 40;
+
+    sprintf(air_intake_string, "%u", air_intake_temp);
+
+    LCD_cursor_set(1,14);
+    LCD_write_string("AIT");
+    LCD_cursor_set(2,14);
+    LCD_write_string(air_intake_string);
+    LCD_cursor_set(2,16);
+    LCD_write_string("C");
+
+    buffer_count = 0;
+    message_complete = 0;
+}
+
+void live_reading_mode(void){
+            print_RPM();
+            print_Vbatt();
+            print_AI_Temp();
+}
+
+
+
+void print_ELMVer(void) {
+
+    UART1_SendString("ATI\r");
+
+    while(!message_complete) {
+
+    }
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("ELM: ");
+    LCD_write_string(buffer);
+
+
+    buffer_count = 0;
+    message_complete = 0;
+}
+
+void print_SAEVer(void){
+    UART1_SendString("0108\r");
+
+    while(!message_complete) {
+
+    }
+
+    LCD_cursor_set(2,1);
+    LCD_write_string("SAE: ");
+    LCD_write_string(buffer);
+
+
+    buffer_count = 0;
+    message_complete = 0;
+}
+
+void display_system_info (void){
+    print_ELMVer();
+    print_SAEVer();
+}
+
+
+
+void read_diagnostic_codes(void){
+    UART1_SendString("010C\r");
+    while(!message_complete) {
+
+    }
 
 }

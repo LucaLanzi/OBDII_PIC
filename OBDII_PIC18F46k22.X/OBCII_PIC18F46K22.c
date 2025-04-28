@@ -1,53 +1,105 @@
 #include <xc.h>
 #include <stdio.h>
+#include <string.h>
 #include "PIC18F46K22-Config.h"
 #include "LCD.h"
 
+//Preset Definitions
 #define _XTAL_FREQ 16000000 //defines the internal frequency to 16Mhz (Configurable Pg. 30)
+#define short_delay_preset 50
+#define long_delay_preset 2000
 
-//UART Variable Config
-#define BUFFER_SIZE 32 //Set the total byte size of the UART buffer
-char buffer[BUFFER_SIZE]; //Define a character array to hold the incoming bytes from Rx
-unsigned char buffer_count = 0; //a counter for the array index
-char RX_char; //variable to store the byte read from the RCREG
-volatile char message_complete = 0; // flag for completing UART message
+//I/O Setup Function Prototypes
+void input_init(void);
+void ADC_init(void);
+
+// ## EUSART1 Function Prototypes and Variables
+    #define BUFFER_SIZE 32 //Set the total byte size of the UART buffer
+    char buffer[BUFFER_SIZE]; //Define a character array to hold the incoming bytes from Rx (Array has 32 elements, but index range is from 0-31)
+    unsigned char buffer_count = 0; //a counter for the array index
+    char RX_char; //variable to store the byte read from the RCREG
+    volatile char message_complete = 0; // flag for completing UART message
+    void UART1_Init(void); //initialize UART1
+    void UART1_SendString(char string[]); //Function to send string to ELM327
+    void UART1_SendChar(char c); //Function to break down the string and send one character at a time to the ELM327
+
+// ## Main Menu Function Prototypes
+    unsigned int readADC(); //For Pot input readings
+    void display_mm(void);
+    void main_menu(void);    
+
+// ## Live Reading Mode Function Prototypes and Variables ##
+    //Read RPM Function Prototypes and Variables
+    void live_reading_mode(void);
+    void print_RPM(void);
+    void print_Vbatt(void);
+    unsigned char hex_char_to_value(char c); //function definition for hex to charcter to value converter
+    unsigned int A_rpm; //variable declarations for RPM formula
+    unsigned int B_rpm;
+    unsigned int RPM;
+    char rpm_string[16]; //create a string call it rpm_string
+    //Read Air Intake Function Prototypes and Variables
+    void print_AI_Temp(void);
+    char air_intake_string[16]; //create a string call it air_intake_string
+    unsigned int A_air_intake;
+    unsigned int air_intake_temp;                                
+
+// ## Read Diagnostic Codes Mode Function Prototypes and Variables ##
+
+// ## Clear Diagnostic Codes Mode Function Prototypes and Variables ##
+
+// ## Display System Information Mode Function Prototypes and Variables ##
+    void print_ELMVer(void);
+    void print_SAEVer(void);
+    void display_system_info(void);         
 
 
-//UART Function Prototypes
-void UART1_Init(void); //initialize UART1
-void UART1_SendString(char string[]); //Function to send string to ELM327
-void UART1_SendChar(char c); //Function to break down the string and send one character at a time to the ELM327
+    void main(void){
 
-//Read RPM Function Prototypes
-void print_RPM(void);
-void print_Vbatt(void);
-void print_AI_Temp(void);
-unsigned char hex_char_to_value(char c);
-
-void main(void){
-
+    //OSCCON setup
     OSCCON = 0b01110000; //16Mhz FOSC
+     
     
-
+    //Initializations
     LCD_init(); //initialize the LCD
     LCD_clear(); //clear the LCD
+    input_init(); //initialize the inputs
+    ADC_init();
     UART1_Init(); //initialize UART1
 
-    __delay_ms(2000);
+    __delay_ms(long_delay_preset);
     UART1_SendString("ATE0\r"); //Turn off Echo from ELM327
-    __delay_ms(500);
-    LCD_clear();
+    __delay_ms(short_delay_preset);
 
-    while(1){
-            print_RPM(); //Print RPM Values
-            print_Vbatt(); //Print Vbatt;
-        
+        while(1){
+                main_menu();
+            }
 
-        //other program stuff here
-    }
 }
 
-// ########  Beginning of UART CONFIGURATION AND SETUP BLOCK ######
+//######### Input Initialization #############
+void input_init(void){
+
+    //Input Declarations
+    TRISBbits.TRISB4 = 1; //Enter button input
+    ANSELBbits.ANSB4 = 0; //Disable analog for B4
+
+    TRISCbits.TRISC5 = 1; //Back button input
+    ANSELCbits.ANSC5 = 0; //Disable analog for C5
+
+    TRISAbits.TRISA0 = 1; //On Board Potentiometer input
+    ANSELAbits.ANSA0 = 1; //Enable the potentiometer input as analog
+}
+
+// ######### ADC INITIALIZATION #################
+void ADC_init(void){
+    // ADC Configuration
+    ADCON0 = 0b00000001;  // Enable ADC, select channel AN0
+    ADCON1 = 0b00000000;  // VDD and VSS as references
+    ADCON2 = 0b10101010;  // Right justified, 12TAD, Fosc/32
+}
+
+// ######## UART CONFIGURATION AND SETUP BLOCK######
 void UART1_Init(void) {
     ANSELC = 0; //ensure all outputs are digital on PORTC
     
@@ -118,30 +170,161 @@ void UART1_SendChar(char c){ //Function that takes in a character
         TXREG = c;
 }
 
-// ######## END OF UART CONFIGURATION AND SETUP BLOCK ######
 
-// Request RPM Code
+// ######## MAIN MENU BLOCK #######################
+unsigned int readADC() {
+    ADCON0bits.GO = 1;  // Start ADC conversion
+    while (ADCON0bits.GO);  // Wait for conversion to finish
+    __delay_ms(10);
+    return ((ADRESH << 8) | ADRESL);  // Combine 8-bit results
+}
 
-unsigned char hex_char_to_value(char c) { 
+void display_mm(void){ //Main Menu Display function
+    LCD_cursor_set(1,1);
+    LCD_write_string("MENU<<OBDIIPIC>>");
+    LCD_cursor_set(2,1);
+    LCD_write_string("LRM RDC CDC DSI");
+}
+
+void main_menu(void){ //main menu loop, checks back and enter state and takes in mode set by potentiometer input
+    
+ 
+    unsigned int result; //ADC result
+    int menu_sel = -1; // -1 means we are in menu, not in any mode
+    
+    LCD_clear();
+    display_mm(); //main menu display function
+    
+    while(1){
+        result = readADC();
+        if(result >= 0 && result <= 255){ //set first value range
+            menu_sel = 0;
+            LCD_cursor_set(2,1);
+           
+        }
+        if(result >= 256 && result <=511){ //set second value range
+            menu_sel = 1;
+            LCD_cursor_set(2,5);
+           
+        }
+        if(result >=512 && result <=767){ //set third value range
+            menu_sel = 2;
+            LCD_cursor_set(2,9);
+        }
+        if(result >= 768 && result <=1023 ){ //set fourth value range
+            menu_sel = 3;
+            LCD_cursor_set(2,13); 
+        }
+        LCD_configure_cursor_blink(1);
+
+        if (PORTBbits.RB4 == 0) { // Enter button pressed (Assuming active low button)
+            __delay_ms(20); // Simple debounce
+            if (PORTBbits.RB4 == 0) { // Confirm still pressed
+                LCD_configure_cursor_blink(0);
+                LCD_clear();
+
+                // Now go into the selected mode
+                switch (menu_sel) {
+                    case 0:
+                        while (1) {
+                            live_reading_mode();
+                            // Check for back button
+                            if (PORTCbits.RC5 == 0) {
+                                __delay_ms(20);
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm(); // Go back to main menu display
+                                    menu_sel = -1; // reset mode
+                                    break; // break out of inner while(1)
+                                }
+                            }
+                        }
+                        break;
+
+                    case 1:
+                        while (1) {
+                            // Recording mode logic here
+
+                            // Check for back button
+                            if (PORTCbits.RC5 == 0) {
+                                __delay_ms(20);
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        while (1) {
+                            // CEC mode logic here
+
+                            if (PORTCbits.RC5 == 0) {
+                                __delay_ms(20);
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 3:
+                        while (1) {
+                            display_system_info();
+                            // DSI mode logic here
+                            if (PORTCbits.RC5 == 0) {
+                                __delay_ms(20);
+                                if (PORTCbits.RC5 == 0) {
+                                    LCD_clear();
+                                    display_mm();
+                                    menu_sel = -1;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        __delay_ms(50); // Small delay for stability
+    }
+}
+
+
+// ######## LIVE READING MODE BLOCK ######
+unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
     if (c >= '0' && c <= '9') return c - '0'; //if the character is between 0 and 9, (ASCII codes 48-57) subtract 0 to get its actual value
     if (c >= 'A' && c <= 'F') return c - 'A' + 10; //if the character is between A and F (ASCII codes 65-70) subtract A (which is 10 in hex) and add 10
     if (c >= 'a' && c <= 'f') return c - 'a' + 10; //if the character is between a and f (ASCII codes 97-102) subtract a and add 10
     return 0; // Error case if nothing matches in these places, return an error value of zero
 }
 
-void print_RPM(void){
 
-    UART1_SendString("010C\r"); // Request RPM OBDII PID
+void print_RPM(void){ // Request and display RPM OBDII PID
+
+    UART1_SendString("010C\r");
     while(!message_complete) {
         // Wait here until full reply received
     }
 
-    unsigned int A = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]); //go to the 4th in
-    unsigned int B = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
-    unsigned int RPM = ((A * 256) + B) / 4;
+    A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]); //shift the 4th index value over 4 bits and or it with the 5th to make the full byte
+    B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]); //shift the 6th index value over 4 bits and or it with the 7th to make the 2nd full bye
+    RPM = ((A_rpm * 256) + B_rpm) / 4; //Do the math to find RPM speed
     
-    char rpm_string[16]; //create a string call it rpm_string
     sprintf(rpm_string, "%u", RPM); // Turn RPM number we grabbed from converted hex values into a string
+
+    LCD_cursor_set(2,1);
+    LCD_write_string("     "); //clear the data entry
 
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
@@ -150,31 +333,113 @@ void print_RPM(void){
 
     buffer_count = 0;     // Clear buffer for next message
     message_complete = 0; // Ready for next
-
-    __delay_ms(500);
 }
 
-void print_Vbatt(void) {
+
+void print_Vbatt(void) { // Request and display VBatt AT Command
 
     UART1_SendString("ATRV\r"); // Request Battery Voltage using AT command
     while(!message_complete) {
         // Wait here until full reply received
     }
+
+    LCD_cursor_set(2,7);
+    LCD_write_string("     "); //clear the data entry
     
     LCD_cursor_set(1,7);
     LCD_write_string("VBatt");
     LCD_cursor_set(2,7);
-    LCD_write_string(buffer);
-    LCD_cursor_set(2,12);
-    LCD_write_string("     ");
+
+    if (!strchr(buffer, 'V')) { //Since the voltage reading always containts a V, we can use this to check if we are getting SEARCHING... or actual voltage
+        LCD_write_string("N/A"); //So if we dont have a V in the incoming buffer, print this
+    }
+    else {
+    LCD_write_string(buffer); //If we do have a V, 
+    }
 
     buffer_count = 0;     // Clear buffer for next message
     message_complete = 0; // Ready for next
-
-    __delay_ms(500);
 }
 
-void print_AI_Temp(void){
 
+void print_AI_Temp(void){ //Request and display Air Intake Temp PID
+
+    UART1_SendString("010F\r");
+     while(!message_complete) {
+        // Wait here until full reply received
+    }
+
+    LCD_cursor_set(2,14);
+    LCD_write_string("   "); //clear the data entry
+
+    A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+    air_intake_temp = A_air_intake - 40;
+    
+    sprintf(air_intake_string, "%u", air_intake_temp); // Turn RPM number we grabbed from converted hex values into a string
+
+    LCD_cursor_set(1,14);
+    LCD_write_string("AIT");
+    LCD_cursor_set(2,14);
+    LCD_write_string(air_intake_string);
+    LCD_cursor_set(2,16);
+    LCD_write_string("C");
+
+    buffer_count = 0;     // Clear buffer for next message
+    message_complete = 0; // Ready for next
 }
 
+void live_reading_mode(void){ //Function that calls all three from above
+            print_RPM(); //Print RPM Values
+            print_Vbatt(); //Print Vbatt;
+            print_AI_Temp(); //Print Air Intake Temperature
+}
+
+
+// ## DISPLAY SYSTEM INFORMATION MODE BLOCK ##
+void print_ELMVer(void) {
+
+    UART1_SendString("ATI\r"); // Request AT Information Request
+
+    while(!message_complete) {
+        // Wait here until full reply received
+    }
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("ELM: ");
+    LCD_write_string(buffer); //If we do have a V, 
+    
+
+    buffer_count = 0;     // Clear buffer for next message
+    message_complete = 0; // Ready for next
+}
+
+void print_SAEVer(void){
+    UART1_SendString("0108\r"); // Request Supported SAE version from vehicle
+
+    while(!message_complete) {
+        // Wait here until full reply received
+    }
+
+    LCD_cursor_set(2,1);
+    LCD_write_string("SAE: ");
+    LCD_write_string(buffer); //If we do have a V, 
+    
+
+    buffer_count = 0;     // Clear buffer for next message
+    message_complete = 0; // Ready for next
+}
+
+void display_system_info (void){
+    print_ELMVer();
+    print_SAEVer();
+}
+
+
+// ######## BEGINNING OF READ DIAGNOSTIC ERROR CODE BLOCK #####
+void read_diagnostic_codes(void){
+    UART1_SendString("010C\r");
+    while(!message_complete) {
+        // Wait here until full reply received
+    }
+
+}

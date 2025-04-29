@@ -73,49 +73,53 @@
 [v _LCD_write_char LCD_write_char `(v  1 e 1 0 ]
 "392
 [v _LCD_write_variable LCD_write_variable `(v  1 e 1 0 ]
-"67 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"69 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _main main `(v  1 e 1 0 ]
-"92
+"94
 [v _input_init input_init `(v  1 e 1 0 ]
-"106
+"108
 [v _ADC_init ADC_init `(v  1 e 1 0 ]
-"114
+"116
 [v _UART1_Init UART1_Init `(v  1 e 1 0 ]
-"150
+"154
 [v _UART_ISR UART_ISR `IIH(v  1 e 1 0 ]
-"173
+"178
 [v _UART1_SendString UART1_SendString `(v  1 e 1 0 ]
-"179
+"184
 [v _UART1_SendChar UART1_SendChar `(v  1 e 1 0 ]
-"185
+"190
 [v _ccp1_init ccp1_init `(v  1 e 1 0 ]
-"198
+"203
 [v _tmr1_init tmr1_init `(v  1 e 1 0 ]
-"209
+"214
 [v _welcome_splash welcome_splash `(v  1 e 1 0 ]
-"244
+"282
 [v _readADC readADC `(ui  1 e 2 0 ]
-"251
+"289
 [v _display_mm display_mm `(v  1 e 1 0 ]
-"258
+"296
+[v _parsing_notif parsing_notif `(v  1 e 1 0 ]
+"300
+[v _clear_parsing_notif clear_parsing_notif `(v  1 e 1 0 ]
+"305
 [v _main_menu main_menu `(v  1 e 1 0 ]
-"372
+"425
 [v _hex_char_to_value hex_char_to_value `(uc  1 e 1 0 ]
-"379
+"432
 [v _print_RPM print_RPM `(v  1 e 1 0 ]
-"404
+"468
 [v _print_Vbatt print_Vbatt `(v  1 e 1 0 ]
-"429
+"504
 [v _print_AI_Temp print_AI_Temp `(v  1 e 1 0 ]
-"455
+"541
 [v _live_reading_mode live_reading_mode `(v  1 e 1 0 ]
-"463
+"553
 [v _print_ELMVer print_ELMVer `(v  1 e 1 0 ]
-"480
+"581
 [v _print_SAEVer print_SAEVer `(v  1 e 1 0 ]
-"496
+"608
 [v _display_system_info display_system_info `(v  1 e 1 0 ]
-"508
+"624
 [v _clear_diagnostic_codes clear_diagnostic_codes `(v  1 e 1 0 ]
 [s S220 . 1 `uc 1 ANSA0 1 0 :1:0 
 `uc 1 ANSA1 1 0 :1:1 
@@ -269,7 +273,7 @@
 ]
 [u S1038 . 1 `S130 1 . 1 0 `S989 1 . 1 0 `S998 1 . 1 0 `S1007 1 . 1 0 `S1016 1 . 1 0 `S1025 1 . 1 0 `S1034 1 . 1 0 ]
 [v _PORTCbits PORTCbits `VES1038  1 e 1 @3970 ]
-[s S1370 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S1379 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -279,7 +283,7 @@
 `uc 1 LATD7 1 0 :1:7 
 ]
 "7923
-[s S1379 . 1 `uc 1 LD0 1 0 :1:0 
+[s S1388 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -288,8 +292,8 @@
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S1388 . 1 `S1370 1 . 1 0 `S1379 1 . 1 0 ]
-[v _LATDbits LATDbits `VES1388  1 e 1 @3980 ]
+[u S1397 . 1 `S1379 1 . 1 0 `S1388 1 . 1 0 ]
+[v _LATDbits LATDbits `VES1397  1 e 1 @3980 ]
 [s S180 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
@@ -335,7 +339,7 @@
 "8536
 [u S139 . 1 `S121 1 . 1 0 `S130 1 . 1 0 ]
 [v _TRISCbits TRISCbits `VES139  1 e 1 @3988 ]
-[s S1412 . 1 `uc 1 TRISD0 1 0 :1:0 
+[s S1421 . 1 `uc 1 TRISD0 1 0 :1:0 
 `uc 1 TRISD1 1 0 :1:1 
 `uc 1 TRISD2 1 0 :1:2 
 `uc 1 TRISD3 1 0 :1:3 
@@ -345,7 +349,7 @@
 `uc 1 TRISD7 1 0 :1:7 
 ]
 "8758
-[s S1421 . 1 `uc 1 RD0 1 0 :1:0 
+[s S1430 . 1 `uc 1 RD0 1 0 :1:0 
 `uc 1 RD1 1 0 :1:1 
 `uc 1 RD2 1 0 :1:2 
 `uc 1 RD3 1 0 :1:3 
@@ -354,8 +358,8 @@
 `uc 1 RD6 1 0 :1:6 
 `uc 1 RD7 1 0 :1:7 
 ]
-[u S1430 . 1 `S1412 1 . 1 0 `S1421 1 . 1 0 ]
-[v _TRISDbits TRISDbits `VES1430  1 e 1 @3989 ]
+[u S1439 . 1 `S1421 1 . 1 0 `S1430 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES1439  1 e 1 @3989 ]
 [s S445 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
@@ -637,43 +641,43 @@
 [v _menu_sel menu_sel `i  1 e 2 0 ]
 "35
 [v _result result `ui  1 e 2 0 ]
-"45
-[v _A_rpm A_rpm `ui  1 e 2 0 ]
-"46
-[v _B_rpm B_rpm `ui  1 e 2 0 ]
 "47
-[v _RPM RPM `ui  1 e 2 0 ]
+[v _A_rpm A_rpm `ui  1 e 2 0 ]
 "48
+[v _B_rpm B_rpm `ui  1 e 2 0 ]
+"49
+[v _RPM RPM `ui  1 e 2 0 ]
+"50
 [v _rpm_string rpm_string `[16]uc  1 e 16 0 ]
-"51
-[v _air_intake_string air_intake_string `[16]uc  1 e 16 0 ]
-"52
-[v _A_air_intake A_air_intake `ui  1 e 2 0 ]
 "53
+[v _air_intake_string air_intake_string `[16]uc  1 e 16 0 ]
+"54
+[v _A_air_intake A_air_intake `ui  1 e 2 0 ]
+"55
 [v _air_intake_temp air_intake_temp `ui  1 e 2 0 ]
-"67
+"69
 [v _main main `(v  1 e 1 0 ]
 {
-"89
+"91
 } 0
-"209
+"214
 [v _welcome_splash welcome_splash `(v  1 e 1 0 ]
 {
-"211
+"216
 [v welcome_splash@CCP1IF_counter CCP1IF_counter `VEui  1 a 2 31 ]
-"210
+"215
 [v welcome_splash@plug_flag plug_flag `VEi  1 a 2 29 ]
-"240
+"277
 } 0
-"198
+"203
 [v _tmr1_init tmr1_init `(v  1 e 1 0 ]
 {
-"207
+"212
 } 0
-"185
+"190
 [v _ccp1_init ccp1_init `(v  1 e 1 0 ]
 {
-"196
+"201
 } 0
 "392 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_write_variable LCD_write_variable `(v  1 e 1 0 ]
@@ -723,20 +727,20 @@
 [v ___aldiv@divisor divisor `l  1 p 4 6 ]
 "41
 } 0
-"258 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"305 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _main_menu main_menu `(v  1 e 1 0 ]
 {
-"369
+"416
 } 0
-"455
+"541
 [v _live_reading_mode live_reading_mode `(v  1 e 1 0 ]
 {
-"460
+"546
 } 0
-"404
+"468
 [v _print_Vbatt print_Vbatt `(v  1 e 1 0 ]
 {
-"427
+"502
 } 0
 "3 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\strchr.c
 [v _strchr strchr `(*.30uc  1 e 2 0 ]
@@ -745,55 +749,55 @@
 [v strchr@c c `i  1 p 2 3 ]
 "11
 } 0
-"379 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"432 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _print_RPM print_RPM `(v  1 e 1 0 ]
 {
-"402
+"466
 } 0
-"429
+"504
 [v _print_AI_Temp print_AI_Temp `(v  1 e 1 0 ]
 {
-"453
+"539
 } 0
 "9 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_sprintf.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[u S1979 . 2 `*.30uc 1 buffer 1 0 `*.39Cuc 1 source 2 0 ]
+[u S1988 . 2 `*.30uc 1 buffer 1 0 `*.39Cuc 1 source 2 0 ]
 "13
-[s S1982 _IO_FILE 11 `S1979 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v sprintf@f f `S1982  1 a 11 29 ]
+[s S1991 _IO_FILE 11 `S1988 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v sprintf@f f `S1991  1 a 11 34 ]
 "12
-[v sprintf@ap ap `[1]*.30v  1 a 1 28 ]
+[v sprintf@ap ap `[1]*.30v  1 a 1 33 ]
 "9
-[v sprintf@s s `*.30uc  1 p 1 24 ]
-[v sprintf@fmt fmt `*.31Cuc  1 p 1 25 ]
+[v sprintf@s s `*.30uc  1 p 1 28 ]
+[v sprintf@fmt fmt `*.32Cuc  1 p 2 29 ]
 "23
 } 0
 "1817 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doprnt.c
 [v _vfprintf vfprintf `(i  1 e 2 0 ]
 {
 "1820
-[v vfprintf@cfmt cfmt `*.31uc  1 a 1 23 ]
-[s S2014 _IO_FILE 0 ]
+[v vfprintf@cfmt cfmt `*.32uc  1 a 2 26 ]
+[s S2023 _IO_FILE 0 ]
 "1817
-[v vfprintf@fp fp `*.30S2014  1 p 1 20 ]
-[v vfprintf@fmt fmt `*.31Cuc  1 p 1 21 ]
-[v vfprintf@ap ap `*.30*.30v  1 p 1 22 ]
+[v vfprintf@fp fp `*.30S2023  1 p 1 22 ]
+[v vfprintf@fmt fmt `*.32Cuc  1 p 2 23 ]
+[v vfprintf@ap ap `*.30*.30v  1 p 1 25 ]
 "1840
 } 0
 "1177
 [v _vfpfcnvrt vfpfcnvrt `(v  1 s 1 vfpfcnvrt ]
 {
-[u S2027 . 4 `i 1 sint 2 0 `ui 1 uint 2 0 `d 1 f 4 0 ]
+[u S2036 . 4 `i 1 sint 2 0 `ui 1 uint 2 0 `d 1 f 4 0 ]
 "1188
-[v vfpfcnvrt@convarg convarg `S2027  1 a 4 14 ]
+[v vfpfcnvrt@convarg convarg `S2036  1 a 4 17 ]
 "1179
-[v vfpfcnvrt@c c `uc  1 a 1 19 ]
-[v vfpfcnvrt@cp cp `*.31uc  1 a 1 18 ]
-[s S2014 _IO_FILE 0 ]
+[v vfpfcnvrt@cp cp `*.32uc  1 a 2 15 ]
+[v vfpfcnvrt@c c `uc  1 a 1 21 ]
+[s S2023 _IO_FILE 0 ]
 "1177
-[v vfpfcnvrt@fp fp `*.30S2014  1 p 1 10 ]
-[v vfpfcnvrt@fmt fmt `*.30*.31uc  1 p 1 11 ]
+[v vfpfcnvrt@fp fp `*.30S2023  1 p 1 10 ]
+[v vfpfcnvrt@fmt fmt `*.30*.32uc  1 p 1 11 ]
 [v vfpfcnvrt@ap ap `*.30*.30v  1 p 1 12 ]
 "1814
 } 0
@@ -801,9 +805,9 @@
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 2 ]
-[u S1979 . 2 `*.30uc 1 buffer 1 0 `*.39Cuc 1 source 2 0 ]
-[s S1982 _IO_FILE 11 `S1979 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fputc@fp fp `*.30S1982  1 p 1 4 ]
+[u S1988 . 2 `*.30uc 1 buffer 1 0 `*.39Cuc 1 source 2 0 ]
+[s S1991 _IO_FILE 11 `S1988 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fputc@fp fp `*.30S1991  1 p 1 4 ]
 "24
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\putch.c
@@ -833,45 +837,55 @@
 [v ___lwdiv@divisor divisor `ui  1 p 2 4 ]
 "30
 } 0
-"372 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"425 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _hex_char_to_value hex_char_to_value `(uc  1 e 1 0 ]
 {
 [v hex_char_to_value@c c `uc  1 p 1 wreg ]
 [v hex_char_to_value@c c `uc  1 p 1 wreg ]
 [v hex_char_to_value@c c `uc  1 p 1 2 ]
-"377
+"430
 } 0
-"496
+"608
 [v _display_system_info display_system_info `(v  1 e 1 0 ]
 {
-"499
+"615
 } 0
-"480
+"581
 [v _print_SAEVer print_SAEVer `(v  1 e 1 0 ]
 {
-"494
+"606
 } 0
-"463
+"553
 [v _print_ELMVer print_ELMVer `(v  1 e 1 0 ]
 {
-"478
+"579
 } 0
-"508
+"624
 [v _clear_diagnostic_codes clear_diagnostic_codes `(v  1 e 1 0 ]
 {
-"510
+"626
 [v clear_diagnostic_codes@opt_sel opt_sel `i  1 a 2 12 ]
-"585
+"698
 } 0
-"244
+"282
 [v _readADC readADC `(ui  1 e 2 0 ]
 {
-"249
+"287
 } 0
-"251
+"296
+[v _parsing_notif parsing_notif `(v  1 e 1 0 ]
+{
+"299
+} 0
+"289
 [v _display_mm display_mm `(v  1 e 1 0 ]
 {
-"256
+"294
+} 0
+"300
+[v _clear_parsing_notif clear_parsing_notif `(v  1 e 1 0 ]
+{
+"303
 } 0
 "362 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_write_string LCD_write_string `(v  1 e 1 0 ]
@@ -901,22 +915,22 @@
 [v LCD_cursor_set@row row `uc  1 p 1 6 ]
 "169
 } 0
-"173 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"178 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _UART1_SendString UART1_SendString `(v  1 e 1 0 ]
 {
-"174
-[v UART1_SendString@i i `ui  1 a 2 5 ]
-"173
-[v UART1_SendString@string string `*.31uc  1 p 1 3 ]
-"177
-} 0
 "179
+[v UART1_SendString@i i `ui  1 a 2 7 ]
+"178
+[v UART1_SendString@string string `*.32uc  1 p 2 3 ]
+"182
+} 0
+"184
 [v _UART1_SendChar UART1_SendChar `(v  1 e 1 0 ]
 {
 [v UART1_SendChar@c c `uc  1 p 1 wreg ]
 [v UART1_SendChar@c c `uc  1 p 1 wreg ]
 [v UART1_SendChar@c c `uc  1 p 1 2 ]
-"182
+"187
 } 0
 "231 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_configure_cursor_blink LCD_configure_cursor_blink `(v  1 e 1 0 ]
@@ -927,15 +941,15 @@
 [v LCD_configure_cursor_blink@state state `uc  1 p 1 5 ]
 "243
 } 0
-"92 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"94 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _input_init input_init `(v  1 e 1 0 ]
 {
-"103
+"105
 } 0
-"114
+"116
 [v _UART1_Init UART1_Init `(v  1 e 1 0 ]
 {
-"148
+"150
 } 0
 "106 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_init LCD_init `(v  1 e 1 0 ]
@@ -961,13 +975,13 @@
 {
 "39
 } 0
-"106 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"108 C:\Users\Luca Lanzillotta\OneDrive - Cal Poly Pomona\300_juniorYear\2nd Semester\ECE 3301L\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _ADC_init ADC_init `(v  1 e 1 0 ]
 {
-"111
+"113
 } 0
-"150
+"154
 [v _UART_ISR UART_ISR `IIH(v  1 e 1 0 ]
 {
-"171
+"176
 } 0

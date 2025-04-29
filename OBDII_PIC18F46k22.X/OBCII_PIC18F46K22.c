@@ -8,7 +8,7 @@
 #define _XTAL_FREQ 16000000 //defines the internal frequency to 16Mhz (Configurable Pg. 30)
 #define short_delay_preset 50
 #define long_delay_preset 2000
-#define splash_delay 10 // the number of seconds you want to delay the port checker
+#define splash_delay 4 // the number of seconds you want to delay the port checker
 
 //I/O Setup Function Prototypes
 void input_init(void);
@@ -34,7 +34,9 @@ void ADC_init(void);
     unsigned int readADC(); //For Pot input readings
     unsigned int result; //ADC result
     void display_mm(void);
-    void main_menu(void);    
+    void main_menu(void);
+    void parsing_notif(void); 
+    void clear_parsing_notif(void);
 
 // ## Live Reading Mode Function Prototypes and Variables ##
     //Read RPM Function Prototypes and Variables
@@ -147,6 +149,8 @@ void UART1_Init(void) {
     INTCONbits.GIE = 1;   // Disable global interrupts
 }
 
+
+// ## INTERRUPT SERVICE ROUTINE
 void __interrupt() UART_ISR(void) { //using an interrupt service routine for when a byte is recieved
     if (PIE1bits.RC1IE && PIR1bits.RC1IF) { // If UART1 is on and the recive interrupt is high, meaning it is full
         RX_char = RCREG1; // Read byte immediately to clear RCIF
@@ -168,6 +172,7 @@ void __interrupt() UART_ISR(void) { //using an interrupt service routine for whe
             message_complete = 1;        // Set flag to display later
         }
     }
+   
 }
 
 void UART1_SendString(char string[]) { //User inputs desired string in the array with a carriage return value '\r'
@@ -207,40 +212,73 @@ void tmr1_init(void){
 }
 
 void welcome_splash(void) {
-    volatile int plug_flag = 0; // Flag to flip once we are plugged in
-    volatile unsigned int CCP1IF_counter = 0; // Counter to count CCP1IF trips
+    volatile int plug_flag = 0; // 0 = disconnected, 1 = connected
+    volatile unsigned int CCP1IF_counter = 0; // timer counter
 
-    // Splash Screen for when the OBDIIPIC turns on
+    // Splash Screen when the OBDIIPIC turns on
+    LCD_clear();
     LCD_cursor_set(1, 1);   
     LCD_write_string(">>> OBDIIPIC <<<");
     LCD_cursor_set(2, 1);
-    LCD_write_string(">>>>> V1.0 <<<<<");
+    LCD_write_string(">>>> V1.0 <<<<");
 
-    ccp1_init(); // Setup the compare module
-    tmr1_init(); // Initialize the timer and turn it on
-    
-    while(CCP1IF_counter < (splash_delay)*10){
-        if(PIR1bits.CCP1IF){ //will do this for seconds
-            PIR1bits.CCP1IF = 0; //reset the interrupt flag
-            CCP1IF_counter++; //increment a count to get to 30s
-            T1CONbits.TMR1ON = 1; //turn the timer back on
-            LCD_cursor_set(2,16);
-            LCD_write_variable((CCP1IF_counter)/10,1);
+    ccp1_init(); // Setup CCP1 module
+    tmr1_init(); // Start Timer1
+
+    CCP1IF_counter = 0;
+    plug_flag = 0;
+
+    while (1) { // stay here until successful 5 seconds of connection
+        if (PIR1bits.CCP1IF) { // every 0.1 seconds
+            PIR1bits.CCP1IF = 0; 
+            T1CONbits.TMR1ON = 1; // Restart timer
+            CCP1IF_counter++;
+
+            LCD_cursor_set(2, 16);
+            LCD_write_variable((CCP1IF_counter) / 10, 1);
+
+            // Every second (10 ticks of 0.1s) send an ATI ping
+            if (CCP1IF_counter % 10 == 0) {
+                UART1_SendString("ATI\r");
+            }
+        }
+
+        // Check if message was received
+        if (message_complete) {
+            plug_flag = 1; // Connected
+            buffer_count = 0;
+            message_complete = 0;
+        }
+
+        // If connected, continue counting
+        if (plug_flag) {
+            if (CCP1IF_counter >= splash_delay * 10) { 
+                // Connected continuously for n seconds
+                break; // Exit splash
+            }
+        } else {
+            // No connection or lost connection — reset timer
+            CCP1IF_counter = 0;
+            LCD_cursor_set(2, 1);
+            LCD_write_string("OBDII Not Found ");
+            UART1_SendString("ATI\r"); // keep pinging to find ELM327
+            __delay_ms(short_delay_preset);
         }
     }
-    UART1_SendString("ATI\r");
-    while(!message_complete){
-         LCD_cursor_set(2, 1);   
-         LCD_write_string("  Not Detected  ");
-         __delay_ms(short_delay_preset);
-         UART1_SendString("ATI\r"); //will send another ping to see if its back
-    }
+
+    // ELM detected after successful 5 seconds
+    LCD_clear();
+    LCD_cursor_set(1, 1);
+    LCD_write_string("OBDII Detected");
+    __delay_ms(2 * long_delay_preset);
+
+    UART1_SendString("ATE0\r"); // Disable Echo
     __delay_ms(short_delay_preset);
-    UART1_SendString("ATE0\r"); //ensure that echo is off
 }
 
 
-// ######## MAIN MENU BLOCK #######################
+
+// ######## MAIN MENU BLOCK #########################################################################################################################################################
 unsigned int readADC() {
     ADCON0bits.GO = 1;  // Start ADC conversion
     while (ADCON0bits.GO);  // Wait for conversion to finish
@@ -253,6 +291,15 @@ void display_mm(void){ //Main Menu Display function
     LCD_write_string("MENU <OBDIIPIC>");
     LCD_cursor_set(2,1);
     LCD_write_string("LRM RDC CDC DSI");
+}
+
+void parsing_notif(void) { //display a little loading icon
+    LCD_cursor_set(1,16);
+    LCD_write_string("@");
+}
+void clear_parsing_notif(void){
+    LCD_cursor_set(1,16);
+    LCD_write_string(" ");
 }
 
 void main_menu(void){ //main menu loop, checks back and enter state and takes in mode set by potentiometer input
@@ -313,12 +360,12 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
 
                             // Check for back button
                             if (PORTCbits.RC5 == 0) {
-                                    __delay_ms(20);
+                                    __delay_ms(20); //button debounce
                                 if (PORTCbits.RC5 == 0) {
                                     LCD_clear();
-                                    display_mm();
-                                    menu_sel = -1;
-                                    break;
+                                    display_mm(); 
+                                    menu_sel = -1; //reset the mode
+                                    break; //break out of inner while(1)
                                 }
                             }
                         }
@@ -326,10 +373,10 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
 
                     case 2:
                         while (1) {
-                                //Clear Diagnostic Codes mode logic here
                                 __delay_ms(200); //debounce the button press
                                 clear_diagnostic_codes(); //run the mode
-                                break;
+                                menu_sel = -1;
+                                break; //once its done exit the while loop and shoot you back to the menu
                             if (PORTCbits.RC5 == 0) {
                                 __delay_ms(20);
                                 if (PORTCbits.RC5 == 0) {
@@ -344,8 +391,8 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
 
                     case 3:
                         while (1) {
-                            display_system_info();
-                            // DSI mode logic here
+                            display_system_info(); // DSI mode
+                            //stay here unless back button is pressed
                             if (PORTCbits.RC5 == 0) {
                                __delay_ms(20);
                                 if (PORTCbits.RC5 == 0) {
@@ -368,7 +415,13 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
     }
 }
 
-// ######## LIVE READING MODE BLOCK ######
+
+
+
+
+
+
+// ######## LIVE READING MODE BLOCK #################################################################################################################
 unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
     if (c >= '0' && c <= '9') return c - '0'; //if the character is between 0 and 9, (ASCII codes 48-57) subtract 0 to get its actual value
     if (c >= 'A' && c <= 'F') return c - 'A' + 10; //if the character is between A and F (ASCII codes 65-70) subtract A (which is 10 in hex) and add 10
@@ -381,7 +434,18 @@ void print_RPM(void){ // Request and display RPM OBDII PID
     UART1_SendString("010C\r");
     while(!message_complete) {
         // Wait here until full reply received
+        if (PORTCbits.RC5 == 0) { //back function
+            __delay_ms(20);
+            if (PORTCbits.RC5 == 0) {
+                LCD_clear();
+                display_mm(); // Go back to main menu display
+                menu_sel = -1; // reset mode
+                break; // break out of inner while(1)
+            }
+        }
+        parsing_notif();
     }
+    clear_parsing_notif();
 
     A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]); //shift the 4th index value over 4 bits and or it with the 5th to make the full byte
     B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]); //shift the 6th index value over 4 bits and or it with the 7th to make the 2nd full bye
@@ -406,7 +470,18 @@ void print_Vbatt(void) { // Request and display VBatt AT Command
     UART1_SendString("ATRV\r"); // Request Battery Voltage using AT command
     while(!message_complete) {
         // Wait here until full reply received
+        if (PORTCbits.RC5 == 0) { //back function
+            __delay_ms(20);
+            if (PORTCbits.RC5 == 0) {
+                LCD_clear();
+                display_mm(); // Go back to main menu display
+                menu_sel = -1; // reset mode
+                break; // break out of inner while(1)
+            }
+        }
+        parsing_notif();
     }
+    clear_parsing_notif();
 
     LCD_cursor_set(2,7);
     LCD_write_string("     "); //clear the data entry
@@ -430,10 +505,21 @@ void print_AI_Temp(void){ //Request and display Air Intake Temp PID
 
     UART1_SendString("010F\r");
      while(!message_complete) {
+        if (PORTCbits.RC5 == 0) { //back function
+            __delay_ms(20);
+            if (PORTCbits.RC5 == 0) {
+                LCD_clear();
+                display_mm(); // Go back to main menu display
+                menu_sel = -1; // reset mode
+                break; // break out of inner while(1)
+            }
+        }
         // Wait here until full reply received
+        parsing_notif();
     }
+    clear_parsing_notif();
 
-    LCD_cursor_set(2,14);
+    LCD_cursor_set(2,13);
     LCD_write_string("   "); //clear the data entry
 
     A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
@@ -441,11 +527,11 @@ void print_AI_Temp(void){ //Request and display Air Intake Temp PID
     
     sprintf(air_intake_string, "%u", air_intake_temp); // Turn RPM number we grabbed from converted hex values into a string
 
-    LCD_cursor_set(1,14);
+    LCD_cursor_set(1,13);
     LCD_write_string("AIT");
-    LCD_cursor_set(2,14);
+    LCD_cursor_set(2,13);
     LCD_write_string(air_intake_string);
-    LCD_cursor_set(2,16);
+    LCD_cursor_set(2,15);
     LCD_write_string("C");
 
     buffer_count = 0;     // Clear buffer for next message
@@ -459,17 +545,32 @@ void live_reading_mode(void){ //Function that calls all three from above
             __delay_ms(short_delay_preset);
 }
 
-// ## DISPLAY SYSTEM INFORMATION MODE BLOCK ##
+
+
+
+
+// ## DISPLAY SYSTEM INFORMATION MODE BLOCK ########################################################################################################################################
 void print_ELMVer(void) {
 
     UART1_SendString("ATI\r"); // Request AT Information Request
 
     while(!message_complete) {
         // Wait here until full reply received
+        if (PORTCbits.RC5 == 0) {
+            __delay_ms(20);
+            if (PORTCbits.RC5 == 0) {
+                LCD_clear();
+                display_mm(); // Go back to main menu display
+                menu_sel = -1; // reset mode
+                break; // break out of inner while(1)
+            }
+        }
+        parsing_notif();
     }
+    clear_parsing_notif();
 
     LCD_cursor_set(1,1);
-    LCD_write_string("ELM:");
+    LCD_write_string("OS:");
     LCD_write_string(buffer); //If we do have a V, 
     
 
@@ -479,10 +580,21 @@ void print_ELMVer(void) {
 
 void print_SAEVer(void){
     UART1_SendString("0108\r"); // Request Supported SAE version from vehicle
-
+    
     while(!message_complete) {
         // Wait here until full reply received
+        if (PORTCbits.RC5 == 0) { //back condition
+            __delay_ms(20);
+            if (PORTCbits.RC5 == 0) {
+                LCD_clear();
+                display_mm(); // Go back to main menu display
+                menu_sel = -1; // reset mode
+                break; // break out of inner while(1)
+            }
+        }
+        parsing_notif();
     }
+    clear_parsing_notif();
 
     LCD_cursor_set(2,1);
     LCD_write_string("SAE:");
@@ -494,17 +606,21 @@ void print_SAEVer(void){
 }
 
 void display_system_info (void){
+    LCD_cursor_set(1,4);
+    LCD_write_string("            ");
+    LCD_cursor_set(2,5);
+    LCD_write_string("             ");
     print_ELMVer();
     print_SAEVer();
 }
 
-// ######## READ DIAGNOSTIC ERROR CODE BLOCK #####
+// ######## READ DIAGNOSTIC ERROR CODE BLOCK ########################################################################################################################################
 void read_diagnostic_codes(void){
 
 
 }
 
-// ######## CLEAR DIAGNOSTIC ERROR CODE BLOCK ####
+// ######## CLEAR DIAGNOSTIC ERROR CODE BLOCK #######################################################################################################################################
 void clear_diagnostic_codes(void){
 
     int opt_sel = 0; //Y/N option select
@@ -545,7 +661,9 @@ void clear_diagnostic_codes(void){
                     UART1_SendString("04\r"); //Send Clear Code
                     while(!message_complete){
                         //wait for accept message
+                        parsing_notif();
                     }
+                    clear_parsing_notif();
 
                     LCD_clear();
                     LCD_cursor_set(1,1);
@@ -573,13 +691,9 @@ void clear_diagnostic_codes(void){
                     default:
                         break;
                 }
-                break;
+            break;
             }
-        
           }
-
-        
-
     }
-
 }
+

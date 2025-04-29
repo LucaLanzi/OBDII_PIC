@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/Luca Lanzillotta/OneDrive - Cal Poly Pomona/300_juniorYear/2nd Semester/ECE 3301L/ECE3301FinalProject/_build/OBDII_PIC18F46k22/default",
+  "command": "c:\\PROGRA~1\\MICROC~1\\xc8\\v3.00\\bin\\xc8-cc.exe -DXPRJ_default=default -D__18F46K22__ -I\"C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\cmake\\OBDII_PIC18F46k22\\default\\..\\..\\..\\OBDII_PIC18F46k22.X\" -c -mcpu=18F46K22 -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto -o CMakeFiles\\OBDII_PIC18F46k22_default_default_XC8_compile.dir\\529df28d900f48fdec3871c4f7bc594c\\LCD.c.p1 -c \"C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\OBDII_PIC18F46k22.X\\LCD.c\"",
+  "file": "C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\OBDII_PIC18F46k22.X\\LCD.c",
+  "output": "CMakeFiles\\OBDII_PIC18F46k22_default_default_XC8_compile.dir\\529df28d900f48fdec3871c4f7bc594c\\LCD.c.p1"
+},
+{
+  "directory": "C:/Users/Luca Lanzillotta/OneDrive - Cal Poly Pomona/300_juniorYear/2nd Semester/ECE 3301L/ECE3301FinalProject/_build/OBDII_PIC18F46k22/default",
+  "command": "c:\\PROGRA~1\\MICROC~1\\xc8\\v3.00\\bin\\xc8-cc.exe -DXPRJ_default=default -D__18F46K22__ -I\"C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\cmake\\OBDII_PIC18F46k22\\default\\..\\..\\..\\OBDII_PIC18F46k22.X\" -c -mcpu=18F46K22 -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -mwarn=-3 -Wa,-a -msummary=-psect,-class,+mem,-hex,-file -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto -o CMakeFiles\\OBDII_PIC18F46k22_default_default_XC8_compile.dir\\529df28d900f48fdec3871c4f7bc594c\\OBCII_PIC18F46K22.c.p1 -c \"C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\OBDII_PIC18F46k22.X\\OBCII_PIC18F46K22.c\"",
+  "file": "C:\\Users\\Luca Lanzillotta\\OneDrive - Cal Poly Pomona\\300_juniorYear\\2nd Semester\\ECE 3301L\\ECE3301FinalProject\\OBDII_PIC18F46k22.X\\OBCII_PIC18F46K22.c",
+  "output": "CMakeFiles\\OBDII_PIC18F46k22_default_default_XC8_compile.dir\\529df28d900f48fdec3871c4f7bc594c\\OBCII_PIC18F46K22.c.p1"
+}
+]

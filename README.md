@@ -205,6 +205,13 @@ Because we are sending and receiving data over UART, we need to be able to recie
 
 * Define when we are receiving data: 
     Data is recieved in the RCREG1, when a byte is sent and recieved, the RC1IF interrupt flag in the PIR1 register is set to 1. RC1IF = 1 means a byte was recieved.
+    Once this is true, we can read the value in RCREG1, and store it in a buffer array. Once we have read it and stored it, the RC1IF flag is cleared, and we can then be ready to recieve the next byte.
+    
+    We need to check for a condition (when RC1IF is 1) then assign that byte to a variable, then put that variable in a position in an array, and then repeat but doing so in the next part of the array
+
+    Code Chunk:
+
+    
 
 ### Reference Documents and Useful Links: ###
 

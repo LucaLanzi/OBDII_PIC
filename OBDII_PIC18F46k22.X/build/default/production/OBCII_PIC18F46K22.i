@@ -9970,6 +9970,7 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
 
 
 
+
 void input_init(void);
 void ADC_init(void);
 
@@ -9984,7 +9985,14 @@ void ADC_init(void);
     void UART1_SendChar(char c);
 
 
+    void welcome_splash(void);
+    void ccp1_init(void);
+    void tmr1_init(void);
+
+
+    int menu_sel = -1;
     unsigned int readADC();
+    unsigned int result;
     void display_mm(void);
     void main_menu(void);
 
@@ -10005,8 +10013,10 @@ void ADC_init(void);
     unsigned int air_intake_temp;
 
 
+    void read_diagnostic_codes(void);
 
 
+    void clear_diagnostic_codes(void);
 
 
     void print_ELMVer(void);
@@ -10032,6 +10042,7 @@ void ADC_init(void);
     _delay((unsigned long)((50)*(16000000/4000.0)));
 
         while(1){
+                welcome_splash();
                 main_menu();
             }
 
@@ -10131,6 +10142,64 @@ void UART1_SendChar(char c){
 }
 
 
+void ccp1_init(void){
+    CCP1CONbits.CCP1M3 = 1;
+    CCP1CONbits.CCP1M2 = 0;
+    CCP1CONbits.CCP1M1 = 1;
+    CCP1CONbits.CCP1M0 = 1;
+
+
+
+    CCPR1H = 195;
+    CCPR1L = 80;
+
+}
+
+void tmr1_init(void){
+
+    T1CONbits.T1CKPS1 = 1;
+    T1CONbits.T1CKPS0 = 1;
+    T1CONbits.T1OSCEN = 0;
+    T1CONbits.T1SYNC = 1;
+    T1CONbits.TMR1CS1 = 0;
+    T1CONbits.TMR1CS0 = 0;
+    T1CONbits.TMR1ON = 1;
+}
+
+void welcome_splash(void) {
+    volatile int plug_flag = 0;
+    volatile unsigned int CCP1IF_counter = 0;
+
+
+    LCD_cursor_set(1, 1);
+    LCD_write_string(">>> OBDIIPIC <<<");
+    LCD_cursor_set(2, 1);
+    LCD_write_string(">>>>> V1.0 <<<<<");
+
+    ccp1_init();
+    tmr1_init();
+
+    while(CCP1IF_counter < (10)*10){
+        if(PIR1bits.CCP1IF){
+            PIR1bits.CCP1IF = 0;
+            CCP1IF_counter++;
+            T1CONbits.TMR1ON = 1;
+            LCD_cursor_set(2,16);
+            LCD_write_variable((CCP1IF_counter)/10,1);
+        }
+    }
+    UART1_SendString("ATI\r");
+    while(!message_complete){
+         LCD_cursor_set(2, 1);
+         LCD_write_string("  Not Detected  ");
+         _delay((unsigned long)((50)*(16000000/4000.0)));
+         UART1_SendString("ATI\r");
+    }
+    _delay((unsigned long)((50)*(16000000/4000.0)));
+    UART1_SendString("ATE0\r");
+}
+
+
 
 unsigned int readADC() {
     ADCON0bits.GO = 1;
@@ -10141,21 +10210,18 @@ unsigned int readADC() {
 
 void display_mm(void){
     LCD_cursor_set(1,1);
-    LCD_write_string("MENU<<OBDIIPIC>>");
+    LCD_write_string("MENU <OBDIIPIC>");
     LCD_cursor_set(2,1);
     LCD_write_string("LRM RDC CDC DSI");
 }
 
 void main_menu(void){
 
-
-    unsigned int result;
-    int menu_sel = -1;
-
     LCD_clear();
     display_mm();
 
     while(1){
+        display_mm();
         result = readADC();
         if(result >= 0 && result <= 255){
             menu_sel = 0;
@@ -10207,7 +10273,7 @@ void main_menu(void){
 
 
                             if (PORTCbits.RC5 == 0) {
-                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                                    _delay((unsigned long)((20)*(16000000/4000.0)));
                                 if (PORTCbits.RC5 == 0) {
                                     LCD_clear();
                                     display_mm();
@@ -10221,7 +10287,9 @@ void main_menu(void){
                     case 2:
                         while (1) {
 
-
+                                _delay((unsigned long)((200)*(16000000/4000.0)));
+                                clear_diagnostic_codes();
+                                break;
                             if (PORTCbits.RC5 == 0) {
                                 _delay((unsigned long)((20)*(16000000/4000.0)));
                                 if (PORTCbits.RC5 == 0) {
@@ -10239,7 +10307,7 @@ void main_menu(void){
                             display_system_info();
 
                             if (PORTCbits.RC5 == 0) {
-                                _delay((unsigned long)((20)*(16000000/4000.0)));
+                               _delay((unsigned long)((20)*(16000000/4000.0)));
                                 if (PORTCbits.RC5 == 0) {
                                     LCD_clear();
                                     display_mm();
@@ -10261,14 +10329,12 @@ void main_menu(void){
 }
 
 
-
 unsigned char hex_char_to_value(char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
     if (c >= 'a' && c <= 'f') return c - 'a' + 10;
     return 0;
 }
-
 
 void print_RPM(void){
 
@@ -10295,7 +10361,6 @@ void print_RPM(void){
     message_complete = 0;
 }
 
-
 void print_Vbatt(void) {
 
     UART1_SendString("ATRV\r");
@@ -10320,7 +10385,6 @@ void print_Vbatt(void) {
     buffer_count = 0;
     message_complete = 0;
 }
-
 
 void print_AI_Temp(void){
 
@@ -10352,8 +10416,8 @@ void live_reading_mode(void){
             print_RPM();
             print_Vbatt();
             print_AI_Temp();
+            _delay((unsigned long)((50)*(16000000/4000.0)));
 }
-
 
 
 void print_ELMVer(void) {
@@ -10365,7 +10429,7 @@ void print_ELMVer(void) {
     }
 
     LCD_cursor_set(1,1);
-    LCD_write_string("ELM: ");
+    LCD_write_string("ELM:");
     LCD_write_string(buffer);
 
 
@@ -10381,7 +10445,7 @@ void print_SAEVer(void){
     }
 
     LCD_cursor_set(2,1);
-    LCD_write_string("SAE: ");
+    LCD_write_string("SAE:");
     LCD_write_string(buffer);
 
 
@@ -10395,10 +10459,86 @@ void display_system_info (void){
 }
 
 
-
 void read_diagnostic_codes(void){
-    UART1_SendString("010C\r");
-    while(!message_complete) {
+
+
+}
+
+
+void clear_diagnostic_codes(void){
+
+    int opt_sel = 0;
+    LCD_clear();
+    LCD_cursor_set(1,1);
+    LCD_write_string("Clear Code(s)?");
+    LCD_cursor_set(2,1);
+    LCD_write_string("Y/N <<<<<<<<<<<<");
+    LCD_configure_cursor_blink(1);
+
+    while(1){
+        result = readADC();
+        if(result >= 0 && result <= 511){
+            opt_sel = 0;
+            LCD_cursor_set(2,1);
+
+        }
+        if(result >= 512 && result <=1023){
+            opt_sel = 1;
+            LCD_cursor_set(2,3);
+        }
+            if (PORTCbits.RC5 == 0) {
+                _delay((unsigned long)((20)*(16000000/4000.0)));
+                if (PORTCbits.RC5 == 0) {
+                    LCD_clear();
+                    display_mm();
+                    menu_sel = -1;
+                    break;
+                }
+            }
+
+        if (PORTBbits.RB4 == 0) {
+            _delay((unsigned long)((20)*(16000000/4000.0)));
+            if (PORTBbits.RB4 == 0) {
+                switch(opt_sel){
+                    case 0:
+
+                    UART1_SendString("04\r");
+                    while(!message_complete){
+
+                    }
+
+                    LCD_clear();
+                    LCD_cursor_set(1,1);
+                    LCD_write_string("Codes Cleared");
+                    LCD_cursor_set(2,1);
+                    LCD_write_string("To Menu...");
+
+                    menu_sel = -1;
+                    _delay((unsigned long)((2000)*(16000000/4000.0)));
+
+                        break;
+
+                    case 1:
+
+                    LCD_clear();
+                    LCD_cursor_set(1,1);
+                    LCD_write_string("Nothing Cleared");
+                    LCD_cursor_set(2,1);
+                    LCD_write_string("To Menu...");
+
+                    menu_sel = -1;
+                    _delay((unsigned long)((2000)*(16000000/4000.0)));
+                        break;
+
+                    default:
+                        break;
+                }
+                break;
+            }
+
+          }
+
+
 
     }
 

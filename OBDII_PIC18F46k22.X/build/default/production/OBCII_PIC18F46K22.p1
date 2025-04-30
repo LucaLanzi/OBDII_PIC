@@ -1883,418 +1883,424 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;OBCII_PIC18F46K22.c: 271:     LCD_cursor_set(1, 1);
 [e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "272
-[; ;OBCII_PIC18F46K22.c: 272:     LCD_write_string("OBDII Detected");
+[; ;OBCII_PIC18F46K22.c: 272:     LCD_write_string("<OBDII Detected>");
 [e ( _LCD_write_string (1 :s 7C ]
 "273
-[; ;OBCII_PIC18F46K22.c: 273:     _delay((unsigned long)((2 * 2000)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> * -> 2 `i -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;OBCII_PIC18F46K22.c: 273:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"274
+[; ;OBCII_PIC18F46K22.c: 274:     LCD_write_string("================");
+[e ( _LCD_write_string (1 :s 8C ]
 "275
-[; ;OBCII_PIC18F46K22.c: 275:     UART1_SendString("ATE0\r");
-[e ( _UART1_SendString (1 :s 8C ]
-"276
-[; ;OBCII_PIC18F46K22.c: 276:     _delay((unsigned long)((50)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;OBCII_PIC18F46K22.c: 275:     _delay((unsigned long)((2 * 2000)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> * -> 2 `i -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 "277
-[; ;OBCII_PIC18F46K22.c: 277: }
+[; ;OBCII_PIC18F46K22.c: 277:     UART1_SendString("ATE0\r");
+[e ( _UART1_SendString (1 :s 9C ]
+"278
+[; ;OBCII_PIC18F46K22.c: 278:     _delay((unsigned long)((50)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+"279
+[; ;OBCII_PIC18F46K22.c: 279: }
 [e :UE 880 ]
 }
-"282
-[; ;OBCII_PIC18F46K22.c: 282: unsigned int readADC() {
+"284
+[; ;OBCII_PIC18F46K22.c: 284: unsigned int readADC() {
 [v _readADC `(ui ~T0 @X0 1 ef ]
 {
 [e :U _readADC ]
 [f ]
-"283
-[; ;OBCII_PIC18F46K22.c: 283:     ADCON0bits.GO = 1;
+"285
+[; ;OBCII_PIC18F46K22.c: 285:     ADCON0bits.GO = 1;
 [e = . . _ADCON0bits 2 1 -> -> 1 `i `uc ]
-"284
-[; ;OBCII_PIC18F46K22.c: 284:     while (ADCON0bits.GO);
+"286
+[; ;OBCII_PIC18F46K22.c: 286:     while (ADCON0bits.GO);
 [e $U 891  ]
 [e :U 892 ]
 [e :U 891 ]
 [e $ != -> . . _ADCON0bits 2 1 `i -> 0 `i 892  ]
 [e :U 893 ]
-"285
-[; ;OBCII_PIC18F46K22.c: 285:     _delay((unsigned long)((10)*(16000000/4000.0)));
+"287
+[; ;OBCII_PIC18F46K22.c: 287:     _delay((unsigned long)((10)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 10 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"286
-[; ;OBCII_PIC18F46K22.c: 286:     return ((ADRESH << 8) | ADRESL);
+"288
+[; ;OBCII_PIC18F46K22.c: 288:     return ((ADRESH << 8) | ADRESL);
 [e ) -> | << -> _ADRESH `i -> 8 `i -> _ADRESL `i `ui ]
 [e $UE 890  ]
-"287
-[; ;OBCII_PIC18F46K22.c: 287: }
+"289
+[; ;OBCII_PIC18F46K22.c: 289: }
 [e :UE 890 ]
 }
-"289
-[; ;OBCII_PIC18F46K22.c: 289: void display_mm(void){
+"291
+[; ;OBCII_PIC18F46K22.c: 291: void display_mm(void){
 [v _display_mm `(v ~T0 @X0 1 ef ]
 {
 [e :U _display_mm ]
 [f ]
-"290
-[; ;OBCII_PIC18F46K22.c: 290:     LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"291
-[; ;OBCII_PIC18F46K22.c: 291:     LCD_write_string("MENU <OBDIIPIC>");
-[e ( _LCD_write_string (1 :s 9C ]
 "292
-[; ;OBCII_PIC18F46K22.c: 292:     LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 292:     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "293
-[; ;OBCII_PIC18F46K22.c: 293:     LCD_write_string("LRM RDC CDC DSI");
+[; ;OBCII_PIC18F46K22.c: 293:     LCD_write_string("MENU  <OBDIIPIC>");
 [e ( _LCD_write_string (1 :s 10C ]
 "294
-[; ;OBCII_PIC18F46K22.c: 294: }
+[; ;OBCII_PIC18F46K22.c: 294:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"295
+[; ;OBCII_PIC18F46K22.c: 295:     LCD_write_string("LRM RDC CDC DSI");
+[e ( _LCD_write_string (1 :s 11C ]
+"296
+[; ;OBCII_PIC18F46K22.c: 296: }
 [e :UE 894 ]
 }
-"296
-[; ;OBCII_PIC18F46K22.c: 296: void parsing_notif(void) {
+"298
+[; ;OBCII_PIC18F46K22.c: 298: void parsing_notif(void) {
 [v _parsing_notif `(v ~T0 @X0 1 ef ]
 {
 [e :U _parsing_notif ]
 [f ]
-"297
-[; ;OBCII_PIC18F46K22.c: 297:     LCD_cursor_set(1,16);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 16 `i `uc ]
-"298
-[; ;OBCII_PIC18F46K22.c: 298:     LCD_write_string("@");
-[e ( _LCD_write_string (1 :s 11C ]
 "299
-[; ;OBCII_PIC18F46K22.c: 299: }
+[; ;OBCII_PIC18F46K22.c: 299:     LCD_cursor_set(1,16);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 16 `i `uc ]
+"300
+[; ;OBCII_PIC18F46K22.c: 300:     LCD_write_string("~");
+[e ( _LCD_write_string (1 :s 12C ]
+"301
+[; ;OBCII_PIC18F46K22.c: 301: }
 [e :UE 895 ]
 }
-"300
-[; ;OBCII_PIC18F46K22.c: 300: void clear_parsing_notif(void){
+"302
+[; ;OBCII_PIC18F46K22.c: 302: void clear_parsing_notif(void){
 [v _clear_parsing_notif `(v ~T0 @X0 1 ef ]
 {
 [e :U _clear_parsing_notif ]
 [f ]
-"301
-[; ;OBCII_PIC18F46K22.c: 301:     LCD_cursor_set(1,16);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 16 `i `uc ]
-"302
-[; ;OBCII_PIC18F46K22.c: 302:     LCD_write_string(" ");
-[e ( _LCD_write_string (1 :s 12C ]
 "303
-[; ;OBCII_PIC18F46K22.c: 303: }
+[; ;OBCII_PIC18F46K22.c: 303:     LCD_cursor_set(1,16);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 16 `i `uc ]
+"304
+[; ;OBCII_PIC18F46K22.c: 304:     LCD_write_string("^");
+[e ( _LCD_write_string (1 :s 13C ]
+"305
+[; ;OBCII_PIC18F46K22.c: 305: }
 [e :UE 896 ]
 }
-"305
-[; ;OBCII_PIC18F46K22.c: 305: void main_menu(void){
+"307
+[; ;OBCII_PIC18F46K22.c: 307: void main_menu(void){
 [v _main_menu `(v ~T0 @X0 1 ef ]
 {
 [e :U _main_menu ]
 [f ]
-"307
-[; ;OBCII_PIC18F46K22.c: 307:     LCD_clear();
+"309
+[; ;OBCII_PIC18F46K22.c: 309:     LCD_clear();
 [e ( _LCD_clear ..  ]
-"308
-[; ;OBCII_PIC18F46K22.c: 308:     display_mm();
-[e ( _display_mm ..  ]
 "310
-[; ;OBCII_PIC18F46K22.c: 310:     while(1){
-[e :U 899 ]
-{
-"311
-[; ;OBCII_PIC18F46K22.c: 311:         display_mm();
+[; ;OBCII_PIC18F46K22.c: 310:     display_mm();
 [e ( _display_mm ..  ]
 "312
-[; ;OBCII_PIC18F46K22.c: 312:         result = readADC();
-[e = _result ( _readADC ..  ]
+[; ;OBCII_PIC18F46K22.c: 312:     while(1){
+[e :U 899 ]
+{
 "313
-[; ;OBCII_PIC18F46K22.c: 313:         if(result >= 0 && result <= 255){
+[; ;OBCII_PIC18F46K22.c: 313:         display_mm();
+[e ( _display_mm ..  ]
+"314
+[; ;OBCII_PIC18F46K22.c: 314:         result = readADC();
+[e = _result ( _readADC ..  ]
+"315
+[; ;OBCII_PIC18F46K22.c: 315:         if(result >= 0 && result <= 255){
 [e $ ! && >= _result -> -> 0 `i `ui <= _result -> -> 255 `i `ui 901  ]
 {
-"314
-[; ;OBCII_PIC18F46K22.c: 314:             menu_sel = 0;
+"316
+[; ;OBCII_PIC18F46K22.c: 316:             menu_sel = 0;
 [e = _menu_sel -> 0 `i ]
-"315
-[; ;OBCII_PIC18F46K22.c: 315:             LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
 "317
-[; ;OBCII_PIC18F46K22.c: 317:         }
+[; ;OBCII_PIC18F46K22.c: 317:             LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"319
+[; ;OBCII_PIC18F46K22.c: 319:         }
 }
 [e :U 901 ]
-"318
-[; ;OBCII_PIC18F46K22.c: 318:         if(result >= 256 && result <=511){
+"320
+[; ;OBCII_PIC18F46K22.c: 320:         if(result >= 256 && result <=511){
 [e $ ! && >= _result -> -> 256 `i `ui <= _result -> -> 511 `i `ui 902  ]
 {
-"319
-[; ;OBCII_PIC18F46K22.c: 319:             menu_sel = 1;
+"321
+[; ;OBCII_PIC18F46K22.c: 321:             menu_sel = 1;
 [e = _menu_sel -> 1 `i ]
-"320
-[; ;OBCII_PIC18F46K22.c: 320:             LCD_cursor_set(2,5);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
 "322
-[; ;OBCII_PIC18F46K22.c: 322:         }
+[; ;OBCII_PIC18F46K22.c: 322:             LCD_cursor_set(2,5);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
+"324
+[; ;OBCII_PIC18F46K22.c: 324:         }
 }
 [e :U 902 ]
-"323
-[; ;OBCII_PIC18F46K22.c: 323:         if(result >=512 && result <=767){
+"325
+[; ;OBCII_PIC18F46K22.c: 325:         if(result >=512 && result <=767){
 [e $ ! && >= _result -> -> 512 `i `ui <= _result -> -> 767 `i `ui 903  ]
 {
-"324
-[; ;OBCII_PIC18F46K22.c: 324:             menu_sel = 2;
-[e = _menu_sel -> 2 `i ]
-"325
-[; ;OBCII_PIC18F46K22.c: 325:             LCD_cursor_set(2,9);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 9 `i `uc ]
 "326
-[; ;OBCII_PIC18F46K22.c: 326:         }
+[; ;OBCII_PIC18F46K22.c: 326:             menu_sel = 2;
+[e = _menu_sel -> 2 `i ]
+"327
+[; ;OBCII_PIC18F46K22.c: 327:             LCD_cursor_set(2,9);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 9 `i `uc ]
+"328
+[; ;OBCII_PIC18F46K22.c: 328:         }
 }
 [e :U 903 ]
-"327
-[; ;OBCII_PIC18F46K22.c: 327:         if(result >= 768 && result <=1023 ){
+"329
+[; ;OBCII_PIC18F46K22.c: 329:         if(result >= 768 && result <=1023 ){
 [e $ ! && >= _result -> -> 768 `i `ui <= _result -> -> 1023 `i `ui 904  ]
 {
-"328
-[; ;OBCII_PIC18F46K22.c: 328:             menu_sel = 3;
-[e = _menu_sel -> 3 `i ]
-"329
-[; ;OBCII_PIC18F46K22.c: 329:             LCD_cursor_set(2,13);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 13 `i `uc ]
 "330
-[; ;OBCII_PIC18F46K22.c: 330:         }
+[; ;OBCII_PIC18F46K22.c: 330:             menu_sel = 3;
+[e = _menu_sel -> 3 `i ]
+"331
+[; ;OBCII_PIC18F46K22.c: 331:             LCD_cursor_set(2,13);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 13 `i `uc ]
+"332
+[; ;OBCII_PIC18F46K22.c: 332:         }
 }
 [e :U 904 ]
-"331
-[; ;OBCII_PIC18F46K22.c: 331:         LCD_configure_cursor_blink(1);
-[e ( _LCD_configure_cursor_blink (1 -> -> 1 `i `uc ]
 "333
-[; ;OBCII_PIC18F46K22.c: 333:         if (PORTBbits.RB4 == 0) {
+[; ;OBCII_PIC18F46K22.c: 333:         LCD_configure_cursor_blink(1);
+[e ( _LCD_configure_cursor_blink (1 -> -> 1 `i `uc ]
+"335
+[; ;OBCII_PIC18F46K22.c: 335:         if (PORTBbits.RB4 == 0) {
 [e $ ! == -> . . _PORTBbits 0 4 `i -> 0 `i 905  ]
 {
-"334
-[; ;OBCII_PIC18F46K22.c: 334:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"336
+[; ;OBCII_PIC18F46K22.c: 336:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"335
-[; ;OBCII_PIC18F46K22.c: 335:             if (PORTBbits.RB4 == 0) {
+"337
+[; ;OBCII_PIC18F46K22.c: 337:             if (PORTBbits.RB4 == 0) {
 [e $ ! == -> . . _PORTBbits 0 4 `i -> 0 `i 906  ]
 {
-"336
-[; ;OBCII_PIC18F46K22.c: 336:                 LCD_configure_cursor_blink(0);
+"338
+[; ;OBCII_PIC18F46K22.c: 338:                 LCD_configure_cursor_blink(0);
 [e ( _LCD_configure_cursor_blink (1 -> -> 0 `i `uc ]
-"337
-[; ;OBCII_PIC18F46K22.c: 337:                 LCD_clear();
+"339
+[; ;OBCII_PIC18F46K22.c: 339:                 LCD_clear();
 [e ( _LCD_clear ..  ]
-"340
-[; ;OBCII_PIC18F46K22.c: 340:                 switch (menu_sel) {
+"342
+[; ;OBCII_PIC18F46K22.c: 342:                 switch (menu_sel) {
 [e $U 908  ]
 {
-"341
-[; ;OBCII_PIC18F46K22.c: 341:                     case 0:
+"343
+[; ;OBCII_PIC18F46K22.c: 343:                     case 0:
 [e :U 909 ]
-"342
-[; ;OBCII_PIC18F46K22.c: 342:                         while (1) {
+"344
+[; ;OBCII_PIC18F46K22.c: 344:                         while (1) {
 [e :U 911 ]
 {
-"343
-[; ;OBCII_PIC18F46K22.c: 343:                             live_reading_mode();
-[e ( _live_reading_mode ..  ]
 "345
-[; ;OBCII_PIC18F46K22.c: 345:                             if (PORTCbits.RC5 == 0) {
+[; ;OBCII_PIC18F46K22.c: 345:                             live_reading_mode();
+[e ( _live_reading_mode ..  ]
+"347
+[; ;OBCII_PIC18F46K22.c: 347:                             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 913  ]
 {
-"346
-[; ;OBCII_PIC18F46K22.c: 346:                                 _delay((unsigned long)((20)*(16000000/4000.0)));
+"348
+[; ;OBCII_PIC18F46K22.c: 348:                                 _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"347
-[; ;OBCII_PIC18F46K22.c: 347:                                 if (PORTCbits.RC5 == 0) {
+"349
+[; ;OBCII_PIC18F46K22.c: 349:                                 if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 914  ]
 {
-"348
-[; ;OBCII_PIC18F46K22.c: 348:                                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"349
-[; ;OBCII_PIC18F46K22.c: 349:                                     display_mm();
-[e ( _display_mm ..  ]
 "350
-[; ;OBCII_PIC18F46K22.c: 350:                                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 350:                                     LCD_clear();
+[e ( _LCD_clear ..  ]
 "351
-[; ;OBCII_PIC18F46K22.c: 351:                                     break;
-[e $U 912  ]
+[; ;OBCII_PIC18F46K22.c: 351:                                     display_mm();
+[e ( _display_mm ..  ]
 "352
-[; ;OBCII_PIC18F46K22.c: 352:                                 }
+[; ;OBCII_PIC18F46K22.c: 352:                                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"353
+[; ;OBCII_PIC18F46K22.c: 353:                                     break;
+[e $U 912  ]
+"354
+[; ;OBCII_PIC18F46K22.c: 354:                                 }
 }
 [e :U 914 ]
-"353
-[; ;OBCII_PIC18F46K22.c: 353:                             }
+"355
+[; ;OBCII_PIC18F46K22.c: 355:                             }
 }
 [e :U 913 ]
-"354
-[; ;OBCII_PIC18F46K22.c: 354:                         }
+"356
+[; ;OBCII_PIC18F46K22.c: 356:                         }
 }
 [e :U 910 ]
 [e $U 911  ]
 [e :U 912 ]
-"355
-[; ;OBCII_PIC18F46K22.c: 355:                         break;
-[e $U 907  ]
 "357
-[; ;OBCII_PIC18F46K22.c: 357:                     case 1:
+[; ;OBCII_PIC18F46K22.c: 357:                         break;
+[e $U 907  ]
+"359
+[; ;OBCII_PIC18F46K22.c: 359:                     case 1:
 [e :U 915 ]
-"358
-[; ;OBCII_PIC18F46K22.c: 358:                         while (1) {
+"360
+[; ;OBCII_PIC18F46K22.c: 360:                         while (1) {
 [e :U 917 ]
 {
-"362
-[; ;OBCII_PIC18F46K22.c: 362:                             if (PORTCbits.RC5 == 0) {
+"364
+[; ;OBCII_PIC18F46K22.c: 364:                             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 919  ]
 {
-"363
-[; ;OBCII_PIC18F46K22.c: 363:                                     _delay((unsigned long)((20)*(16000000/4000.0)));
+"365
+[; ;OBCII_PIC18F46K22.c: 365:                                     _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"364
-[; ;OBCII_PIC18F46K22.c: 364:                                 if (PORTCbits.RC5 == 0) {
+"366
+[; ;OBCII_PIC18F46K22.c: 366:                                 if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 920  ]
 {
-"365
-[; ;OBCII_PIC18F46K22.c: 365:                                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"366
-[; ;OBCII_PIC18F46K22.c: 366:                                     display_mm();
-[e ( _display_mm ..  ]
 "367
-[; ;OBCII_PIC18F46K22.c: 367:                                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 367:                                     LCD_clear();
+[e ( _LCD_clear ..  ]
 "368
-[; ;OBCII_PIC18F46K22.c: 368:                                     break;
-[e $U 918  ]
+[; ;OBCII_PIC18F46K22.c: 368:                                     display_mm();
+[e ( _display_mm ..  ]
 "369
-[; ;OBCII_PIC18F46K22.c: 369:                                 }
+[; ;OBCII_PIC18F46K22.c: 369:                                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"370
+[; ;OBCII_PIC18F46K22.c: 370:                                     break;
+[e $U 918  ]
+"371
+[; ;OBCII_PIC18F46K22.c: 371:                                 }
 }
 [e :U 920 ]
-"370
-[; ;OBCII_PIC18F46K22.c: 370:                             }
+"372
+[; ;OBCII_PIC18F46K22.c: 372:                             }
 }
 [e :U 919 ]
-"371
-[; ;OBCII_PIC18F46K22.c: 371:                         }
+"373
+[; ;OBCII_PIC18F46K22.c: 373:                         }
 }
 [e :U 916 ]
 [e $U 917  ]
 [e :U 918 ]
-"372
-[; ;OBCII_PIC18F46K22.c: 372:                         break;
-[e $U 907  ]
 "374
-[; ;OBCII_PIC18F46K22.c: 374:                     case 2:
+[; ;OBCII_PIC18F46K22.c: 374:                         break;
+[e $U 907  ]
+"376
+[; ;OBCII_PIC18F46K22.c: 376:                     case 2:
 [e :U 921 ]
-"375
-[; ;OBCII_PIC18F46K22.c: 375:                         while (1) {
+"377
+[; ;OBCII_PIC18F46K22.c: 377:                         while (1) {
 [e :U 923 ]
 {
-"376
-[; ;OBCII_PIC18F46K22.c: 376:                                 _delay((unsigned long)((200)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"377
-[; ;OBCII_PIC18F46K22.c: 377:                                 clear_diagnostic_codes();
-[e ( _clear_diagnostic_codes ..  ]
 "378
-[; ;OBCII_PIC18F46K22.c: 378:                                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 378:                                 _delay((unsigned long)((200)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 "379
-[; ;OBCII_PIC18F46K22.c: 379:                                 break;
-[e $U 924  ]
+[; ;OBCII_PIC18F46K22.c: 379:                                 clear_diagnostic_codes();
+[e ( _clear_diagnostic_codes ..  ]
 "380
-[; ;OBCII_PIC18F46K22.c: 380:                             if (PORTCbits.RC5 == 0) {
+[; ;OBCII_PIC18F46K22.c: 380:                                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"381
+[; ;OBCII_PIC18F46K22.c: 381:                                 break;
+[e $U 924  ]
+"382
+[; ;OBCII_PIC18F46K22.c: 382:                             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 925  ]
 {
-"381
-[; ;OBCII_PIC18F46K22.c: 381:                                 _delay((unsigned long)((20)*(16000000/4000.0)));
+"383
+[; ;OBCII_PIC18F46K22.c: 383:                                 _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"382
-[; ;OBCII_PIC18F46K22.c: 382:                                 if (PORTCbits.RC5 == 0) {
+"384
+[; ;OBCII_PIC18F46K22.c: 384:                                 if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 926  ]
 {
-"383
-[; ;OBCII_PIC18F46K22.c: 383:                                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"384
-[; ;OBCII_PIC18F46K22.c: 384:                                     display_mm();
-[e ( _display_mm ..  ]
 "385
-[; ;OBCII_PIC18F46K22.c: 385:                                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 385:                                     LCD_clear();
+[e ( _LCD_clear ..  ]
 "386
-[; ;OBCII_PIC18F46K22.c: 386:                                     break;
-[e $U 924  ]
+[; ;OBCII_PIC18F46K22.c: 386:                                     display_mm();
+[e ( _display_mm ..  ]
 "387
-[; ;OBCII_PIC18F46K22.c: 387:                                 }
+[; ;OBCII_PIC18F46K22.c: 387:                                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"388
+[; ;OBCII_PIC18F46K22.c: 388:                                     break;
+[e $U 924  ]
+"389
+[; ;OBCII_PIC18F46K22.c: 389:                                 }
 }
 [e :U 926 ]
-"388
-[; ;OBCII_PIC18F46K22.c: 388:                             }
+"390
+[; ;OBCII_PIC18F46K22.c: 390:                             }
 }
 [e :U 925 ]
-"389
-[; ;OBCII_PIC18F46K22.c: 389:                         }
+"391
+[; ;OBCII_PIC18F46K22.c: 391:                         }
 }
 [e :U 922 ]
 [e $U 923  ]
 [e :U 924 ]
-"390
-[; ;OBCII_PIC18F46K22.c: 390:                         break;
-[e $U 907  ]
 "392
-[; ;OBCII_PIC18F46K22.c: 392:                     case 3:
+[; ;OBCII_PIC18F46K22.c: 392:                         break;
+[e $U 907  ]
+"394
+[; ;OBCII_PIC18F46K22.c: 394:                     case 3:
 [e :U 927 ]
-"393
-[; ;OBCII_PIC18F46K22.c: 393:                         while (1) {
+"395
+[; ;OBCII_PIC18F46K22.c: 395:                         while (1) {
 [e :U 929 ]
 {
-"394
-[; ;OBCII_PIC18F46K22.c: 394:                             display_system_info();
-[e ( _display_system_info ..  ]
 "396
-[; ;OBCII_PIC18F46K22.c: 396:                             if (PORTCbits.RC5 == 0) {
+[; ;OBCII_PIC18F46K22.c: 396:                             display_system_info();
+[e ( _display_system_info ..  ]
+"398
+[; ;OBCII_PIC18F46K22.c: 398:                             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 931  ]
 {
-"397
-[; ;OBCII_PIC18F46K22.c: 397:                                _delay((unsigned long)((20)*(16000000/4000.0)));
+"399
+[; ;OBCII_PIC18F46K22.c: 399:                                _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"398
-[; ;OBCII_PIC18F46K22.c: 398:                                 if (PORTCbits.RC5 == 0) {
+"400
+[; ;OBCII_PIC18F46K22.c: 400:                                 if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 932  ]
 {
-"399
-[; ;OBCII_PIC18F46K22.c: 399:                                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"400
-[; ;OBCII_PIC18F46K22.c: 400:                                     display_mm();
-[e ( _display_mm ..  ]
 "401
-[; ;OBCII_PIC18F46K22.c: 401:                                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 401:                                     LCD_clear();
+[e ( _LCD_clear ..  ]
 "402
-[; ;OBCII_PIC18F46K22.c: 402:                                     break;
-[e $U 930  ]
+[; ;OBCII_PIC18F46K22.c: 402:                                     display_mm();
+[e ( _display_mm ..  ]
 "403
-[; ;OBCII_PIC18F46K22.c: 403:                                 }
+[; ;OBCII_PIC18F46K22.c: 403:                                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"404
+[; ;OBCII_PIC18F46K22.c: 404:                                     break;
+[e $U 930  ]
+"405
+[; ;OBCII_PIC18F46K22.c: 405:                                 }
 }
 [e :U 932 ]
-"404
-[; ;OBCII_PIC18F46K22.c: 404:                             }
+"406
+[; ;OBCII_PIC18F46K22.c: 406:                             }
 }
 [e :U 931 ]
-"405
-[; ;OBCII_PIC18F46K22.c: 405:                         }
+"407
+[; ;OBCII_PIC18F46K22.c: 407:                         }
 }
 [e :U 928 ]
 [e $U 929  ]
 [e :U 930 ]
-"406
-[; ;OBCII_PIC18F46K22.c: 406:                         break;
-[e $U 907  ]
 "408
-[; ;OBCII_PIC18F46K22.c: 408:                     default:
-[e :U 933 ]
-"409
-[; ;OBCII_PIC18F46K22.c: 409:                         break;
+[; ;OBCII_PIC18F46K22.c: 408:                         break;
 [e $U 907  ]
 "410
-[; ;OBCII_PIC18F46K22.c: 410:                 }
+[; ;OBCII_PIC18F46K22.c: 410:                     default:
+[e :U 933 ]
+"411
+[; ;OBCII_PIC18F46K22.c: 411:                         break;
+[e $U 907  ]
+"412
+[; ;OBCII_PIC18F46K22.c: 412:                 }
 }
 [e $U 907  ]
 [e :U 908 ]
@@ -2304,776 +2310,776 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 3 `i 927
  933 ]
 [e :U 907 ]
-"411
-[; ;OBCII_PIC18F46K22.c: 411:             }
+"413
+[; ;OBCII_PIC18F46K22.c: 413:             }
 }
 [e :U 906 ]
-"412
-[; ;OBCII_PIC18F46K22.c: 412:         }
+"414
+[; ;OBCII_PIC18F46K22.c: 414:         }
 }
 [e :U 905 ]
-"414
-[; ;OBCII_PIC18F46K22.c: 414:         _delay((unsigned long)((50)*(16000000/4000.0)));
+"416
+[; ;OBCII_PIC18F46K22.c: 416:         _delay((unsigned long)((50)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"415
-[; ;OBCII_PIC18F46K22.c: 415:     }
+"417
+[; ;OBCII_PIC18F46K22.c: 417:     }
 }
 [e :U 898 ]
 [e $U 899  ]
 [e :U 900 ]
-"416
-[; ;OBCII_PIC18F46K22.c: 416: }
+"418
+[; ;OBCII_PIC18F46K22.c: 418: }
 [e :UE 897 ]
 }
-"425
-[; ;OBCII_PIC18F46K22.c: 425: unsigned char hex_char_to_value(char c) {
+"427
+[; ;OBCII_PIC18F46K22.c: 427: unsigned char hex_char_to_value(char c) {
 [v _hex_char_to_value `(uc ~T0 @X0 1 ef1`uc ]
 {
 [e :U _hex_char_to_value ]
 [v _c `uc ~T0 @X0 1 r1 ]
 [f ]
-"426
-[; ;OBCII_PIC18F46K22.c: 426:     if (c >= '0' && c <= '9') return c - '0';
+"428
+[; ;OBCII_PIC18F46K22.c: 428:     if (c >= '0' && c <= '9') return c - '0';
 [e $ ! && >= -> _c `ui -> 48 `ui <= -> _c `ui -> 57 `ui 935  ]
 [e ) -> - -> _c `ui -> 48 `ui `uc ]
 [e $UE 934  ]
 [e :U 935 ]
-"427
-[; ;OBCII_PIC18F46K22.c: 427:     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+"429
+[; ;OBCII_PIC18F46K22.c: 429:     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
 [e $ ! && >= -> _c `ui -> 65 `ui <= -> _c `ui -> 70 `ui 936  ]
 [e ) -> + - -> _c `ui -> 65 `ui -> -> 10 `i `ui `uc ]
 [e $UE 934  ]
 [e :U 936 ]
-"428
-[; ;OBCII_PIC18F46K22.c: 428:     if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+"430
+[; ;OBCII_PIC18F46K22.c: 430:     if (c >= 'a' && c <= 'f') return c - 'a' + 10;
 [e $ ! && >= -> _c `ui -> 97 `ui <= -> _c `ui -> 102 `ui 937  ]
 [e ) -> + - -> _c `ui -> 97 `ui -> -> 10 `i `ui `uc ]
 [e $UE 934  ]
 [e :U 937 ]
-"429
-[; ;OBCII_PIC18F46K22.c: 429:     return 0;
+"431
+[; ;OBCII_PIC18F46K22.c: 431:     return 0;
 [e ) -> -> 0 `i `uc ]
 [e $UE 934  ]
-"430
-[; ;OBCII_PIC18F46K22.c: 430: }
+"432
+[; ;OBCII_PIC18F46K22.c: 432: }
 [e :UE 934 ]
 }
-"432
-[; ;OBCII_PIC18F46K22.c: 432: void print_RPM(void){
+"434
+[; ;OBCII_PIC18F46K22.c: 434: void print_RPM(void){
 [v _print_RPM `(v ~T0 @X0 1 ef ]
 {
 [e :U _print_RPM ]
 [f ]
-"434
-[; ;OBCII_PIC18F46K22.c: 434:     UART1_SendString("010C\r");
-[e ( _UART1_SendString (1 :s 13C ]
-"435
-[; ;OBCII_PIC18F46K22.c: 435:     while(!message_complete) {
+"436
+[; ;OBCII_PIC18F46K22.c: 436:     UART1_SendString("010C\r");
+[e ( _UART1_SendString (1 :s 14C ]
+"437
+[; ;OBCII_PIC18F46K22.c: 437:     while(!message_complete) {
 [e $U 939  ]
 [e :U 940 ]
 {
-"437
-[; ;OBCII_PIC18F46K22.c: 437:         if (PORTCbits.RC5 == 0) {
+"439
+[; ;OBCII_PIC18F46K22.c: 439:         if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 942  ]
 {
-"438
-[; ;OBCII_PIC18F46K22.c: 438:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"440
+[; ;OBCII_PIC18F46K22.c: 440:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"439
-[; ;OBCII_PIC18F46K22.c: 439:             if (PORTCbits.RC5 == 0) {
+"441
+[; ;OBCII_PIC18F46K22.c: 441:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 943  ]
 {
-"440
-[; ;OBCII_PIC18F46K22.c: 440:                 LCD_clear();
-[e ( _LCD_clear ..  ]
-"441
-[; ;OBCII_PIC18F46K22.c: 441:                 display_mm();
-[e ( _display_mm ..  ]
 "442
-[; ;OBCII_PIC18F46K22.c: 442:                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 442:                 LCD_clear();
+[e ( _LCD_clear ..  ]
 "443
-[; ;OBCII_PIC18F46K22.c: 443:                 break;
-[e $U 941  ]
+[; ;OBCII_PIC18F46K22.c: 443:                 display_mm();
+[e ( _display_mm ..  ]
 "444
-[; ;OBCII_PIC18F46K22.c: 444:             }
+[; ;OBCII_PIC18F46K22.c: 444:                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"445
+[; ;OBCII_PIC18F46K22.c: 445:                 break;
+[e $U 941  ]
+"446
+[; ;OBCII_PIC18F46K22.c: 446:             }
 }
 [e :U 943 ]
-"445
-[; ;OBCII_PIC18F46K22.c: 445:         }
+"447
+[; ;OBCII_PIC18F46K22.c: 447:         }
 }
 [e :U 942 ]
-"446
-[; ;OBCII_PIC18F46K22.c: 446:         parsing_notif();
+"448
+[; ;OBCII_PIC18F46K22.c: 448:         parsing_notif();
 [e ( _parsing_notif ..  ]
-"447
-[; ;OBCII_PIC18F46K22.c: 447:     }
+"449
+[; ;OBCII_PIC18F46K22.c: 449:     }
 }
 [e :U 939 ]
-"435
-[; ;OBCII_PIC18F46K22.c: 435:     while(!message_complete) {
+"437
+[; ;OBCII_PIC18F46K22.c: 437:     while(!message_complete) {
 [e $ ! != -> _message_complete `i -> 0 `i 940  ]
 [e :U 941 ]
-"448
-[; ;OBCII_PIC18F46K22.c: 448:     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "450
-[; ;OBCII_PIC18F46K22.c: 450:     A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-[e = _A_rpm -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
-"451
-[; ;OBCII_PIC18F46K22.c: 451:     B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
-[e = _B_rpm -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 7 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
+[; ;OBCII_PIC18F46K22.c: 450:     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
 "452
-[; ;OBCII_PIC18F46K22.c: 452:     RPM = ((A_rpm * 256) + B_rpm) / 4;
-[e = _RPM / + * _A_rpm -> -> 256 `i `ui _B_rpm -> -> 4 `i `ui ]
+[; ;OBCII_PIC18F46K22.c: 452:     A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+[e = _A_rpm -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
+"453
+[; ;OBCII_PIC18F46K22.c: 453:     B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
+[e = _B_rpm -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 7 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
 "454
-[; ;OBCII_PIC18F46K22.c: 454:     sprintf(rpm_string, "%u", RPM);
-[e ( _sprintf (1 , (. , &U _rpm_string :s 14C _RPM ]
+[; ;OBCII_PIC18F46K22.c: 454:     RPM = ((A_rpm * 256) + B_rpm) / 4;
+[e = _RPM / + * _A_rpm -> -> 256 `i `ui _B_rpm -> -> 4 `i `ui ]
 "456
-[; ;OBCII_PIC18F46K22.c: 456:     LCD_cursor_set(2,1);
+[; ;OBCII_PIC18F46K22.c: 456:     sprintf(rpm_string, "%u", RPM);
+[e ( _sprintf (1 , (. , &U _rpm_string :s 15C _RPM ]
+"458
+[; ;OBCII_PIC18F46K22.c: 458:     LCD_cursor_set(2,1);
 [e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-"457
-[; ;OBCII_PIC18F46K22.c: 457:     LCD_write_string("     ");
-[e ( _LCD_write_string (1 :s 15C ]
 "459
-[; ;OBCII_PIC18F46K22.c: 459:     LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"460
-[; ;OBCII_PIC18F46K22.c: 460:     LCD_write_string("RPM");
+[; ;OBCII_PIC18F46K22.c: 459:     LCD_write_string("     ");
 [e ( _LCD_write_string (1 :s 16C ]
 "461
-[; ;OBCII_PIC18F46K22.c: 461:     LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 461:     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "462
-[; ;OBCII_PIC18F46K22.c: 462:     LCD_write_string(rpm_string);
-[e ( _LCD_write_string (1 &U _rpm_string ]
+[; ;OBCII_PIC18F46K22.c: 462:     LCD_write_string("RPM");
+[e ( _LCD_write_string (1 :s 17C ]
+"463
+[; ;OBCII_PIC18F46K22.c: 463:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
 "464
-[; ;OBCII_PIC18F46K22.c: 464:     buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"465
-[; ;OBCII_PIC18F46K22.c: 465:     message_complete = 0;
-[e = _message_complete -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 464:     LCD_write_string(rpm_string);
+[e ( _LCD_write_string (1 &U _rpm_string ]
 "466
-[; ;OBCII_PIC18F46K22.c: 466: }
+[; ;OBCII_PIC18F46K22.c: 466:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"467
+[; ;OBCII_PIC18F46K22.c: 467:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"468
+[; ;OBCII_PIC18F46K22.c: 468: }
 [e :UE 938 ]
 }
-"468
-[; ;OBCII_PIC18F46K22.c: 468: void print_Vbatt(void) {
+"470
+[; ;OBCII_PIC18F46K22.c: 470: void print_Vbatt(void) {
 [v _print_Vbatt `(v ~T0 @X0 1 ef ]
 {
 [e :U _print_Vbatt ]
 [f ]
-"470
-[; ;OBCII_PIC18F46K22.c: 470:     UART1_SendString("ATRV\r");
-[e ( _UART1_SendString (1 :s 17C ]
-"471
-[; ;OBCII_PIC18F46K22.c: 471:     while(!message_complete) {
+"472
+[; ;OBCII_PIC18F46K22.c: 472:     UART1_SendString("ATRV\r");
+[e ( _UART1_SendString (1 :s 18C ]
+"473
+[; ;OBCII_PIC18F46K22.c: 473:     while(!message_complete) {
 [e $U 945  ]
 [e :U 946 ]
 {
-"473
-[; ;OBCII_PIC18F46K22.c: 473:         if (PORTCbits.RC5 == 0) {
+"475
+[; ;OBCII_PIC18F46K22.c: 475:         if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 948  ]
 {
-"474
-[; ;OBCII_PIC18F46K22.c: 474:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"476
+[; ;OBCII_PIC18F46K22.c: 476:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"475
-[; ;OBCII_PIC18F46K22.c: 475:             if (PORTCbits.RC5 == 0) {
+"477
+[; ;OBCII_PIC18F46K22.c: 477:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 949  ]
 {
-"476
-[; ;OBCII_PIC18F46K22.c: 476:                 LCD_clear();
-[e ( _LCD_clear ..  ]
-"477
-[; ;OBCII_PIC18F46K22.c: 477:                 display_mm();
-[e ( _display_mm ..  ]
 "478
-[; ;OBCII_PIC18F46K22.c: 478:                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 478:                 LCD_clear();
+[e ( _LCD_clear ..  ]
 "479
-[; ;OBCII_PIC18F46K22.c: 479:                 break;
-[e $U 947  ]
+[; ;OBCII_PIC18F46K22.c: 479:                 display_mm();
+[e ( _display_mm ..  ]
 "480
-[; ;OBCII_PIC18F46K22.c: 480:             }
+[; ;OBCII_PIC18F46K22.c: 480:                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"481
+[; ;OBCII_PIC18F46K22.c: 481:                 break;
+[e $U 947  ]
+"482
+[; ;OBCII_PIC18F46K22.c: 482:             }
 }
 [e :U 949 ]
-"481
-[; ;OBCII_PIC18F46K22.c: 481:         }
+"483
+[; ;OBCII_PIC18F46K22.c: 483:         }
 }
 [e :U 948 ]
-"482
-[; ;OBCII_PIC18F46K22.c: 482:         parsing_notif();
+"484
+[; ;OBCII_PIC18F46K22.c: 484:         parsing_notif();
 [e ( _parsing_notif ..  ]
-"483
-[; ;OBCII_PIC18F46K22.c: 483:     }
+"485
+[; ;OBCII_PIC18F46K22.c: 485:     }
 }
 [e :U 945 ]
-"471
-[; ;OBCII_PIC18F46K22.c: 471:     while(!message_complete) {
+"473
+[; ;OBCII_PIC18F46K22.c: 473:     while(!message_complete) {
 [e $ ! != -> _message_complete `i -> 0 `i 946  ]
 [e :U 947 ]
-"484
-[; ;OBCII_PIC18F46K22.c: 484:     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "486
-[; ;OBCII_PIC18F46K22.c: 486:     LCD_cursor_set(2,7);
+[; ;OBCII_PIC18F46K22.c: 486:     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
+"488
+[; ;OBCII_PIC18F46K22.c: 488:     LCD_cursor_set(2,7);
 [e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 7 `i `uc ]
-"487
-[; ;OBCII_PIC18F46K22.c: 487:     LCD_write_string("     ");
-[e ( _LCD_write_string (1 :s 18C ]
 "489
-[; ;OBCII_PIC18F46K22.c: 489:     LCD_cursor_set(1,7);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 7 `i `uc ]
-"490
-[; ;OBCII_PIC18F46K22.c: 490:     LCD_write_string("VBatt");
+[; ;OBCII_PIC18F46K22.c: 489:     LCD_write_string("     ");
 [e ( _LCD_write_string (1 :s 19C ]
 "491
-[; ;OBCII_PIC18F46K22.c: 491:     LCD_cursor_set(2,7);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 7 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 491:     LCD_cursor_set(1,7);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 7 `i `uc ]
+"492
+[; ;OBCII_PIC18F46K22.c: 492:     LCD_write_string("VBatt");
+[e ( _LCD_write_string (1 :s 20C ]
 "493
-[; ;OBCII_PIC18F46K22.c: 493:     if (!strchr(buffer, 'V')) {
+[; ;OBCII_PIC18F46K22.c: 493:     LCD_cursor_set(2,7);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 7 `i `uc ]
+"495
+[; ;OBCII_PIC18F46K22.c: 495:     if (!strchr(buffer, 'V')) {
 [e $ ! ! != ( _strchr (2 , -> &U _buffer `*Cuc -> -> 86 `ui `i -> -> 0 `i `*uc 950  ]
 {
-"494
-[; ;OBCII_PIC18F46K22.c: 494:         LCD_write_string("N/A");
-[e ( _LCD_write_string (1 :s 20C ]
-"495
-[; ;OBCII_PIC18F46K22.c: 495:     }
+"496
+[; ;OBCII_PIC18F46K22.c: 496:         LCD_write_string("N/A");
+[e ( _LCD_write_string (1 :s 21C ]
+"497
+[; ;OBCII_PIC18F46K22.c: 497:     }
 }
 [e $U 951  ]
-"496
-[; ;OBCII_PIC18F46K22.c: 496:     else {
+"498
+[; ;OBCII_PIC18F46K22.c: 498:     else {
 [e :U 950 ]
 {
-"497
-[; ;OBCII_PIC18F46K22.c: 497:     LCD_write_string(buffer);
+"499
+[; ;OBCII_PIC18F46K22.c: 499:     LCD_write_string(buffer);
 [e ( _LCD_write_string (1 &U _buffer ]
-"498
-[; ;OBCII_PIC18F46K22.c: 498:     }
+"500
+[; ;OBCII_PIC18F46K22.c: 500:     }
 }
 [e :U 951 ]
-"500
-[; ;OBCII_PIC18F46K22.c: 500:     buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"501
-[; ;OBCII_PIC18F46K22.c: 501:     message_complete = 0;
-[e = _message_complete -> -> 0 `i `uc ]
 "502
-[; ;OBCII_PIC18F46K22.c: 502: }
+[; ;OBCII_PIC18F46K22.c: 502:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"503
+[; ;OBCII_PIC18F46K22.c: 503:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"504
+[; ;OBCII_PIC18F46K22.c: 504: }
 [e :UE 944 ]
 }
-"504
-[; ;OBCII_PIC18F46K22.c: 504: void print_AI_Temp(void){
+"506
+[; ;OBCII_PIC18F46K22.c: 506: void print_AI_Temp(void){
 [v _print_AI_Temp `(v ~T0 @X0 1 ef ]
 {
 [e :U _print_AI_Temp ]
 [f ]
-"506
-[; ;OBCII_PIC18F46K22.c: 506:     UART1_SendString("010F\r");
-[e ( _UART1_SendString (1 :s 21C ]
-"507
-[; ;OBCII_PIC18F46K22.c: 507:      while(!message_complete) {
+"508
+[; ;OBCII_PIC18F46K22.c: 508:     UART1_SendString("010F\r");
+[e ( _UART1_SendString (1 :s 22C ]
+"509
+[; ;OBCII_PIC18F46K22.c: 509:      while(!message_complete) {
 [e $U 953  ]
 [e :U 954 ]
 {
-"508
-[; ;OBCII_PIC18F46K22.c: 508:         if (PORTCbits.RC5 == 0) {
+"510
+[; ;OBCII_PIC18F46K22.c: 510:         if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 956  ]
 {
-"509
-[; ;OBCII_PIC18F46K22.c: 509:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"511
+[; ;OBCII_PIC18F46K22.c: 511:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"510
-[; ;OBCII_PIC18F46K22.c: 510:             if (PORTCbits.RC5 == 0) {
+"512
+[; ;OBCII_PIC18F46K22.c: 512:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 957  ]
 {
-"511
-[; ;OBCII_PIC18F46K22.c: 511:                 LCD_clear();
-[e ( _LCD_clear ..  ]
-"512
-[; ;OBCII_PIC18F46K22.c: 512:                 display_mm();
-[e ( _display_mm ..  ]
 "513
-[; ;OBCII_PIC18F46K22.c: 513:                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 513:                 LCD_clear();
+[e ( _LCD_clear ..  ]
 "514
-[; ;OBCII_PIC18F46K22.c: 514:                 break;
-[e $U 955  ]
+[; ;OBCII_PIC18F46K22.c: 514:                 display_mm();
+[e ( _display_mm ..  ]
 "515
-[; ;OBCII_PIC18F46K22.c: 515:             }
+[; ;OBCII_PIC18F46K22.c: 515:                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"516
+[; ;OBCII_PIC18F46K22.c: 516:                 break;
+[e $U 955  ]
+"517
+[; ;OBCII_PIC18F46K22.c: 517:             }
 }
 [e :U 957 ]
-"516
-[; ;OBCII_PIC18F46K22.c: 516:         }
+"518
+[; ;OBCII_PIC18F46K22.c: 518:         }
 }
 [e :U 956 ]
-"518
-[; ;OBCII_PIC18F46K22.c: 518:         parsing_notif();
+"520
+[; ;OBCII_PIC18F46K22.c: 520:         parsing_notif();
 [e ( _parsing_notif ..  ]
-"519
-[; ;OBCII_PIC18F46K22.c: 519:     }
+"521
+[; ;OBCII_PIC18F46K22.c: 521:     }
 }
 [e :U 953 ]
-"507
-[; ;OBCII_PIC18F46K22.c: 507:      while(!message_complete) {
+"509
+[; ;OBCII_PIC18F46K22.c: 509:      while(!message_complete) {
 [e $ ! != -> _message_complete `i -> 0 `i 954  ]
 [e :U 955 ]
-"520
-[; ;OBCII_PIC18F46K22.c: 520:     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "522
-[; ;OBCII_PIC18F46K22.c: 522:     LCD_cursor_set(2,13);
+[; ;OBCII_PIC18F46K22.c: 522:     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
+"524
+[; ;OBCII_PIC18F46K22.c: 524:     LCD_cursor_set(2,13);
 [e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 13 `i `uc ]
-"523
-[; ;OBCII_PIC18F46K22.c: 523:     LCD_write_string("   ");
-[e ( _LCD_write_string (1 :s 22C ]
 "525
-[; ;OBCII_PIC18F46K22.c: 525:     A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
+[; ;OBCII_PIC18F46K22.c: 525:     LCD_write_string("   ");
+[e ( _LCD_write_string (1 :s 23C ]
+"527
+[; ;OBCII_PIC18F46K22.c: 527:     A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
 [e = _A_air_intake -> | << -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 4 `i -> ( _hex_char_to_value (1 *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i `ui ]
-"526
-[; ;OBCII_PIC18F46K22.c: 526:     air_intake_temp = A_air_intake - 40;
-[e = _air_intake_temp - _A_air_intake -> -> 40 `i `ui ]
 "528
-[; ;OBCII_PIC18F46K22.c: 528:     sprintf(air_intake_string, "%u", air_intake_temp);
-[e ( _sprintf (1 , (. , &U _air_intake_string :s 23C _air_intake_temp ]
+[; ;OBCII_PIC18F46K22.c: 528:     air_intake_temp = A_air_intake - 40;
+[e = _air_intake_temp - _A_air_intake -> -> 40 `i `ui ]
 "530
-[; ;OBCII_PIC18F46K22.c: 530:     LCD_cursor_set(1,13);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 13 `i `uc ]
-"531
-[; ;OBCII_PIC18F46K22.c: 531:     LCD_write_string("AIT");
-[e ( _LCD_write_string (1 :s 24C ]
+[; ;OBCII_PIC18F46K22.c: 530:     sprintf(air_intake_string, "%u", air_intake_temp);
+[e ( _sprintf (1 , (. , &U _air_intake_string :s 24C _air_intake_temp ]
 "532
-[; ;OBCII_PIC18F46K22.c: 532:     LCD_cursor_set(2,13);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 13 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 532:     LCD_cursor_set(1,13);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 13 `i `uc ]
 "533
-[; ;OBCII_PIC18F46K22.c: 533:     LCD_write_string(air_intake_string);
-[e ( _LCD_write_string (1 &U _air_intake_string ]
-"534
-[; ;OBCII_PIC18F46K22.c: 534:     LCD_cursor_set(2,15);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 15 `i `uc ]
-"535
-[; ;OBCII_PIC18F46K22.c: 535:     LCD_write_string("C");
+[; ;OBCII_PIC18F46K22.c: 533:     LCD_write_string("AIT");
 [e ( _LCD_write_string (1 :s 25C ]
+"534
+[; ;OBCII_PIC18F46K22.c: 534:     LCD_cursor_set(2,13);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 13 `i `uc ]
+"535
+[; ;OBCII_PIC18F46K22.c: 535:     LCD_write_string(air_intake_string);
+[e ( _LCD_write_string (1 &U _air_intake_string ]
+"536
+[; ;OBCII_PIC18F46K22.c: 536:     LCD_cursor_set(2,15);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 15 `i `uc ]
 "537
-[; ;OBCII_PIC18F46K22.c: 537:     buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"538
-[; ;OBCII_PIC18F46K22.c: 538:     message_complete = 0;
-[e = _message_complete -> -> 0 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 537:     LCD_write_string("C");
+[e ( _LCD_write_string (1 :s 26C ]
 "539
-[; ;OBCII_PIC18F46K22.c: 539: }
+[; ;OBCII_PIC18F46K22.c: 539:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"540
+[; ;OBCII_PIC18F46K22.c: 540:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"541
+[; ;OBCII_PIC18F46K22.c: 541: }
 [e :UE 952 ]
 }
-"541
-[; ;OBCII_PIC18F46K22.c: 541: void live_reading_mode(void){
+"543
+[; ;OBCII_PIC18F46K22.c: 543: void live_reading_mode(void){
 [v _live_reading_mode `(v ~T0 @X0 1 ef ]
 {
 [e :U _live_reading_mode ]
 [f ]
-"542
-[; ;OBCII_PIC18F46K22.c: 542:             print_RPM();
-[e ( _print_RPM ..  ]
-"543
-[; ;OBCII_PIC18F46K22.c: 543:             print_Vbatt();
-[e ( _print_Vbatt ..  ]
 "544
-[; ;OBCII_PIC18F46K22.c: 544:             print_AI_Temp();
-[e ( _print_AI_Temp ..  ]
+[; ;OBCII_PIC18F46K22.c: 544:             print_RPM();
+[e ( _print_RPM ..  ]
 "545
-[; ;OBCII_PIC18F46K22.c: 545:             _delay((unsigned long)((50)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+[; ;OBCII_PIC18F46K22.c: 545:             print_Vbatt();
+[e ( _print_Vbatt ..  ]
 "546
-[; ;OBCII_PIC18F46K22.c: 546: }
+[; ;OBCII_PIC18F46K22.c: 546:             print_AI_Temp();
+[e ( _print_AI_Temp ..  ]
+"547
+[; ;OBCII_PIC18F46K22.c: 547:             _delay((unsigned long)((50)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
+"548
+[; ;OBCII_PIC18F46K22.c: 548: }
 [e :UE 958 ]
 }
-"553
-[; ;OBCII_PIC18F46K22.c: 553: void print_ELMVer(void) {
+"555
+[; ;OBCII_PIC18F46K22.c: 555: void print_ELMVer(void) {
 [v _print_ELMVer `(v ~T0 @X0 1 ef ]
 {
 [e :U _print_ELMVer ]
 [f ]
-"555
-[; ;OBCII_PIC18F46K22.c: 555:     UART1_SendString("ATI\r");
-[e ( _UART1_SendString (1 :s 26C ]
 "557
-[; ;OBCII_PIC18F46K22.c: 557:     while(!message_complete) {
+[; ;OBCII_PIC18F46K22.c: 557:     UART1_SendString("ATI\r");
+[e ( _UART1_SendString (1 :s 27C ]
+"559
+[; ;OBCII_PIC18F46K22.c: 559:     while(!message_complete) {
 [e $U 960  ]
 [e :U 961 ]
 {
-"559
-[; ;OBCII_PIC18F46K22.c: 559:         if (PORTCbits.RC5 == 0) {
+"561
+[; ;OBCII_PIC18F46K22.c: 561:         if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 963  ]
 {
-"560
-[; ;OBCII_PIC18F46K22.c: 560:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"562
+[; ;OBCII_PIC18F46K22.c: 562:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"561
-[; ;OBCII_PIC18F46K22.c: 561:             if (PORTCbits.RC5 == 0) {
+"563
+[; ;OBCII_PIC18F46K22.c: 563:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 964  ]
 {
-"562
-[; ;OBCII_PIC18F46K22.c: 562:                 LCD_clear();
-[e ( _LCD_clear ..  ]
-"563
-[; ;OBCII_PIC18F46K22.c: 563:                 display_mm();
-[e ( _display_mm ..  ]
 "564
-[; ;OBCII_PIC18F46K22.c: 564:                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 564:                 LCD_clear();
+[e ( _LCD_clear ..  ]
 "565
-[; ;OBCII_PIC18F46K22.c: 565:                 break;
-[e $U 962  ]
+[; ;OBCII_PIC18F46K22.c: 565:                 display_mm();
+[e ( _display_mm ..  ]
 "566
-[; ;OBCII_PIC18F46K22.c: 566:             }
+[; ;OBCII_PIC18F46K22.c: 566:                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"567
+[; ;OBCII_PIC18F46K22.c: 567:                 break;
+[e $U 962  ]
+"568
+[; ;OBCII_PIC18F46K22.c: 568:             }
 }
 [e :U 964 ]
-"567
-[; ;OBCII_PIC18F46K22.c: 567:         }
+"569
+[; ;OBCII_PIC18F46K22.c: 569:         }
 }
 [e :U 963 ]
-"568
-[; ;OBCII_PIC18F46K22.c: 568:         parsing_notif();
+"570
+[; ;OBCII_PIC18F46K22.c: 570:         parsing_notif();
 [e ( _parsing_notif ..  ]
-"569
-[; ;OBCII_PIC18F46K22.c: 569:     }
+"571
+[; ;OBCII_PIC18F46K22.c: 571:     }
 }
 [e :U 960 ]
-"557
-[; ;OBCII_PIC18F46K22.c: 557:     while(!message_complete) {
+"559
+[; ;OBCII_PIC18F46K22.c: 559:     while(!message_complete) {
 [e $ ! != -> _message_complete `i -> 0 `i 961  ]
 [e :U 962 ]
-"570
-[; ;OBCII_PIC18F46K22.c: 570:     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "572
-[; ;OBCII_PIC18F46K22.c: 572:     LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"573
-[; ;OBCII_PIC18F46K22.c: 573:     LCD_write_string("OS:");
-[e ( _LCD_write_string (1 :s 27C ]
+[; ;OBCII_PIC18F46K22.c: 572:     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
 "574
-[; ;OBCII_PIC18F46K22.c: 574:     LCD_write_string(buffer);
+[; ;OBCII_PIC18F46K22.c: 574:     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+"575
+[; ;OBCII_PIC18F46K22.c: 575:     LCD_write_string("OS:");
+[e ( _LCD_write_string (1 :s 28C ]
+"576
+[; ;OBCII_PIC18F46K22.c: 576:     LCD_write_string(buffer);
 [e ( _LCD_write_string (1 &U _buffer ]
-"577
-[; ;OBCII_PIC18F46K22.c: 577:     buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"578
-[; ;OBCII_PIC18F46K22.c: 578:     message_complete = 0;
-[e = _message_complete -> -> 0 `i `uc ]
 "579
-[; ;OBCII_PIC18F46K22.c: 579: }
+[; ;OBCII_PIC18F46K22.c: 579:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"580
+[; ;OBCII_PIC18F46K22.c: 580:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"581
+[; ;OBCII_PIC18F46K22.c: 581: }
 [e :UE 959 ]
 }
-"581
-[; ;OBCII_PIC18F46K22.c: 581: void print_SAEVer(void){
+"583
+[; ;OBCII_PIC18F46K22.c: 583: void print_SAEVer(void){
 [v _print_SAEVer `(v ~T0 @X0 1 ef ]
 {
 [e :U _print_SAEVer ]
 [f ]
-"582
-[; ;OBCII_PIC18F46K22.c: 582:     UART1_SendString("0108\r");
-[e ( _UART1_SendString (1 :s 28C ]
 "584
-[; ;OBCII_PIC18F46K22.c: 584:     while(!message_complete) {
+[; ;OBCII_PIC18F46K22.c: 584:     UART1_SendString("0108\r");
+[e ( _UART1_SendString (1 :s 29C ]
+"586
+[; ;OBCII_PIC18F46K22.c: 586:     while(!message_complete) {
 [e $U 966  ]
 [e :U 967 ]
 {
-"586
-[; ;OBCII_PIC18F46K22.c: 586:         if (PORTCbits.RC5 == 0) {
+"588
+[; ;OBCII_PIC18F46K22.c: 588:         if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 969  ]
 {
-"587
-[; ;OBCII_PIC18F46K22.c: 587:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"589
+[; ;OBCII_PIC18F46K22.c: 589:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"588
-[; ;OBCII_PIC18F46K22.c: 588:             if (PORTCbits.RC5 == 0) {
+"590
+[; ;OBCII_PIC18F46K22.c: 590:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 970  ]
 {
-"589
-[; ;OBCII_PIC18F46K22.c: 589:                 LCD_clear();
-[e ( _LCD_clear ..  ]
-"590
-[; ;OBCII_PIC18F46K22.c: 590:                 display_mm();
-[e ( _display_mm ..  ]
 "591
-[; ;OBCII_PIC18F46K22.c: 591:                 menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 591:                 LCD_clear();
+[e ( _LCD_clear ..  ]
 "592
-[; ;OBCII_PIC18F46K22.c: 592:                 break;
-[e $U 968  ]
+[; ;OBCII_PIC18F46K22.c: 592:                 display_mm();
+[e ( _display_mm ..  ]
 "593
-[; ;OBCII_PIC18F46K22.c: 593:             }
+[; ;OBCII_PIC18F46K22.c: 593:                 menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"594
+[; ;OBCII_PIC18F46K22.c: 594:                 break;
+[e $U 968  ]
+"595
+[; ;OBCII_PIC18F46K22.c: 595:             }
 }
 [e :U 970 ]
-"594
-[; ;OBCII_PIC18F46K22.c: 594:         }
+"596
+[; ;OBCII_PIC18F46K22.c: 596:         }
 }
 [e :U 969 ]
-"595
-[; ;OBCII_PIC18F46K22.c: 595:         parsing_notif();
+"597
+[; ;OBCII_PIC18F46K22.c: 597:         parsing_notif();
 [e ( _parsing_notif ..  ]
-"596
-[; ;OBCII_PIC18F46K22.c: 596:     }
+"598
+[; ;OBCII_PIC18F46K22.c: 598:     }
 }
 [e :U 966 ]
-"584
-[; ;OBCII_PIC18F46K22.c: 584:     while(!message_complete) {
+"586
+[; ;OBCII_PIC18F46K22.c: 586:     while(!message_complete) {
 [e $ ! != -> _message_complete `i -> 0 `i 967  ]
 [e :U 968 ]
-"597
-[; ;OBCII_PIC18F46K22.c: 597:     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "599
-[; ;OBCII_PIC18F46K22.c: 599:     LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-"600
-[; ;OBCII_PIC18F46K22.c: 600:     LCD_write_string("SAE:");
-[e ( _LCD_write_string (1 :s 29C ]
+[; ;OBCII_PIC18F46K22.c: 599:     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
 "601
-[; ;OBCII_PIC18F46K22.c: 601:     LCD_write_string(buffer);
+[; ;OBCII_PIC18F46K22.c: 601:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"602
+[; ;OBCII_PIC18F46K22.c: 602:     LCD_write_string("SAE:");
+[e ( _LCD_write_string (1 :s 30C ]
+"603
+[; ;OBCII_PIC18F46K22.c: 603:     LCD_write_string(buffer);
 [e ( _LCD_write_string (1 &U _buffer ]
-"604
-[; ;OBCII_PIC18F46K22.c: 604:     buffer_count = 0;
-[e = _buffer_count -> -> 0 `i `uc ]
-"605
-[; ;OBCII_PIC18F46K22.c: 605:     message_complete = 0;
-[e = _message_complete -> -> 0 `i `uc ]
 "606
-[; ;OBCII_PIC18F46K22.c: 606: }
+[; ;OBCII_PIC18F46K22.c: 606:     buffer_count = 0;
+[e = _buffer_count -> -> 0 `i `uc ]
+"607
+[; ;OBCII_PIC18F46K22.c: 607:     message_complete = 0;
+[e = _message_complete -> -> 0 `i `uc ]
+"608
+[; ;OBCII_PIC18F46K22.c: 608: }
 [e :UE 965 ]
 }
-"608
-[; ;OBCII_PIC18F46K22.c: 608: void display_system_info (void){
+"610
+[; ;OBCII_PIC18F46K22.c: 610: void display_system_info (void){
 [v _display_system_info `(v ~T0 @X0 1 ef ]
 {
 [e :U _display_system_info ]
 [f ]
-"609
-[; ;OBCII_PIC18F46K22.c: 609:     LCD_cursor_set(1,4);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 4 `i `uc ]
-"610
-[; ;OBCII_PIC18F46K22.c: 610:     LCD_write_string("            ");
-[e ( _LCD_write_string (1 :s 30C ]
 "611
-[; ;OBCII_PIC18F46K22.c: 611:     LCD_cursor_set(2,5);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 611:     LCD_cursor_set(1,4);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 4 `i `uc ]
 "612
-[; ;OBCII_PIC18F46K22.c: 612:     LCD_write_string("             ");
+[; ;OBCII_PIC18F46K22.c: 612:     LCD_write_string("            ");
 [e ( _LCD_write_string (1 :s 31C ]
 "613
-[; ;OBCII_PIC18F46K22.c: 613:     print_ELMVer();
-[e ( _print_ELMVer ..  ]
+[; ;OBCII_PIC18F46K22.c: 613:     LCD_cursor_set(2,5);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 5 `i `uc ]
 "614
-[; ;OBCII_PIC18F46K22.c: 614:     print_SAEVer();
-[e ( _print_SAEVer ..  ]
+[; ;OBCII_PIC18F46K22.c: 614:     LCD_write_string("             ");
+[e ( _LCD_write_string (1 :s 32C ]
 "615
-[; ;OBCII_PIC18F46K22.c: 615: }
+[; ;OBCII_PIC18F46K22.c: 615:     print_ELMVer();
+[e ( _print_ELMVer ..  ]
+"616
+[; ;OBCII_PIC18F46K22.c: 616:     print_SAEVer();
+[e ( _print_SAEVer ..  ]
+"617
+[; ;OBCII_PIC18F46K22.c: 617: }
 [e :UE 971 ]
 }
-"618
-[; ;OBCII_PIC18F46K22.c: 618: void read_diagnostic_codes(void){
+"620
+[; ;OBCII_PIC18F46K22.c: 620: void read_diagnostic_codes(void){
 [v _read_diagnostic_codes `(v ~T0 @X0 1 ef ]
 {
 [e :U _read_diagnostic_codes ]
 [f ]
-"621
-[; ;OBCII_PIC18F46K22.c: 621: }
+"623
+[; ;OBCII_PIC18F46K22.c: 623: }
 [e :UE 972 ]
 }
-"624
-[; ;OBCII_PIC18F46K22.c: 624: void clear_diagnostic_codes(void){
+"626
+[; ;OBCII_PIC18F46K22.c: 626: void clear_diagnostic_codes(void){
 [v _clear_diagnostic_codes `(v ~T0 @X0 1 ef ]
 {
 [e :U _clear_diagnostic_codes ]
 [f ]
-"626
-[; ;OBCII_PIC18F46K22.c: 626:     int opt_sel = 0;
+"628
+[; ;OBCII_PIC18F46K22.c: 628:     int opt_sel = 0;
 [v _opt_sel `i ~T0 @X0 1 a ]
 [e = _opt_sel -> 0 `i ]
-"627
-[; ;OBCII_PIC18F46K22.c: 627:     LCD_clear();
-[e ( _LCD_clear ..  ]
-"628
-[; ;OBCII_PIC18F46K22.c: 628:     LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "629
-[; ;OBCII_PIC18F46K22.c: 629:     LCD_write_string("Clear Code(s)?");
-[e ( _LCD_write_string (1 :s 32C ]
+[; ;OBCII_PIC18F46K22.c: 629:     LCD_clear();
+[e ( _LCD_clear ..  ]
 "630
-[; ;OBCII_PIC18F46K22.c: 630:     LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 630:     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
 "631
-[; ;OBCII_PIC18F46K22.c: 631:     LCD_write_string("Y/N <<<<<<<<<<<<");
+[; ;OBCII_PIC18F46K22.c: 631:     LCD_write_string("Clear Code(s)?");
 [e ( _LCD_write_string (1 :s 33C ]
 "632
-[; ;OBCII_PIC18F46K22.c: 632:     LCD_configure_cursor_blink(1);
-[e ( _LCD_configure_cursor_blink (1 -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 632:     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"633
+[; ;OBCII_PIC18F46K22.c: 633:     LCD_write_string("Y/N <<<<<<<<<<<<");
+[e ( _LCD_write_string (1 :s 34C ]
 "634
-[; ;OBCII_PIC18F46K22.c: 634:     while(1){
+[; ;OBCII_PIC18F46K22.c: 634:     LCD_configure_cursor_blink(1);
+[e ( _LCD_configure_cursor_blink (1 -> -> 1 `i `uc ]
+"636
+[; ;OBCII_PIC18F46K22.c: 636:     while(1){
 [e :U 975 ]
 {
-"635
-[; ;OBCII_PIC18F46K22.c: 635:         result = readADC();
+"637
+[; ;OBCII_PIC18F46K22.c: 637:         result = readADC();
 [e = _result ( _readADC ..  ]
-"636
-[; ;OBCII_PIC18F46K22.c: 636:         if(result >= 0 && result <= 511){
+"638
+[; ;OBCII_PIC18F46K22.c: 638:         if(result >= 0 && result <= 511){
 [e $ ! && >= _result -> -> 0 `i `ui <= _result -> -> 511 `i `ui 977  ]
 {
-"637
-[; ;OBCII_PIC18F46K22.c: 637:             opt_sel = 0;
+"639
+[; ;OBCII_PIC18F46K22.c: 639:             opt_sel = 0;
 [e = _opt_sel -> 0 `i ]
-"638
-[; ;OBCII_PIC18F46K22.c: 638:             LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
 "640
-[; ;OBCII_PIC18F46K22.c: 640:         }
+[; ;OBCII_PIC18F46K22.c: 640:             LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"642
+[; ;OBCII_PIC18F46K22.c: 642:         }
 }
 [e :U 977 ]
-"641
-[; ;OBCII_PIC18F46K22.c: 641:         if(result >= 512 && result <=1023){
+"643
+[; ;OBCII_PIC18F46K22.c: 643:         if(result >= 512 && result <=1023){
 [e $ ! && >= _result -> -> 512 `i `ui <= _result -> -> 1023 `i `ui 978  ]
 {
-"642
-[; ;OBCII_PIC18F46K22.c: 642:             opt_sel = 1;
-[e = _opt_sel -> 1 `i ]
-"643
-[; ;OBCII_PIC18F46K22.c: 643:             LCD_cursor_set(2,3);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 3 `i `uc ]
 "644
-[; ;OBCII_PIC18F46K22.c: 644:         }
+[; ;OBCII_PIC18F46K22.c: 644:             opt_sel = 1;
+[e = _opt_sel -> 1 `i ]
+"645
+[; ;OBCII_PIC18F46K22.c: 645:             LCD_cursor_set(2,3);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 3 `i `uc ]
+"646
+[; ;OBCII_PIC18F46K22.c: 646:         }
 }
 [e :U 978 ]
-"645
-[; ;OBCII_PIC18F46K22.c: 645:             if (PORTCbits.RC5 == 0) {
+"647
+[; ;OBCII_PIC18F46K22.c: 647:             if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 979  ]
 {
-"646
-[; ;OBCII_PIC18F46K22.c: 646:                 _delay((unsigned long)((20)*(16000000/4000.0)));
+"648
+[; ;OBCII_PIC18F46K22.c: 648:                 _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"647
-[; ;OBCII_PIC18F46K22.c: 647:                 if (PORTCbits.RC5 == 0) {
+"649
+[; ;OBCII_PIC18F46K22.c: 649:                 if (PORTCbits.RC5 == 0) {
 [e $ ! == -> . . _PORTCbits 0 5 `i -> 0 `i 980  ]
 {
-"648
-[; ;OBCII_PIC18F46K22.c: 648:                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"649
-[; ;OBCII_PIC18F46K22.c: 649:                     display_mm();
-[e ( _display_mm ..  ]
 "650
-[; ;OBCII_PIC18F46K22.c: 650:                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
+[; ;OBCII_PIC18F46K22.c: 650:                     LCD_clear();
+[e ( _LCD_clear ..  ]
 "651
-[; ;OBCII_PIC18F46K22.c: 651:                     break;
-[e $U 976  ]
+[; ;OBCII_PIC18F46K22.c: 651:                     display_mm();
+[e ( _display_mm ..  ]
 "652
-[; ;OBCII_PIC18F46K22.c: 652:                 }
+[; ;OBCII_PIC18F46K22.c: 652:                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"653
+[; ;OBCII_PIC18F46K22.c: 653:                     break;
+[e $U 976  ]
+"654
+[; ;OBCII_PIC18F46K22.c: 654:                 }
 }
 [e :U 980 ]
-"653
-[; ;OBCII_PIC18F46K22.c: 653:             }
+"655
+[; ;OBCII_PIC18F46K22.c: 655:             }
 }
 [e :U 979 ]
-"655
-[; ;OBCII_PIC18F46K22.c: 655:         if (PORTBbits.RB4 == 0) {
+"657
+[; ;OBCII_PIC18F46K22.c: 657:         if (PORTBbits.RB4 == 0) {
 [e $ ! == -> . . _PORTBbits 0 4 `i -> 0 `i 981  ]
 {
-"656
-[; ;OBCII_PIC18F46K22.c: 656:             _delay((unsigned long)((20)*(16000000/4000.0)));
+"658
+[; ;OBCII_PIC18F46K22.c: 658:             _delay((unsigned long)((20)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"657
-[; ;OBCII_PIC18F46K22.c: 657:             if (PORTBbits.RB4 == 0) {
+"659
+[; ;OBCII_PIC18F46K22.c: 659:             if (PORTBbits.RB4 == 0) {
 [e $ ! == -> . . _PORTBbits 0 4 `i -> 0 `i 982  ]
 {
-"658
-[; ;OBCII_PIC18F46K22.c: 658:                 switch(opt_sel){
+"660
+[; ;OBCII_PIC18F46K22.c: 660:                 switch(opt_sel){
 [e $U 984  ]
 {
-"659
-[; ;OBCII_PIC18F46K22.c: 659:                     case 0:
-[e :U 985 ]
 "661
-[; ;OBCII_PIC18F46K22.c: 661:                     UART1_SendString("04\r");
-[e ( _UART1_SendString (1 :s 34C ]
-"662
-[; ;OBCII_PIC18F46K22.c: 662:                     while(!message_complete){
+[; ;OBCII_PIC18F46K22.c: 661:                     case 0:
+[e :U 985 ]
+"663
+[; ;OBCII_PIC18F46K22.c: 663:                     UART1_SendString("04\r");
+[e ( _UART1_SendString (1 :s 35C ]
+"664
+[; ;OBCII_PIC18F46K22.c: 664:                     while(!message_complete){
 [e $U 986  ]
 [e :U 987 ]
 {
-"664
-[; ;OBCII_PIC18F46K22.c: 664:                         parsing_notif();
+"666
+[; ;OBCII_PIC18F46K22.c: 666:                         parsing_notif();
 [e ( _parsing_notif ..  ]
-"665
-[; ;OBCII_PIC18F46K22.c: 665:                     }
+"667
+[; ;OBCII_PIC18F46K22.c: 667:                     }
 }
 [e :U 986 ]
-"662
-[; ;OBCII_PIC18F46K22.c: 662:                     while(!message_complete){
+"664
+[; ;OBCII_PIC18F46K22.c: 664:                     while(!message_complete){
 [e $ ! != -> _message_complete `i -> 0 `i 987  ]
 [e :U 988 ]
-"666
-[; ;OBCII_PIC18F46K22.c: 666:                     clear_parsing_notif();
-[e ( _clear_parsing_notif ..  ]
 "668
-[; ;OBCII_PIC18F46K22.c: 668:                     LCD_clear();
-[e ( _LCD_clear ..  ]
-"669
-[; ;OBCII_PIC18F46K22.c: 669:                     LCD_cursor_set(1,1);
-[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+[; ;OBCII_PIC18F46K22.c: 668:                     clear_parsing_notif();
+[e ( _clear_parsing_notif ..  ]
 "670
-[; ;OBCII_PIC18F46K22.c: 670:                     LCD_write_string("Codes Cleared");
-[e ( _LCD_write_string (1 :s 35C ]
-"671
-[; ;OBCII_PIC18F46K22.c: 671:                     LCD_cursor_set(2,1);
-[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-"672
-[; ;OBCII_PIC18F46K22.c: 672:                     LCD_write_string("To Menu...");
-[e ( _LCD_write_string (1 :s 36C ]
-"674
-[; ;OBCII_PIC18F46K22.c: 674:                     menu_sel = -1;
-[e = _menu_sel -U -> 1 `i ]
-"675
-[; ;OBCII_PIC18F46K22.c: 675:                     _delay((unsigned long)((2000)*(16000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"677
-[; ;OBCII_PIC18F46K22.c: 677:                         break;
-[e $U 983  ]
-"679
-[; ;OBCII_PIC18F46K22.c: 679:                     case 1:
-[e :U 989 ]
-"681
-[; ;OBCII_PIC18F46K22.c: 681:                     LCD_clear();
+[; ;OBCII_PIC18F46K22.c: 670:                     LCD_clear();
 [e ( _LCD_clear ..  ]
-"682
-[; ;OBCII_PIC18F46K22.c: 682:                     LCD_cursor_set(1,1);
+"671
+[; ;OBCII_PIC18F46K22.c: 671:                     LCD_cursor_set(1,1);
 [e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
-"683
-[; ;OBCII_PIC18F46K22.c: 683:                     LCD_write_string("Nothing Cleared");
-[e ( _LCD_write_string (1 :s 37C ]
-"684
-[; ;OBCII_PIC18F46K22.c: 684:                     LCD_cursor_set(2,1);
+"672
+[; ;OBCII_PIC18F46K22.c: 672:                     LCD_write_string("Codes Cleared");
+[e ( _LCD_write_string (1 :s 36C ]
+"673
+[; ;OBCII_PIC18F46K22.c: 673:                     LCD_cursor_set(2,1);
 [e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
-"685
-[; ;OBCII_PIC18F46K22.c: 685:                     LCD_write_string("To Menu...");
-[e ( _LCD_write_string (1 :s 38C ]
-"687
-[; ;OBCII_PIC18F46K22.c: 687:                     menu_sel = -1;
+"674
+[; ;OBCII_PIC18F46K22.c: 674:                     LCD_write_string("To Menu...");
+[e ( _LCD_write_string (1 :s 37C ]
+"676
+[; ;OBCII_PIC18F46K22.c: 676:                     menu_sel = -1;
 [e = _menu_sel -U -> 1 `i ]
-"688
-[; ;OBCII_PIC18F46K22.c: 688:                     _delay((unsigned long)((2000)*(16000000/4000.0)));
+"677
+[; ;OBCII_PIC18F46K22.c: 677:                     _delay((unsigned long)((2000)*(16000000/4000.0)));
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
-"689
-[; ;OBCII_PIC18F46K22.c: 689:                         break;
+"679
+[; ;OBCII_PIC18F46K22.c: 679:                         break;
 [e $U 983  ]
+"681
+[; ;OBCII_PIC18F46K22.c: 681:                     case 1:
+[e :U 989 ]
+"683
+[; ;OBCII_PIC18F46K22.c: 683:                     LCD_clear();
+[e ( _LCD_clear ..  ]
+"684
+[; ;OBCII_PIC18F46K22.c: 684:                     LCD_cursor_set(1,1);
+[e ( _LCD_cursor_set (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+"685
+[; ;OBCII_PIC18F46K22.c: 685:                     LCD_write_string("Nothing Cleared");
+[e ( _LCD_write_string (1 :s 38C ]
+"686
+[; ;OBCII_PIC18F46K22.c: 686:                     LCD_cursor_set(2,1);
+[e ( _LCD_cursor_set (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"687
+[; ;OBCII_PIC18F46K22.c: 687:                     LCD_write_string("To Menu...");
+[e ( _LCD_write_string (1 :s 39C ]
+"689
+[; ;OBCII_PIC18F46K22.c: 689:                     menu_sel = -1;
+[e = _menu_sel -U -> 1 `i ]
+"690
+[; ;OBCII_PIC18F46K22.c: 690:                     _delay((unsigned long)((2000)*(16000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 16000000 `l `d .4000.0 `ul ]
 "691
-[; ;OBCII_PIC18F46K22.c: 691:                     default:
-[e :U 990 ]
-"692
-[; ;OBCII_PIC18F46K22.c: 692:                         break;
+[; ;OBCII_PIC18F46K22.c: 691:                         break;
 [e $U 983  ]
 "693
-[; ;OBCII_PIC18F46K22.c: 693:                 }
+[; ;OBCII_PIC18F46K22.c: 693:                     default:
+[e :U 990 ]
+"694
+[; ;OBCII_PIC18F46K22.c: 694:                         break;
+[e $U 983  ]
+"695
+[; ;OBCII_PIC18F46K22.c: 695:                 }
 }
 [e $U 983  ]
 [e :U 984 ]
@@ -3081,63 +3087,64 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 1 `i 989
  990 ]
 [e :U 983 ]
-"694
-[; ;OBCII_PIC18F46K22.c: 694:             break;
+"696
+[; ;OBCII_PIC18F46K22.c: 696:             break;
 [e $U 976  ]
-"695
-[; ;OBCII_PIC18F46K22.c: 695:             }
+"697
+[; ;OBCII_PIC18F46K22.c: 697:             }
 }
 [e :U 982 ]
-"696
-[; ;OBCII_PIC18F46K22.c: 696:           }
+"698
+[; ;OBCII_PIC18F46K22.c: 698:           }
 }
 [e :U 981 ]
-"697
-[; ;OBCII_PIC18F46K22.c: 697:     }
+"699
+[; ;OBCII_PIC18F46K22.c: 699:     }
 }
 [e :U 974 ]
 [e $U 975  ]
 [e :U 976 ]
-"698
-[; ;OBCII_PIC18F46K22.c: 698: }
+"700
+[; ;OBCII_PIC18F46K22.c: 700: }
 [e :UE 973 ]
 }
 [p f _sprintf 8389632 ]
-[a 14C 37 117 0 ]
-[a 23C 37 117 0 ]
-[a 19C 86 66 97 116 116 0 ]
-[a 7C 79 66 68 73 73 32 68 101 116 101 99 116 101 100 0 ]
-[a 35C 67 111 100 101 115 32 67 108 101 97 114 101 100 0 ]
-[a 37C 78 111 116 104 105 110 103 32 67 108 101 97 114 101 100 0 ]
-[a 24C 65 73 84 0 ]
-[a 16C 82 80 77 0 ]
-[a 10C 76 82 77 32 82 68 67 32 67 68 67 32 68 83 73 0 ]
-[a 25C 67 0 ]
-[a 20C 78 47 65 0 ]
-[a 11C 64 0 ]
-[a 32C 67 108 101 97 114 32 67 111 100 101 40 115 41 63 0 ]
-[a 9C 77 69 78 85 32 60 79 66 68 73 73 80 73 67 62 0 ]
-[a 33C 89 47 78 32 60 60 60 60 60 60 60 60 60 60 60 60 0 ]
+[a 12C 126 0 ]
+[a 15C 37 117 0 ]
+[a 24C 37 117 0 ]
+[a 20C 86 66 97 116 116 0 ]
+[a 36C 67 111 100 101 115 32 67 108 101 97 114 101 100 0 ]
+[a 38C 78 111 116 104 105 110 103 32 67 108 101 97 114 101 100 0 ]
+[a 13C 94 0 ]
+[a 25C 65 73 84 0 ]
+[a 17C 82 80 77 0 ]
+[a 11C 76 82 77 32 82 68 67 32 67 68 67 32 68 83 73 0 ]
+[a 26C 67 0 ]
+[a 21C 78 47 65 0 ]
+[a 33C 67 108 101 97 114 32 67 111 100 101 40 115 41 63 0 ]
+[a 7C 60 79 66 68 73 73 32 68 101 116 101 99 116 101 100 62 0 ]
+[a 10C 77 69 78 85 32 32 60 79 66 68 73 73 80 73 67 62 0 ]
+[a 8C 61 61 61 61 61 61 61 61 61 61 61 61 61 61 61 61 0 ]
+[a 34C 89 47 78 32 60 60 60 60 60 60 60 60 60 60 60 60 0 ]
 [a 3C 62 62 62 62 32 86 49 46 48 32 60 60 60 60 0 ]
 [a 2C 62 62 62 32 79 66 68 73 73 80 73 67 32 60 60 60 0 ]
-[a 27C 79 83 58 0 ]
-[a 29C 83 65 69 58 0 ]
-[a 36C 84 111 32 77 101 110 117 46 46 46 0 ]
-[a 38C 84 111 32 77 101 110 117 46 46 46 0 ]
+[a 28C 79 83 58 0 ]
+[a 30C 83 65 69 58 0 ]
+[a 37C 84 111 32 77 101 110 117 46 46 46 0 ]
+[a 39C 84 111 32 77 101 110 117 46 46 46 0 ]
 [a 5C 79 66 68 73 73 32 78 111 116 32 70 111 117 110 100 32 0 ]
-[a 31C 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 30C 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 15C 32 32 32 32 32 0 ]
-[a 18C 32 32 32 32 32 0 ]
-[a 22C 32 32 32 0 ]
-[a 12C 32 0 ]
-[a 17C 65 84 82 86 13 0 ]
+[a 32C 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 31C 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 16C 32 32 32 32 32 0 ]
+[a 19C 32 32 32 32 32 0 ]
+[a 23C 32 32 32 0 ]
+[a 18C 65 84 82 86 13 0 ]
 [a 4C 65 84 73 13 0 ]
 [a 6C 65 84 73 13 0 ]
-[a 26C 65 84 73 13 0 ]
-[a 21C 48 49 48 70 13 0 ]
-[a 13C 48 49 48 67 13 0 ]
-[a 28C 48 49 48 56 13 0 ]
-[a 34C 48 52 13 0 ]
+[a 27C 65 84 73 13 0 ]
+[a 22C 48 49 48 70 13 0 ]
+[a 14C 48 49 48 67 13 0 ]
+[a 29C 48 49 48 56 13 0 ]
+[a 35C 48 52 13 0 ]
 [a 1C 65 84 69 48 13 0 ]
-[a 8C 65 84 69 48 13 0 ]
+[a 9C 65 84 69 48 13 0 ]

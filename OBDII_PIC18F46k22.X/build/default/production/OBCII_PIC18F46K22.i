@@ -10229,7 +10229,9 @@ void welcome_splash(void) {
 
     LCD_clear();
     LCD_cursor_set(1, 1);
-    LCD_write_string("OBDII Detected");
+    LCD_write_string("<OBDII Detected>");
+    LCD_cursor_set(2,1);
+    LCD_write_string("================");
     _delay((unsigned long)((2 * 2000)*(16000000/4000.0)));
 
     UART1_SendString("ATE0\r");
@@ -10248,18 +10250,18 @@ unsigned int readADC() {
 
 void display_mm(void){
     LCD_cursor_set(1,1);
-    LCD_write_string("MENU <OBDIIPIC>");
+    LCD_write_string("MENU  <OBDIIPIC>");
     LCD_cursor_set(2,1);
     LCD_write_string("LRM RDC CDC DSI");
 }
 
 void parsing_notif(void) {
     LCD_cursor_set(1,16);
-    LCD_write_string("@");
+    LCD_write_string("~");
 }
 void clear_parsing_notif(void){
     LCD_cursor_set(1,16);
-    LCD_write_string(" ");
+    LCD_write_string("^");
 }
 
 void main_menu(void){
@@ -10374,7 +10376,7 @@ void main_menu(void){
         _delay((unsigned long)((50)*(16000000/4000.0)));
     }
 }
-# 425 "OBCII_PIC18F46K22.c"
+# 427 "OBCII_PIC18F46K22.c"
 unsigned char hex_char_to_value(char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;

@@ -269,7 +269,9 @@ void welcome_splash(void) {
     // ELM detected after successful 5 seconds
     LCD_clear();
     LCD_cursor_set(1, 1);
-    LCD_write_string("OBDII Detected");
+    LCD_write_string("<OBDII Detected>");
+    LCD_cursor_set(2,1);
+    LCD_write_string("================");
     __delay_ms(2 * long_delay_preset);
 
     UART1_SendString("ATE0\r"); // Disable Echo
@@ -288,18 +290,18 @@ unsigned int readADC() {
 
 void display_mm(void){ //Main Menu Display function
     LCD_cursor_set(1,1);
-    LCD_write_string("MENU <OBDIIPIC>");
+    LCD_write_string("MENU  <OBDIIPIC>");
     LCD_cursor_set(2,1);
     LCD_write_string("LRM RDC CDC DSI");
 }
 
 void parsing_notif(void) { //display a little loading icon
     LCD_cursor_set(1,16);
-    LCD_write_string("@");
+    LCD_write_string("~");
 }
 void clear_parsing_notif(void){
     LCD_cursor_set(1,16);
-    LCD_write_string(" ");
+    LCD_write_string("^");
 }
 
 void main_menu(void){ //main menu loop, checks back and enter state and takes in mode set by potentiometer input

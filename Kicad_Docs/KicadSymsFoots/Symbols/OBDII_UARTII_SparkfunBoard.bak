@@ -40,7 +40,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "https://cdn.sparkfun.com/assets/a/3/f/9/c/OBD-II-UART-v13.pdf"
+		(property "Description" ""
 			(at 0 0 0)
 			(effects
 				(font

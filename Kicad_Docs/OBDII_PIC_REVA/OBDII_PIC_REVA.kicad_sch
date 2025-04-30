@@ -723,6 +723,124 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "OBDII_UART:STN1110"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -5.334 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "STN1110"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://www.scantool.net/scantool/downloads/234/stn1100-frpm-preliminary.pdf?srsltid=AfmBOoo-ck3aRutfNohtRgrJahpXeoSJl7bUUqXrZD0vmXV2ENzVUR-f"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "STN1110_0_1"
+				(rectangle
+					(start -6.35 6.35)
+					(end 6.35 -6.35)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "STN1110_1_1"
+				(pin passive line
+					(at 6.35 -5.08 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 8.89 3.81 180)
+					(length 2.54)
+					(name "UART_TX"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 8.89 1.27 180)
+					(length 2.54)
+					(name "UART_RX"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "PIC18F46K22:PIC18F46K22-I_P"
 			(pin_names
 				(offset 1.016)
@@ -2070,6 +2188,18 @@
 		(uuid 53f178cb-ec79-4dcf-b9eb-bd6fb5cbac5b)
 	)
 	(rectangle
+		(start 13.335 80.01)
+		(end 86.36 104.775)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 76e84dc1-692b-40d9-9590-df9f48734161)
+	)
+	(rectangle
 		(start 12.7 13.335)
 		(end 120.65 78.74)
 		(stroke
@@ -2132,6 +2262,46 @@
 			(justify left top)
 		)
 		(uuid "4b8fedaf-8350-47ab-9df0-19b04969b23e")
+	)
+	(text_box "When testing, you can use the Vbatt to 5v, however, before plugging the OBDII connector to the car, remove the Vbatt line so you dont kill the PIC"
+		(exclude_from_sim no)
+		(at 15.24 89.535 0)
+		(size 33.02 13.335)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "58383643-ed50-40eb-b07f-459b12af7381")
+	)
+	(text_box "Sparkfun_OBDII_to_UART"
+		(exclude_from_sim no)
+		(at 15.24 82.55 0)
+		(size 26.67 4.445)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "60eb04ec-c887-4c4e-a833-6dc33bb35689")
 	)
 	(text_box "Scroll Knob"
 		(exclude_from_sim no)
@@ -2837,6 +3007,16 @@
 	)
 	(wire
 		(pts
+			(xy 67.31 97.79) (xy 73.66 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b296f3dd-7da6-4995-bba2-137fc88a7f8c")
+	)
+	(wire
+		(pts
 			(xy 40.64 45.72) (xy 45.72 45.72)
 		)
 		(stroke
@@ -3065,6 +3245,16 @@
 		)
 		(uuid "26105f12-1908-4838-a0ca-7ca7ff785485")
 	)
+	(label "RC6_TXP_RXU"
+		(at 69.85 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3117c36f-371a-432f-bfdd-01c56528bc57")
+	)
 	(label "RD6"
 		(at 269.24 63.5 0)
 		(effects
@@ -3214,6 +3404,16 @@
 			(justify left bottom)
 		)
 		(uuid "e8322637-c8f5-4165-be45-376079a09cb5")
+	)
+	(label "RC7_RXP_TXU"
+		(at 69.85 88.9 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f77ede89-9f03-4db2-adc7-5a9b1549627d")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3690,6 +3890,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 73.66 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2e333be3-bfab-4951-904d-0c17e4d90748")
+		(property "Reference" "#PWR016"
+			(at 73.66 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 73.66 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 73.66 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 73.66 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 73.66 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "daef49f7-0330-48ef-ab7b-1107185e4842")
+		)
+		(instances
+			(project "OBDII_PIC_REVA"
+				(path "/82ea1033-e42f-45cf-b3f2-aacaaa1723fc"
+					(reference "#PWR016")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+5V")
 		(at 104.14 43.18 0)
 		(unit 1)
@@ -3955,6 +4221,76 @@
 			(project "OBDII_PIC_REVA"
 				(path "/82ea1033-e42f-45cf-b3f2-aacaaa1723fc"
 					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "OBDII_UART:STN1110")
+		(at 60.96 92.71 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4d553d32-3e8c-44ff-b402-501e99d4a6eb")
+		(property "Reference" "U3"
+			(at 66.04 85.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "STN1110"
+			(at 58.674 85.344 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 60.96 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.scantool.net/scantool/downloads/234/stn1100-frpm-preliminary.pdf?srsltid=AfmBOoo-ck3aRutfNohtRgrJahpXeoSJl7bUUqXrZD0vmXV2ENzVUR-f"
+			(at 60.96 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 60.96 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6548c656-2322-4079-9302-a3049806bfab")
+		)
+		(pin "1"
+			(uuid "3dc69be6-b952-4e36-be09-f280ae623c40")
+		)
+		(pin "3"
+			(uuid "247c4b85-8324-46ce-b835-1110f45bf333")
+		)
+		(instances
+			(project ""
+				(path "/82ea1033-e42f-45cf-b3f2-aacaaa1723fc"
+					(reference "U3")
 					(unit 1)
 				)
 			)

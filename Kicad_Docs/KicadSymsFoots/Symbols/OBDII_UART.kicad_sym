@@ -2,20 +2,20 @@
 	(version 20241209)
 	(generator "kicad_symbol_editor")
 	(generator_version "9.0")
-	(symbol "STN1110_ELM327"
+	(symbol "STN1110"
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at -6.35 6.858 0)
+			(at -5.334 5.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" ""
-			(at 0 0 0)
+		(property "Value" "STN1110"
+			(at -2.286 7.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -31,7 +31,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.scantool.net/scantool/downloads/234/stn1100-frpm-preliminary.pdf?srsltid=AfmBOoo-ck3aRutfNohtRgrJahpXeoSJl7bUUqXrZD0vmXV2ENzVUR-f"
 			(at 0 0 0)
 			(effects
 				(font
@@ -40,7 +40,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "https://cdn.sparkfun.com/assets/a/3/f/9/c/OBD-II-UART-v13.pdf"
+		(property "Description" ""
 			(at 0 0 0)
 			(effects
 				(font
@@ -49,10 +49,10 @@
 				(hide yes)
 			)
 		)
-		(symbol "STN1110_ELM327_0_1"
+		(symbol "STN1110_0_1"
 			(rectangle
-				(start -7.62 8.255)
-				(end 8.89 -1.27)
+				(start -6.35 6.35)
+				(end 6.35 -6.35)
 				(stroke
 					(width 0)
 					(type default)
@@ -62,9 +62,27 @@
 				)
 			)
 		)
-		(symbol "STN1110_ELM327_1_1"
+		(symbol "STN1110_1_1"
+			(pin passive line
+				(at 6.35 -5.08 180)
+				(length 2.54)
+				(name "GND"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "3"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
 			(pin output line
-				(at 11.43 6.35 180)
+				(at 8.89 3.81 180)
 				(length 2.54)
 				(name "UART_TX"
 					(effects
@@ -82,27 +100,9 @@
 				)
 			)
 			(pin input line
-				(at 11.43 3.81 180)
+				(at 8.89 1.27 180)
 				(length 2.54)
 				(name "UART_RX"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 11.43 0 180)
-				(length 2.54)
-				(name "GND"
 					(effects
 						(font
 							(size 1.27 1.27)

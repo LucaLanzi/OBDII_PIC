@@ -1,6 +1,6 @@
 
 18F46K22 Memory Summary:
-    Program space        used  1A14h (  6676) of 10000h bytes   ( 10.2%)
+    Program space        used  1A40h (  6720) of 10000h bytes   ( 10.3%)
     Data space           used    B3h (   179) of   F38h bytes   (  4.6%)
     Configuration bits   used     7h (     7) of     7h words   (100.0%)
     EEPROM space         used     0h (     0) of   400h bytes   (  0.0%)

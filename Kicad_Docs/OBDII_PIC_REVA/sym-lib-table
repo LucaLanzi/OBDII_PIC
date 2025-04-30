@@ -1,5 +1,5 @@
 (sym_lib_table
   (version 7)
   (lib (name "PIC18F46K22")(type "KiCad")(uri "C:/Users/luqui/OneDrive/Documents/GitHub/ECE3301FinalProject/KicadSymsFoots/Symbols/PIC18F46K22-I_P.kicad_sym")(options "")(descr ""))
-  (lib (name "OBDII_UARTII_SparkfunBoard")(type "KiCad")(uri "C:/Users/luqui/OneDrive/Documents/GitHub/ECE3301FinalProject/KicadSymsFoots/Symbols/OBDII_UARTII_SparkfunBoard.kicad_sym")(options "")(descr ""))
+  (lib (name "OBDII_UARTII_SparkfunBoard")(type "KiCad")(uri "C:/Users/Luca Lanzillotta/OneDrive - Cal Poly Pomona/300_juniorYear/2nd Semester/ECE 3301L/ECE3301FinalProject/Kicad_Docs/KicadSymsFoots/Symbols/OBDII_UARTII_SparkfunBoard.kicad_sym")(options "")(descr ""))
 )

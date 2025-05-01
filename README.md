@@ -131,7 +131,7 @@ Welcome Splash Modes:
 
 ## Standard Operation Mode: ##
 
-* The OBDII_PIC is a user friendly device, because of this it was important to include essential buttons to the functionality of any configurable embedded device, it was for this reason that the OBDIIPIC includes a main menu and intuitive tools to navigate it using with a scroll wheel and enter and back buttons. The scroll wheel is a simple potentiometer configured using the PIC's ADC, which displays a flashing cursor relative to its rotational position. The menu includes four modes that any OBDII device should have, the first is the Live Reading mode, written LR to conserve LCD space, this mode displays the current Engine RPM, Battery Voltage, and Air Intake Temperature. The mode also includes a parsing icon which notifies the user that information is being requested and displayed. The second mode is by far the most useful and challenging to program, as it interacts directly with the vehicles ECU when requesting OBDII PIDs. The second mode is the Read Diagnostics Codes, RDC for short. This mode allows the user to request OBDII PIDs using the 03 PID request that is standardized for OBDII. Upon requesting the diagnostic codes, the PIC recieves two bytes of data per code and displays them on the LCD. In the case where there are more than three diagnostic codes, the PIC must detect a shift in transmission protocol and adjust the reception of the data to be legible. Additionally, if there is more data than the LCD can display, the user can scroll through the diagnostic codes utilizing the embedded potentiometer. Next up is the third and most powerful mode; the Clear Diagnostic Codes, or CDC for short allows the user to clear any error codes generated from the ECU of the vehicle, this of course may be overwritten the time the vehicle starts, or if an error code is generated during normal operation. The mode allows for a Y/N style menu and returns to the main menu after either option is selected, which before returning indicates the request was either allowed or cancelled to confirm the users decision. Lastly is the Display System Information mode, or DSI for short. This mode tells the user which ELM protocol the OBDII to UART IC is using, in this case the current firmware version is 1.4b, and also notifies the user which SAE version the vehicle being used uses.
+* The OBDII_PIC is a user friendly device, because of this it was important to include essential buttons to the functionality of any configurable embedded device, it was for this reason that the OBDIIPIC includes a main menu and intuitive tools to navigate it using with a scroll wheel and enter and back buttons. The scroll wheel is a simple potentiometer configured using the PIC's ADC, which displays a flashing cursor relative to its rotational position. The menu includes four modes that any OBDII device should have, the first is the Live Reading mode, written LR to conserve LCD space, this mode displays the current Engine RPM, Battery Voltage, and Air Intake Temperature. The mode also includes a parsing icon which notifies the user that information is being requested and displayed. The second mode is by far the most useful and challenging to program, as it interacts directly with the vehicles ECU when requesting OBDII PIDs. The second mode is the Diagnostic Trouble Codes, DTC for short. This mode allows the user to request OBDII PIDs using the 03 PID request that is standardized for OBDII. Upon requesting the diagnostic codes, the PIC recieves two bytes of data per code and displays them on the LCD. In the case where there are more than three diagnostic codes, the PIC must detect a shift in transmission protocol and adjust the reception of the data to be legible. Additionally, if there is more data than the LCD can display, the user can scroll through the diagnostic codes utilizing the embedded potentiometer. Next up is the third and most powerful mode; the Clear Diagnostic Codes, or CDC for short allows the user to clear any error codes generated from the ECU of the vehicle, this of course may be overwritten the time the vehicle starts, or if an error code is generated during normal operation. The mode allows for a Y/N style menu and returns to the main menu after either option is selected, which before returning indicates the request was either allowed or cancelled to confirm the users decision. Lastly is the Display System Information mode, or DSI for short. This mode tells the user which ELM protocol the OBDII to UART IC is using, in this case the current firmware version is 1.4b, and also notifies the user which SAE version the vehicle being used uses.
 Due to the ease of use, if the user wishes to exit any mode at any instant, the back button provides itself as function to reset the PIC to the main menu to select another mode.
         
 ### Main Menu: ###
@@ -387,9 +387,41 @@ Code chunk:
 
     
 
-### Scan Diagnostic Codes: ###
+### Read Diagnostic Codes: ###
 * Display OBDII PID Error Codes 
-    
+* Request an "03" OBDII service code, The ECU will return the following code format
+1st character:
+P = Powertrain
+C = Chassis
+B = Body
+U = Network
+
+2nd character:
+0 – Indicates a generic (SAE defined) code
+1 – Indicates a manufacturer-specific (OEM) code
+2 – Category dependent:
+For the 'P' category this indicates a generic (SAE defined) code
+For other categories indicates a manufacturer-specific (OEM) code
+3 – Category dependent:
+For the 'P' category this is indicates a code that has been 'jointly' defined
+For other categories this has been reserved for future use
+
+3rd character: Denotes a particular vehicle system that the fault relates to
+
+0 – Fuel and air metering and auxiliary emission controls
+1 – Fuel and air metering
+2 – Fuel and air metering (injector circuit)
+3 – Ignition systems or misfires
+4 – Auxiliary emission controls
+5 – Vehicle speed control and idle control systems
+6 – Computer and output circuit
+7 – Transmission
+8 – Transmission
+A-F – Hybrid Trouble Codes
+
+Finally the fourth and fifth characters define the exact problem detected.
+
+Since we can recieve many error codes in packets, we need to be able to store them in a massive buffer and iterate through them as the user wishes
 
 Code Chunk:
            
@@ -399,7 +431,17 @@ Code Chunk:
 
         Clear Error Code(s)
         Y/N <<<<<<<<<<<<<<< 
-    
+
+* User selects "N"
+
+        Nothing Cleared
+        To Menu...
+
+* User selects "Y"
+
+        Codes Cleared
+        To Menu...
+        
 Code Chunk:
 
         void clear_diagnostic_codes(void){

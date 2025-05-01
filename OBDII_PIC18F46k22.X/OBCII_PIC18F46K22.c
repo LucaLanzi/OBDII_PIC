@@ -9,13 +9,14 @@
 #define short_delay_preset 50
 #define long_delay_preset 2000
 #define splash_delay 4 // the number of seconds you want to delay the port checker
+#define MAX_DTC_COUNT 10
 
 //I/O Setup Function Prototypes
 void input_init(void);
 void ADC_init(void);
 
 // ## EUSART1 Function Prototypes and Variables
-    #define BUFFER_SIZE 32 //Set the total byte size of the UART buffer
+    #define BUFFER_SIZE 256 //Set the total byte size of the UART buffer (Huge so we can store many DTC's in the case of having many of them)
     char buffer[BUFFER_SIZE]; //Define a character array to hold the incoming bytes from Rx (Array has 32 elements, but index range is from 0-31)
     unsigned char buffer_count = 0; //a counter for the array index
     char RX_char; //variable to store the byte read from the RCREG
@@ -55,7 +56,9 @@ void ADC_init(void);
     unsigned int air_intake_temp;                                
 
 // ## Read Diagnostic Codes Mode Function Prototypes and Variables ##
-    void read_diagnostic_codes(void);
+    void diagnostic_trouble_codes(void);
+    void decode_dtc(unsigned int b1, unsigned int b2, char* dtc); //first byte, second byte and the dtc character which is passing a pointer 
+    char dtc_codes[MAX_DTC_COUNT][6]; // Each DTC is 5 chars + null terminator
 
 // ## Clear Diagnostic Codes Mode Function Prototypes and Variables ##
     void clear_diagnostic_codes(void);
@@ -222,6 +225,8 @@ void welcome_splash(void) {
     LCD_cursor_set(2, 1);
     LCD_write_string(">>>> V1.0 <<<<");
 
+    UART1_SendString("ATL0\r"); //testing the no line wrap so 
+
     ccp1_init(); // Setup CCP1 module
     tmr1_init(); // Start Timer1
 
@@ -292,7 +297,7 @@ void display_mm(void){ //Main Menu Display function
     LCD_cursor_set(1,1);
     LCD_write_string("MENU  <OBDIIPIC>");
     LCD_cursor_set(2,1);
-    LCD_write_string("LRM RDC CDC DSI");
+    LCD_write_string("LRM DTC CDC DSI");
 }
 
 void parsing_notif(void) { //display a little loading icon
@@ -359,7 +364,7 @@ void main_menu(void){ //main menu loop, checks back and enter state and takes in
                     case 1:
                         while (1) {
                             // Read Diagnostic Codes logic here
-
+                            diagnostic_trouble_codes();
                             // Check for back button
                             if (PORTCbits.RC5 == 0) {
                                     __delay_ms(20); //button debounce
@@ -544,7 +549,6 @@ void live_reading_mode(void){ //Function that calls all three from above
             print_RPM(); //Print RPM Values
             print_Vbatt(); //Print Vbatt;
             print_AI_Temp(); //Print Air Intake Temperature
-            __delay_ms(short_delay_preset);
 }
 
 
@@ -616,11 +620,92 @@ void display_system_info (void){
     print_SAEVer();
 }
 
-// ######## READ DIAGNOSTIC ERROR CODE BLOCK ########################################################################################################################################
-void read_diagnostic_codes(void){
+// ######## READ DIAGNOSTIC TROUBLE CODE BLOCK ########################################################################################################################################
+void decode_dtc(unsigned int b1, unsigned int b2, char* dtc) {
+    char type;
 
+    switch ((b1 & 0xC0) >> 6) { //grab byte 1, and do a bit mask of the top 2 bits, so if b1 = 1011 0010 AND 0xC0 = 1100 0000 then we would just have 1000 0000, then shift it over 6 places
+        case 0: type = 'P'; break;
+        case 1: type = 'C'; break;
+        case 2: type = 'B'; break;
+        case 3: type = 'U'; break;
+        default: type = '?'; break;
+    }
 
+    sprintf(dtc, "%c%01X%02X", type, (b1 & 0x3F) >> 4, ((b1 & 0x0F) << 8 | b2));
+    // sprintf formats a string called dtc, starting with 1 character, a first uppercase hex number (%01X), a second uppercase hex number %02X
+    // b1 & 0x3F → keeps the lower 6 bits of b1 (0011 1111)
+    // Then >> 4 shifts to extract the second digit of the DTC
+
+    //Then b1 & 0x0F keeps the lower 4 bits of b1 and then the << 8 shifts the, to the high nibble of a 12 bit number, then |b2 appends them to form the lower 8 bits
 }
+
+void diagnostic_trouble_codes(void){
+
+    int dtc_index = 0; //set the index for how many DTCs you have currently scanned through
+    int i = 0; //initiate a counting variable
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("DTC's Requested");
+    LCD_cursor_set(2,1);
+    LCD_write_string("Loading...");
+    UART1_SendString("03\r"); //send the DTC pid request
+
+    while (!message_complete) { //wait here until the message is done being sent
+        parsing_notif(); //show that the response is being waited for
+    }
+    clear_parsing_notif();
+
+    // Step 1: Locate start of the response
+    while (!(buffer[i] == '4' && buffer[i+1] == '3')) { //if the next two characters are not '4' and '3' in that order keep iterating through the buffer until they are found
+        i++;
+        if (buffer[i] == '>' || buffer[i+1] == '>') return; // if during this the message ends, then nothing was found, end the function, recall that end of message for AT is ">"
+    }
+    i += 2; // skip "43" once they are found
+
+    // Step 2: Parse hex pairs and decode DTCs
+    while (buffer[i] != '>' && dtc_index < MAX_DTC_COUNT) { //while the message has not ended and we under the DTC limit
+        if (buffer[i] == ' ' || buffer[i] == '\r' || buffer[i] == '\n') { //if we have a space, return carriage or new line, skip it
+            i++;
+            continue;
+        }
+
+        if (buffer[i+3] == '>') break; //look ahead 3 places to see if the message ended
+
+        char byte1_str[3] = { buffer[i], buffer[i+1], '>' };
+        char byte2_str[3] = { buffer[i+2], buffer[i+3], '>' };
+        unsigned int byte1 = 0, byte2 = 0;
+
+        sscanf(byte1_str, "%x", &byte1);
+        sscanf(byte2_str, "%x", &byte2);
+        decode_dtc((uint8_t)byte1, (uint8_t)byte2, dtc_codes[dtc_index]);
+        dtc_index++;
+        i += 4;
+    }
+
+    // Step 3: Display parsed DTCs
+    if (dtc_index == 0) {
+        LCD_clear();
+        LCD_cursor_set(1,1);
+        LCD_write_string("No DTCs Found");
+    } 
+    if(dtc_index >= 1) {
+            LCD_clear();
+            LCD_cursor_set(1,1);
+            LCD_write_string("DTC(s) Found:");
+            LCD_cursor_set(2,1);
+            
+            LCD_write_string(dtc_codes[dtc_index]);
+            //use the pot rotation to output the corresponding value of the indexed PID
+        }
+
+    buffer_count = 0;
+    message_complete = 0;
+}
+
+
+
+
 
 // ######## CLEAR DIAGNOSTIC ERROR CODE BLOCK #######################################################################################################################################
 void clear_diagnostic_codes(void){

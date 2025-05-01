@@ -727,8 +727,8 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
-				(at -5.334 5.08 0)
+			(property "Reference" "U3"
+				(at 5.08 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -736,7 +736,7 @@
 				)
 			)
 			(property "Value" "STN1110"
-				(at 0 0 0)
+				(at -2.286 7.366 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -784,24 +784,6 @@
 				)
 			)
 			(symbol "STN1110_1_1"
-				(pin passive line
-					(at 6.35 -5.08 180)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 				(pin output line
 					(at 8.89 3.81 180)
 					(length 2.54)
@@ -830,7 +812,25 @@
 							)
 						)
 					)
-					(number "1"
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 8.89 -5.08 180)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2627,6 +2627,16 @@
 	)
 	(wire
 		(pts
+			(xy 69.85 97.79) (xy 73.66 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "126002f6-2d29-43c8-88df-1f369d38856a")
+	)
+	(wire
+		(pts
 			(xy 36.83 39.37) (xy 36.83 41.91)
 		)
 		(stroke
@@ -3004,16 +3014,6 @@
 			(type default)
 		)
 		(uuid "af952421-ed3e-47fb-9d47-537abbaf801a")
-	)
-	(wire
-		(pts
-			(xy 67.31 97.79) (xy 73.66 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b296f3dd-7da6-4995-bba2-137fc88a7f8c")
 	)
 	(wire
 		(pts
@@ -4278,7 +4278,7 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
+		(pin "2"
 			(uuid "6548c656-2322-4079-9302-a3049806bfab")
 		)
 		(pin "1"

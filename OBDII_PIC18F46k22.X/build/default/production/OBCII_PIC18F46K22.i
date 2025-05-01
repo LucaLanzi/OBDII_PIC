@@ -9963,20 +9963,13 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
     void LCD_write_variable(int32_t, uint8_t);
     void LCD_write_float(float, uint8_t, uint8_t);
 # 6 "OBCII_PIC18F46K22.c" 2
-
-
-
-
-
-
-
-
+# 15 "OBCII_PIC18F46K22.c"
 void input_init(void);
 void ADC_init(void);
 
 
 
-    char buffer[32];
+    char buffer[256];
     unsigned char buffer_count = 0;
     char RX_char;
     volatile char message_complete = 0;
@@ -10015,7 +10008,9 @@ void ADC_init(void);
     unsigned int air_intake_temp;
 
 
-    void read_diagnostic_codes(void);
+    void diagnostic_trouble_codes(void);
+    void decode_dtc(unsigned int b1, unsigned int b2, char* dtc);
+    char dtc_codes[10][6];
 
 
     void clear_diagnostic_codes(void);
@@ -10127,7 +10122,7 @@ void __attribute__((picinterrupt(("")))) UART_ISR(void) {
             buffer_count++;
         }
 
-        if (RX_char == '>' || RX_char == '\n' || buffer_count >= 32 -1) {
+        if (RX_char == '>' || RX_char == '\n' || buffer_count >= 256 -1) {
             buffer[buffer_count] = '\0';
             message_complete = 1;
         }
@@ -10181,6 +10176,8 @@ void welcome_splash(void) {
     LCD_write_string(">>> OBDIIPIC <<<");
     LCD_cursor_set(2, 1);
     LCD_write_string(">>>> V1.0 <<<<");
+
+    UART1_SendString("ATL0\r");
 
     ccp1_init();
     tmr1_init();
@@ -10252,7 +10249,7 @@ void display_mm(void){
     LCD_cursor_set(1,1);
     LCD_write_string("MENU  <OBDIIPIC>");
     LCD_cursor_set(2,1);
-    LCD_write_string("LRM RDC CDC DSI");
+    LCD_write_string("LRM DTC CDC DSI");
 }
 
 void parsing_notif(void) {
@@ -10319,7 +10316,7 @@ void main_menu(void){
                     case 1:
                         while (1) {
 
-
+                            diagnostic_trouble_codes();
 
                             if (PORTCbits.RC5 == 0) {
                                     _delay((unsigned long)((20)*(16000000/4000.0)));
@@ -10376,7 +10373,7 @@ void main_menu(void){
         _delay((unsigned long)((50)*(16000000/4000.0)));
     }
 }
-# 427 "OBCII_PIC18F46K22.c"
+# 432 "OBCII_PIC18F46K22.c"
 unsigned char hex_char_to_value(char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
@@ -10497,7 +10494,6 @@ void live_reading_mode(void){
             print_RPM();
             print_Vbatt();
             print_AI_Temp();
-            _delay((unsigned long)((50)*(16000000/4000.0)));
 }
 
 
@@ -10570,10 +10566,90 @@ void display_system_info (void){
 }
 
 
-void read_diagnostic_codes(void){
+void decode_dtc(unsigned int b1, unsigned int b2, char* dtc) {
+    char type;
+
+    switch ((b1 & 0xC0) >> 6) {
+        case 0: type = 'P'; break;
+        case 1: type = 'C'; break;
+        case 2: type = 'B'; break;
+        case 3: type = 'U'; break;
+        default: type = '?'; break;
+    }
+
+    sprintf(dtc, "%c%01X%02X", type, (b1 & 0x3F) >> 4, ((b1 & 0x0F) << 8 | b2));
+
+
+
 
 
 }
+
+void diagnostic_trouble_codes(void){
+
+    int dtc_index = 0;
+    int i = 0;
+
+    LCD_cursor_set(1,1);
+    LCD_write_string("DTC's Requested");
+    LCD_cursor_set(2,1);
+    LCD_write_string("Loading...");
+    UART1_SendString("03\r");
+
+    while (!message_complete) {
+        parsing_notif();
+    }
+    clear_parsing_notif();
+
+
+    while (!(buffer[i] == '4' && buffer[i+1] == '3')) {
+        i++;
+        if (buffer[i] == '>' || buffer[i+1] == '>') return;
+    }
+    i += 2;
+
+
+    while (buffer[i] != '>' && dtc_index < 10) {
+        if (buffer[i] == ' ' || buffer[i] == '\r' || buffer[i] == '\n') {
+            i++;
+            continue;
+        }
+
+        if (buffer[i+3] == '>') break;
+
+        char byte1_str[3] = { buffer[i], buffer[i+1], '>' };
+        char byte2_str[3] = { buffer[i+2], buffer[i+3], '>' };
+        unsigned int byte1 = 0, byte2 = 0;
+
+        sscanf(byte1_str, "%x", &byte1);
+        sscanf(byte2_str, "%x", &byte2);
+        decode_dtc((uint8_t)byte1, (uint8_t)byte2, dtc_codes[dtc_index]);
+        dtc_index++;
+        i += 4;
+    }
+
+
+    if (dtc_index == 0 || strstr(buffer, "SEARCHING...STOPPED") != ((void*)0)) {
+        LCD_clear();
+        LCD_cursor_set(1,1);
+        LCD_write_string("No DTCs Found");
+    }
+    if(dtc_index >= 1) {
+            LCD_clear();
+            LCD_cursor_set(1,1);
+            LCD_write_string("DTC(s) Found:");
+            LCD_cursor_set(2,1);
+            LCD_write_string(dtc_codes[dtc_index]);
+
+        }
+
+    buffer_count = 0;
+    message_complete = 0;
+}
+
+
+
+
 
 
 void clear_diagnostic_codes(void){

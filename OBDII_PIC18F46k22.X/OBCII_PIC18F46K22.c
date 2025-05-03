@@ -51,6 +51,7 @@ void ADC_init(void);
     unsigned int RPM;
     char rpm_string[16]; //create a string call it rpm_string
     //Read Air Intake Function Prototypes and Variables
+    unsigned char extract_single_pid_byte(const char* pid, uint8_t* A);
     void print_AI_Temp(void);
     char air_intake_string[16]; //create a string call it air_intake_string
     unsigned int A_air_intake;
@@ -453,6 +454,11 @@ unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) {
 
 
 void print_RPM(void) {
+    
+    memset(buffer, 0, sizeof(buffer)); //clear the buffer before sending a message
+    buffer_count = 0;
+    message_complete = 0;
+    
     UART1_SendString("010C\r");
 
     while(!message_complete) {
@@ -525,6 +531,18 @@ void print_Vbatt(void) { // Request and display VBatt AT Command
     message_complete = 0; // Ready for next
 }
 
+unsigned char extract_single_pid_byte(const char* pid, uint8_t* A) {
+    char* ptr = strstr(buffer, pid);
+    if (ptr) {
+        unsigned int a = 0;
+        if (sscanf(ptr + strlen(pid), "%x", &a) == 1) {
+            *A = (uint8_t)a;
+            return 1; // success
+        }
+    }
+    return 0; // fail
+}
+
 void print_AI_Temp(void) {
     UART1_SendString("010F\r");
 
@@ -542,8 +560,8 @@ void print_AI_Temp(void) {
     }
     clear_parsing_notif();
 
-    uint8_t A = 0, B = 0;
-    if (extract_two_pid_bytes("41 0F", &A, &B)) {
+    uint8_t A = 0;
+    if (extract_single_pid_byte("41 0F", &A)) {
         air_intake_temp = A - 40;
     } else {
         air_intake_temp = 0;
@@ -568,6 +586,7 @@ void live_reading_mode(void){ //Function that calls all three from above
             print_RPM(); //Print RPM Values
             print_Vbatt(); //Print Vbatt;
             print_AI_Temp(); //Print Air Intake Temperature
+           
 }
 
 
@@ -604,7 +623,7 @@ void print_ELMVer(void) {
 }
 
 void print_SAEVer(void){
-    UART1_SendString("0108\r"); // Request Supported SAE version from vehicle
+    UART1_SendString("ATDP\r"); // Request Supported SAE version from vehicle
     
     while(!message_complete) {
         // Wait here until full reply received
@@ -622,7 +641,7 @@ void print_SAEVer(void){
     clear_parsing_notif();
 
     LCD_cursor_set(2,1);
-    LCD_write_string("SAE:");
+    LCD_write_string("P:");
     LCD_write_string(buffer); //If we do have a V, 
     
 
@@ -632,95 +651,39 @@ void print_SAEVer(void){
 
 void display_system_info (void){
     LCD_cursor_set(1,4);
-    LCD_write_string("            ");
     LCD_cursor_set(2,5);
-    LCD_write_string("             ");
     print_ELMVer();
     print_SAEVer();
 }
 
 // ######## READ DIAGNOSTIC TROUBLE CODE BLOCK ########################################################################################################################################
-void decode_dtc(unsigned int b1, unsigned int b2, char* dtc) {
-    char type;
+void diagnostic_trouble_codes(void) {
+    // Clear buffer and flags
+    buffer_count = 0;
+    message_complete = 0;
+    memset(buffer, 0, sizeof(buffer));
 
-    switch ((b1 & 0xC0) >> 6) { //grab byte 1, and do a bit mask of the top 2 bits, so if b1 = 1011 0010 AND 0xC0 = 1100 0000 then we would just have 1000 0000, then shift it over 6 places
-        case 0: type = 'P'; break;
-        case 1: type = 'C'; break;
-        case 2: type = 'B'; break;
-        case 3: type = 'U'; break;
-        default: type = '?'; break;
-    }
+    UART1_SendString("03\r");  // Send to ELM327
 
-    sprintf(dtc, "%c%01X%02X", type, (b1 & 0x3F) >> 4, ((b1 & 0x0F) << 8 | b2));
-    // sprintf formats a string called dtc, starting with 1 character, a first uppercase hex number (%01X), a second uppercase hex number %02X
-    // b1 & 0x3F → keeps the lower 6 bits of b1 (0011 1111)
-    // Then >> 4 shifts to extract the second digit of the DTC
-
-    //Then b1 & 0x0F keeps the lower 4 bits of b1 and then the << 8 shifts the, to the high nibble of a 12 bit number, then |b2 appends them to form the lower 8 bits
-}
-
-void diagnostic_trouble_codes(void){
-
-    int dtc_index = 0; //set the index for how many DTCs you have currently scanned through
-    int i = 0; //initiate a counting variable
-
-    LCD_cursor_set(1,1);
-    LCD_write_string("DTC's Requested");
-    LCD_cursor_set(2,1);
-    LCD_write_string("Loading...");
-    UART1_SendString("03\r"); //send the DTC pid request
-
-    while (!message_complete) { //wait here until the message is done being sent
-        parsing_notif(); //show that the response is being waited for
+    while (!message_complete) {
+        parsing_notif();  // Optional LCD spinner
     }
     clear_parsing_notif();
 
-    // Step 1: Locate start of the response
-    while (!(buffer[i] == '4' && buffer[i+1] == '3')) { //if the next two characters are not '4' and '3' in that order keep iterating through the buffer until they are found
-        i++;
-        if (buffer[i] == '>' || buffer[i+1] == '>') return; // if during this the message ends, then nothing was found, end the function, recall that end of message for AT is ">"
+    LCD_clear();
+    LCD_cursor_set(1, 1);
+    LCD_write_string("Raw DTC's:");
+
+    LCD_cursor_set(2, 1);
+    for (int i = 0; i < 16 && buffer[i] != '\0'; i++) {
+        if (buffer[i] == '\r' || buffer[i] == '\n' || buffer[i] == '>') break;
+        LCD_write_char(buffer[i]);  // Display raw char
     }
-    i += 2; // skip "43" once they are found
-
-    // Step 2: Parse hex pairs and decode DTCs
-    while (buffer[i] != '>' && dtc_index < MAX_DTC_COUNT) { //while the message has not ended and we under the DTC limit
-        if (buffer[i] == ' ' || buffer[i] == '\r' || buffer[i] == '\n') { //if we have a space, return carriage or new line, skip it
-            i++;
-            continue;
-        }
-
-        if (buffer[i+3] == '>') break; //look ahead 3 places to see if the message ended
-
-        char byte1_str[3] = { buffer[i], buffer[i+1], '>' };
-        char byte2_str[3] = { buffer[i+2], buffer[i+3], '>' };
-        unsigned int byte1 = 0, byte2 = 0;
-
-        sscanf(byte1_str, "%x", &byte1);
-        sscanf(byte2_str, "%x", &byte2);
-        decode_dtc((uint8_t)byte1, (uint8_t)byte2, dtc_codes[dtc_index]);
-        dtc_index++;
-        i += 4;
-    }
-
-    // Step 3: Display parsed DTCs
-    if (dtc_index == 0) {
-        LCD_clear();
-        LCD_cursor_set(1,1);
-        LCD_write_string("No DTCs Found");
-    } 
-    if(dtc_index >= 1) {
-            LCD_clear();
-            LCD_cursor_set(1,1);
-            LCD_write_string("DTC(s) Found:");
-            LCD_cursor_set(2,1);
-            
-            LCD_write_string(dtc_codes[dtc_index]);
-            //use the pot rotation to output the corresponding value of the indexed PID
-        }
 
     buffer_count = 0;
     message_complete = 0;
 }
+
 
 
 

@@ -9993,6 +9993,7 @@ void ADC_init(void);
 
 
 
+    unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B);
     void live_reading_mode(void);
     void print_RPM(void);
     void print_Vbatt(void);
@@ -10373,7 +10374,7 @@ void main_menu(void){
         _delay((unsigned long)((50)*(16000000/4000.0)));
     }
 }
-# 432 "OBCII_PIC18F46K22.c"
+# 433 "OBCII_PIC18F46K22.c"
 unsigned char hex_char_to_value(char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
@@ -10381,7 +10382,22 @@ unsigned char hex_char_to_value(char c) {
     return 0;
 }
 
-void print_RPM(void){
+
+unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) {
+    char* ptr = strstr(buffer, pid);
+    if (ptr) {
+        unsigned int a = 0, b = 0;
+        if (sscanf(ptr + strlen(pid), "%x %x", &a, &b) == 2) {
+            *A = (uint8_t)a;
+            *B = (uint8_t)b;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+void print_RPM(void) {
     UART1_SendString("010C\r");
 
     while(!message_complete) {
@@ -10398,34 +10414,16 @@ void print_RPM(void){
     }
     clear_parsing_notif();
 
-
-    char clean_buffer[32];
-    uint8_t j = 0;
-    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
-        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
-            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
-            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
-            clean_buffer[j++] = buffer[i];
-        }
-    }
-    clean_buffer[j] = '\0';
-
-
-    char* rpm_ptr = strstr(clean_buffer, "410C");
-    if (rpm_ptr && strlen(rpm_ptr) >= 8) {
-        A_rpm = (hex_char_to_value(rpm_ptr[4]) << 4) | hex_char_to_value(rpm_ptr[5]);
-        B_rpm = (hex_char_to_value(rpm_ptr[6]) << 4) | hex_char_to_value(rpm_ptr[7]);
-        RPM = ((A_rpm << 8) | B_rpm) / 4;
+    uint8_t A = 0, B = 0;
+    if (extract_two_pid_bytes("41 0C", &A, &B)) {
+        RPM = ((A << 8) | B) / 4;
     } else {
         RPM = 0;
     }
 
-
     sprintf(rpm_string, "%u", RPM);
-
     LCD_cursor_set(2,1);
     LCD_write_string("     ");
-
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
     LCD_cursor_set(2,1);
@@ -10472,7 +10470,7 @@ void print_Vbatt(void) {
     message_complete = 0;
 }
 
-void print_AI_Temp(void){
+void print_AI_Temp(void) {
     UART1_SendString("010F\r");
 
     while(!message_complete) {
@@ -10489,32 +10487,16 @@ void print_AI_Temp(void){
     }
     clear_parsing_notif();
 
-
-    char clean_buffer[32];
-    uint8_t j = 0;
-    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
-        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
-            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
-            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
-            clean_buffer[j++] = buffer[i];
-        }
-    }
-    clean_buffer[j] = '\0';
-
-
-    char* ait_ptr = strstr(clean_buffer, "410F");
-    if (ait_ptr && strlen(ait_ptr) >= 6) {
-        A_air_intake = (hex_char_to_value(ait_ptr[4]) << 4) | hex_char_to_value(ait_ptr[5]);
-        air_intake_temp = A_air_intake - 40;
+    uint8_t A = 0, B = 0;
+    if (extract_two_pid_bytes("41 0F", &A, &B)) {
+        air_intake_temp = A - 40;
     } else {
         air_intake_temp = 0;
     }
 
-
     sprintf(air_intake_string, "%u", air_intake_temp);
     LCD_cursor_set(2,13);
     LCD_write_string("   ");
-
     LCD_cursor_set(1,13);
     LCD_write_string("AIT");
     LCD_cursor_set(2,13);

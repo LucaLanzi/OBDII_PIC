@@ -41,6 +41,7 @@ void ADC_init(void);
 
 // ## Live Reading Mode Function Prototypes and Variables ##
     //Read RPM Function Prototypes and Variables
+    unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B);
     void live_reading_mode(void);
     void print_RPM(void);
     void print_Vbatt(void);
@@ -436,7 +437,22 @@ unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
     return 0; // Error case if nothing matches in these places, return an error value of zero
 }
 
-void print_RPM(void){ // Request and display RPM OBDII PID
+// Tries to extract two data bytes following a response like "41 0C"
+unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) {
+    char* ptr = strstr(buffer, pid);
+    if (ptr) {
+        unsigned int a = 0, b = 0;
+        if (sscanf(ptr + strlen(pid), "%x %x", &a, &b) == 2) {
+            *A = (uint8_t)a;
+            *B = (uint8_t)b;
+            return 1; // success
+        }
+    }
+    return 0; // fail
+}
+
+
+void print_RPM(void) {
     UART1_SendString("010C\r");
 
     while(!message_complete) {
@@ -453,34 +469,16 @@ void print_RPM(void){ // Request and display RPM OBDII PID
     }
     clear_parsing_notif();
 
-    // Step 1: Remove unwanted characters and store clean hex characters
-    char clean_buffer[32];
-    uint8_t j = 0;
-    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
-        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
-            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
-            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
-            clean_buffer[j++] = buffer[i];
-        }
-    }
-    clean_buffer[j] = '\0';
-
-    // Step 2: Find the 410C response
-    char* rpm_ptr = strstr(clean_buffer, "410C");
-    if (rpm_ptr && strlen(rpm_ptr) >= 8) {
-        A_rpm = (hex_char_to_value(rpm_ptr[4]) << 4) | hex_char_to_value(rpm_ptr[5]);
-        B_rpm = (hex_char_to_value(rpm_ptr[6]) << 4) | hex_char_to_value(rpm_ptr[7]);
-        RPM = ((A_rpm << 8) | B_rpm) / 4;
+    uint8_t A = 0, B = 0;
+    if (extract_two_pid_bytes("41 0C", &A, &B)) {
+        RPM = ((A << 8) | B) / 4;
     } else {
-        RPM = 0; // Handle error or "no data"
+        RPM = 0; // fallback
     }
 
-    // Step 3: Display result
     sprintf(rpm_string, "%u", RPM);
-
     LCD_cursor_set(2,1);
-    LCD_write_string("     "); // Clear
-
+    LCD_write_string("     ");
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
     LCD_cursor_set(2,1);
@@ -527,7 +525,7 @@ void print_Vbatt(void) { // Request and display VBatt AT Command
     message_complete = 0; // Ready for next
 }
 
-void print_AI_Temp(void){ //Request and display Air Intake Temp PID
+void print_AI_Temp(void) {
     UART1_SendString("010F\r");
 
     while(!message_complete) {
@@ -544,32 +542,16 @@ void print_AI_Temp(void){ //Request and display Air Intake Temp PID
     }
     clear_parsing_notif();
 
-    // Step 1: Clean incoming buffer
-    char clean_buffer[32];
-    uint8_t j = 0;
-    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
-        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
-            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
-            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
-            clean_buffer[j++] = buffer[i];
-        }
-    }
-    clean_buffer[j] = '\0';
-
-    // Step 2: Find the response "410F"
-    char* ait_ptr = strstr(clean_buffer, "410F");
-    if (ait_ptr && strlen(ait_ptr) >= 6) {
-        A_air_intake = (hex_char_to_value(ait_ptr[4]) << 4) | hex_char_to_value(ait_ptr[5]);
-        air_intake_temp = A_air_intake - 40;
+    uint8_t A = 0, B = 0;
+    if (extract_two_pid_bytes("41 0F", &A, &B)) {
+        air_intake_temp = A - 40;
     } else {
-        air_intake_temp = 0; // Fallback in case parsing fails
+        air_intake_temp = 0;
     }
 
-    // Step 3: Display it
     sprintf(air_intake_string, "%u", air_intake_temp);
     LCD_cursor_set(2,13);
     LCD_write_string("   ");
-
     LCD_cursor_set(1,13);
     LCD_write_string("AIT");
     LCD_cursor_set(2,13);

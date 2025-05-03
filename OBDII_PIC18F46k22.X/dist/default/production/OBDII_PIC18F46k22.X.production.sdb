@@ -15,6 +15,8 @@ CONV_DONE 4
 [v ___aldiv __aldiv `(l  1 e 4 0 ]
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\almod.c
 [v ___almod __almod `(l  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
 "193 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doprnt.c
 [v _pad pad `(v  1 s 1 pad ]
 "476
@@ -113,57 +115,57 @@ CONV_DONE 4
 [v _LCD_write_char LCD_write_char `(v  1 e 1 0 ]
 "392
 [v _LCD_write_variable LCD_write_variable `(v  1 e 1 0 ]
-"72 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"73 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _main main `(v  1 e 1 0 ]
-"97
+"98
 [v _input_init input_init `(v  1 e 1 0 ]
-"111
+"112
 [v _ADC_init ADC_init `(v  1 e 1 0 ]
-"119
+"120
 [v _UART1_Init UART1_Init `(v  1 e 1 0 ]
-"157
+"158
 [v _UART_ISR UART_ISR `IIH(v  1 e 1 0 ]
-"181
+"182
 [v _UART1_SendString UART1_SendString `(v  1 e 1 0 ]
-"187
+"188
 [v _UART1_SendChar UART1_SendChar `(v  1 e 1 0 ]
-"193
+"194
 [v _ccp1_init ccp1_init `(v  1 e 1 0 ]
-"206
+"207
 [v _tmr1_init tmr1_init `(v  1 e 1 0 ]
-"217
+"218
 [v _welcome_splash welcome_splash `(v  1 e 1 0 ]
-"289
+"290
 [v _readADC readADC `(ui  1 e 2 0 ]
-"296
+"297
 [v _display_mm display_mm `(v  1 e 1 0 ]
-"303
+"304
 [v _parsing_notif parsing_notif `(v  1 e 1 0 ]
-"307
+"308
 [v _clear_parsing_notif clear_parsing_notif `(v  1 e 1 0 ]
-"312
+"313
 [v _main_menu main_menu `(v  1 e 1 0 ]
-"432
-[v _hex_char_to_value hex_char_to_value `(uc  1 e 1 0 ]
-"439
+"441
+[v _extract_two_pid_bytes extract_two_pid_bytes `(uc  1 e 1 0 ]
+"455
 [v _print_RPM print_RPM `(v  1 e 1 0 ]
-"494
+"492
 [v _print_Vbatt print_Vbatt `(v  1 e 1 0 ]
-"530
+"528
 [v _print_AI_Temp print_AI_Temp `(v  1 e 1 0 ]
-"585
+"567
 [v _live_reading_mode live_reading_mode `(v  1 e 1 0 ]
-"596
+"578
 [v _print_ELMVer print_ELMVer `(v  1 e 1 0 ]
-"624
+"606
 [v _print_SAEVer print_SAEVer `(v  1 e 1 0 ]
-"651
+"633
 [v _display_system_info display_system_info `(v  1 e 1 0 ]
-"661
+"643
 [v _decode_dtc decode_dtc `(v  1 e 1 0 ]
-"680
+"662
 [v _diagnostic_trouble_codes diagnostic_trouble_codes `(v  1 e 1 0 ]
-"748
+"730
 [v _clear_diagnostic_codes clear_diagnostic_codes `(v  1 e 1 0 ]
 [s S220 . 1 `uc 1 ANSA0 1 0 :1:0 
 `uc 1 ANSA1 1 0 :1:1 
@@ -317,7 +319,7 @@ CONV_DONE 4
 ]
 [u S1038 . 1 `S130 1 . 1 0 `S989 1 . 1 0 `S998 1 . 1 0 `S1007 1 . 1 0 `S1016 1 . 1 0 `S1025 1 . 1 0 `S1034 1 . 1 0 ]
 [v _PORTCbits PORTCbits `VES1038  1 e 1 @3970 ]
-[s S1436 . 1 `uc 1 LATD0 1 0 :1:0 
+[s S1442 . 1 `uc 1 LATD0 1 0 :1:0 
 `uc 1 LATD1 1 0 :1:1 
 `uc 1 LATD2 1 0 :1:2 
 `uc 1 LATD3 1 0 :1:3 
@@ -327,7 +329,7 @@ CONV_DONE 4
 `uc 1 LATD7 1 0 :1:7 
 ]
 "7923
-[s S1445 . 1 `uc 1 LD0 1 0 :1:0 
+[s S1451 . 1 `uc 1 LD0 1 0 :1:0 
 `uc 1 LD1 1 0 :1:1 
 `uc 1 LD2 1 0 :1:2 
 `uc 1 LD3 1 0 :1:3 
@@ -336,8 +338,8 @@ CONV_DONE 4
 `uc 1 LD6 1 0 :1:6 
 `uc 1 LD7 1 0 :1:7 
 ]
-[u S1454 . 1 `S1436 1 . 1 0 `S1445 1 . 1 0 ]
-[v _LATDbits LATDbits `VES1454  1 e 1 @3980 ]
+[u S1460 . 1 `S1442 1 . 1 0 `S1451 1 . 1 0 ]
+[v _LATDbits LATDbits `VES1460  1 e 1 @3980 ]
 [s S180 . 1 `uc 1 TRISA0 1 0 :1:0 
 `uc 1 TRISA1 1 0 :1:1 
 `uc 1 TRISA2 1 0 :1:2 
@@ -383,7 +385,7 @@ CONV_DONE 4
 "8536
 [u S139 . 1 `S121 1 . 1 0 `S130 1 . 1 0 ]
 [v _TRISCbits TRISCbits `VES139  1 e 1 @3988 ]
-[s S1478 . 1 `uc 1 TRISD0 1 0 :1:0 
+[s S1484 . 1 `uc 1 TRISD0 1 0 :1:0 
 `uc 1 TRISD1 1 0 :1:1 
 `uc 1 TRISD2 1 0 :1:2 
 `uc 1 TRISD3 1 0 :1:3 
@@ -393,7 +395,7 @@ CONV_DONE 4
 `uc 1 TRISD7 1 0 :1:7 
 ]
 "8758
-[s S1487 . 1 `uc 1 RD0 1 0 :1:0 
+[s S1493 . 1 `uc 1 RD0 1 0 :1:0 
 `uc 1 RD1 1 0 :1:1 
 `uc 1 RD2 1 0 :1:2 
 `uc 1 RD3 1 0 :1:3 
@@ -402,8 +404,8 @@ CONV_DONE 4
 `uc 1 RD6 1 0 :1:6 
 `uc 1 RD7 1 0 :1:7 
 ]
-[u S1496 . 1 `S1478 1 . 1 0 `S1487 1 . 1 0 ]
-[v _TRISDbits TRISDbits `VES1496  1 e 1 @3989 ]
+[u S1502 . 1 `S1484 1 . 1 0 `S1493 1 . 1 0 ]
+[v _TRISDbits TRISDbits `VES1502  1 e 1 @3989 ]
 [s S445 . 1 `uc 1 TMR1IE 1 0 :1:0 
 `uc 1 TMR2IE 1 0 :1:1 
 `uc 1 CCP1IE 1 0 :1:2 
@@ -672,12 +674,12 @@ CONV_DONE 4
 "54 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doscan.c
 [v _asup asup `a  1 s 1 asup ]
 "55
-[v _width@doscan$F2253 width `i  1 s 2 width ]
+[v _width@doscan$F2259 width `i  1 s 2 width ]
 "58
 [v _ncnv ncnv `i  1 s 2 ncnv ]
 [v _nmatch nmatch `i  1 s 2 nmatch ]
 "71
-[v _dbuf@doscan$F2256 dbuf `[32]uc  1 s 32 dbuf ]
+[v _dbuf@doscan$F2262 dbuf `[32]uc  1 s 32 dbuf ]
 "3 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\errno.c
 [v _errno errno `i  1 e 2 0 ]
 "8 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_getc.c
@@ -700,45 +702,39 @@ CONV_DONE 4
 [v _menu_sel menu_sel `i  1 e 2 0 ]
 "36
 [v _result result `ui  1 e 2 0 ]
-"48
-[v _A_rpm A_rpm `ui  1 e 2 0 ]
-"49
-[v _B_rpm B_rpm `ui  1 e 2 0 ]
-"50
-[v _RPM RPM `ui  1 e 2 0 ]
 "51
+[v _RPM RPM `ui  1 e 2 0 ]
+"52
 [v _rpm_string rpm_string `[16]uc  1 e 16 0 ]
-"54
-[v _air_intake_string air_intake_string `[16]uc  1 e 16 0 ]
 "55
-[v _A_air_intake A_air_intake `ui  1 e 2 0 ]
-"56
+[v _air_intake_string air_intake_string `[16]uc  1 e 16 0 ]
+"57
 [v _air_intake_temp air_intake_temp `ui  1 e 2 0 ]
-"61
+"62
 [v _dtc_codes dtc_codes `[10][6]uc  1 e 60 0 ]
-"72
+"73
 [v _main main `(v  1 e 1 0 ]
 {
-"94
+"95
 } 0
-"217
+"218
 [v _welcome_splash welcome_splash `(v  1 e 1 0 ]
 {
-"219
+"220
 [v welcome_splash@CCP1IF_counter CCP1IF_counter `VEui  1 a 2 31 ]
-"218
+"219
 [v welcome_splash@plug_flag plug_flag `VEi  1 a 2 29 ]
-"284
+"285
 } 0
-"206
+"207
 [v _tmr1_init tmr1_init `(v  1 e 1 0 ]
 {
-"215
+"216
 } 0
-"193
+"194
 [v _ccp1_init ccp1_init `(v  1 e 1 0 ]
 {
-"204
+"205
 } 0
 "392 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_write_variable LCD_write_variable `(v  1 e 1 0 ]
@@ -788,46 +784,63 @@ CONV_DONE 4
 [v ___aldiv@divisor divisor `l  1 p 4 6 ]
 "41
 } 0
-"312 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"313 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _main_menu main_menu `(v  1 e 1 0 ]
 {
-"423
+"424
 } 0
-"585
+"567
 [v _live_reading_mode live_reading_mode `(v  1 e 1 0 ]
 {
-"589
+"571
 } 0
-"494
+"492
 [v _print_Vbatt print_Vbatt `(v  1 e 1 0 ]
 {
-"528
+"526
 } 0
-"439
+"455
 [v _print_RPM print_RPM `(v  1 e 1 0 ]
 {
-"459
-[v print_RPM@i i `uc  1 a 1 35 ]
-"457
-[v print_RPM@clean_buffer clean_buffer `[32]uc  1 a 32 0 ]
-"469
-[v print_RPM@rpm_ptr rpm_ptr `*.39uc  1 a 2 33 ]
-"458
-[v print_RPM@j j `uc  1 a 1 32 ]
-"491
+"472
+[v print_RPM@B B `uc  1 a 1 89 ]
+[v print_RPM@A A `uc  1 a 1 88 ]
+"489
 } 0
-"530
+"7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v ___awdiv@quotient quotient `i  1 a 2 8 ]
+"11
+[v ___awdiv@sign sign `uc  1 a 1 7 ]
+[v ___awdiv@counter counter `uc  1 a 1 6 ]
+"7
+[v ___awdiv@dividend dividend `i  1 p 2 2 ]
+[v ___awdiv@divisor divisor `i  1 p 2 4 ]
+"41
+} 0
+"528 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _print_AI_Temp print_AI_Temp `(v  1 e 1 0 ]
 {
-"550
-[v print_AI_Temp@i i `uc  1 a 1 35 ]
-"548
-[v print_AI_Temp@clean_buffer clean_buffer `[32]uc  1 a 32 0 ]
-"560
-[v print_AI_Temp@ait_ptr ait_ptr `*.39uc  1 a 2 33 ]
-"549
-[v print_AI_Temp@j j `uc  1 a 1 32 ]
-"582
+"545
+[v print_AI_Temp@A A `uc  1 a 1 88 ]
+[v print_AI_Temp@B B `uc  1 a 1 87 ]
+"564
+} 0
+"441
+[v _extract_two_pid_bytes extract_two_pid_bytes `(uc  1 e 1 0 ]
+{
+"444
+[v extract_two_pid_bytes@b b `ui  1 a 2 67 ]
+[v extract_two_pid_bytes@a a `ui  1 a 2 65 ]
+"442
+[v extract_two_pid_bytes@ptr ptr `*.39uc  1 a 2 63 ]
+"441
+[v extract_two_pid_bytes@pid pid `*.32Cuc  1 p 2 59 ]
+[v extract_two_pid_bytes@A A `*.30uc  1 p 1 61 ]
+[v extract_two_pid_bytes@B B `*.30uc  1 p 1 62 ]
+"452
 } 0
 "4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\strstr.c
 [v _strstr strstr `(*.39uc  1 e 2 0 ]
@@ -851,9 +864,9 @@ CONV_DONE 4
 [v _strlen strlen `(ui  1 e 2 0 ]
 {
 "7
-[v strlen@a a `*.35Cuc  1 a 2 4 ]
+[v strlen@a a `*.32Cuc  1 a 2 4 ]
 "5
-[v strlen@s s `*.35Cuc  1 p 2 2 ]
+[v strlen@s s `*.32Cuc  1 p 2 2 ]
 "12
 } 0
 "3 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\strchr.c
@@ -863,57 +876,51 @@ CONV_DONE 4
 [v strchr@c c `i  1 p 2 4 ]
 "11
 } 0
-"432 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
-[v _hex_char_to_value hex_char_to_value `(uc  1 e 1 0 ]
-{
-[v hex_char_to_value@c c `uc  1 p 1 wreg ]
-[v hex_char_to_value@c c `uc  1 p 1 wreg ]
-[v hex_char_to_value@c c `uc  1 p 1 2 ]
-"437
-} 0
-"651
+"633 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _display_system_info display_system_info `(v  1 e 1 0 ]
 {
-"658
+"640
 } 0
-"624
+"606
 [v _print_SAEVer print_SAEVer `(v  1 e 1 0 ]
 {
-"649
+"631
 } 0
-"596
+"578
 [v _print_ELMVer print_ELMVer `(v  1 e 1 0 ]
 {
-"622
+"604
 } 0
-"680
+"662
 [v _diagnostic_trouble_codes diagnostic_trouble_codes `(v  1 e 1 0 ]
 {
-"713
-[v diagnostic_trouble_codes@byte2_str byte2_str `[3]uc  1 a 3 59 ]
-"712
-[v diagnostic_trouble_codes@byte1_str byte1_str `[3]uc  1 a 3 56 ]
-"714
-[v diagnostic_trouble_codes@byte2 byte2 `ui  1 a 2 64 ]
-[v diagnostic_trouble_codes@byte1 byte1 `ui  1 a 2 62 ]
-"683
-[v diagnostic_trouble_codes@i i `i  1 a 2 68 ]
-"682
-[v diagnostic_trouble_codes@dtc_index dtc_index `i  1 a 2 66 ]
-"741
+"695
+[v diagnostic_trouble_codes@byte2_str byte2_str `[3]uc  1 a 3 64 ]
+"694
+[v diagnostic_trouble_codes@byte1_str byte1_str `[3]uc  1 a 3 61 ]
+"696
+[v diagnostic_trouble_codes@byte2 byte2 `ui  1 a 2 69 ]
+[v diagnostic_trouble_codes@byte1 byte1 `ui  1 a 2 67 ]
+"665
+[v diagnostic_trouble_codes@i i `i  1 a 2 73 ]
+"664
+[v diagnostic_trouble_codes@dtc_index dtc_index `i  1 a 2 71 ]
+"723
 } 0
 "9 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_sscanf.c
 [v _sscanf sscanf `(i  1 e 2 0 ]
 {
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
 "12
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v sscanf@f f `S2048  1 a 11 43 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v sscanf@f f `S2054  1 a 11 48 ]
+"11
+[v sscanf@ret ret `i  1 a 2 45 ]
 "14
-[v sscanf@ap ap `[1]*.30v  1 a 1 42 ]
+[v sscanf@ap ap `[1]*.30v  1 a 1 47 ]
 "9
-[v sscanf@s s `*.30Cuc  1 p 1 37 ]
-[v sscanf@fmt fmt `*.32Cuc  1 p 2 38 ]
+[v sscanf@s s `*.39Cuc  1 p 2 37 ]
+[v sscanf@fmt fmt `*.32Cuc  1 p 2 39 ]
 "22
 } 0
 "1497 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\doscan.c
@@ -924,9 +931,9 @@ CONV_DONE 4
 "1500
 [v vfscanf@n n `i  1 a 2 33 ]
 [v vfscanf@saved_errno saved_errno `i  1 a 2 31 ]
-[s S2230 _IO_FILE 0 ]
+[s S2236 _IO_FILE 0 ]
 "1497
-[v vfscanf@fp fp `*.30S2230  1 p 1 27 ]
+[v vfscanf@fp fp `*.30S2236  1 p 1 27 ]
 [v vfscanf@fmt fmt `*.32Cuc  1 p 2 28 ]
 [v vfscanf@ap ap `*.30*.30v  1 p 1 30 ]
 "1519
@@ -941,9 +948,9 @@ CONV_DONE 4
 [v vfsfcnvrt@i i `i  1 a 2 15 ]
 "679
 [v vfsfcnvrt@vp vp `*.30v  1 a 1 14 ]
-[s S2230 _IO_FILE 0 ]
+[s S2236 _IO_FILE 0 ]
 "672
-[v vfsfcnvrt@fp fp `*.30S2230  1 p 1 10 ]
+[v vfsfcnvrt@fp fp `*.30S2236  1 p 1 10 ]
 [v vfsfcnvrt@fmt fmt `*.30*.32uc  1 p 1 11 ]
 [v vfsfcnvrt@ap ap `*.39*.30v  1 p 2 12 ]
 "1495
@@ -959,9 +966,9 @@ CONV_DONE 4
 [v atox@ep ep `*.39uc  1 a 2 2 ]
 "531
 [v atox@w w `i  1 a 2 0 ]
-[s S2230 _IO_FILE 0 ]
+[s S2236 _IO_FILE 0 ]
 "528
-[v atox@fp fp `*.30S2230  1 p 1 74 ]
+[v atox@fp fp `*.30S2236  1 p 1 74 ]
 [v atox@pll pll `*.30uo  1 p 1 75 ]
 "593
 } 0
@@ -970,18 +977,18 @@ CONV_DONE 4
 {
 "76
 [v skipws@c c `i  1 a 2 15 ]
-[s S2230 _IO_FILE 0 ]
+[s S2236 _IO_FILE 0 ]
 "74
-[v skipws@fp fp `*.30S2230  1 p 1 13 ]
+[v skipws@fp fp `*.30S2236  1 p 1 13 ]
 "84
 } 0
 "33 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_getc.c
 [v _ungetc ungetc `(i  1 e 2 0 ]
 {
 [v ungetc@c c `i  1 p 2 2 ]
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v ungetc@fp fp `*.30S2048  1 p 1 4 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v ungetc@fp fp `*.30S2054  1 p 1 4 ]
 "53
 } 0
 "11
@@ -989,10 +996,10 @@ CONV_DONE 4
 {
 "13
 [v fgetc@c c `i  1 a 2 11 ]
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
 "11
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fgetc@fp fp `*.30S2048  1 p 1 4 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fgetc@fp fp `*.30S2054  1 p 1 4 ]
 "31
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\getch.c
@@ -1030,24 +1037,24 @@ CONV_DONE 4
 [v ___omul@multiplicand multiplicand `uo  1 p 8 10 ]
 "354
 } 0
-"661 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"643 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _decode_dtc decode_dtc `(v  1 e 1 0 ]
 {
-"662
+"644
 [v decode_dtc@type type `uc  1 a 1 88 ]
-"661
+"643
 [v decode_dtc@b1 b1 `ui  1 p 2 77 ]
 [v decode_dtc@b2 b2 `ui  1 p 2 79 ]
 [v decode_dtc@dtc dtc `*.39uc  1 p 2 81 ]
-"678
+"660
 } 0
 "9 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\nf_sprintf.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
 "13
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v sprintf@f f `S2048  1 a 11 66 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v sprintf@f f `S2054  1 a 11 66 ]
 "12
 [v sprintf@ap ap `[1]*.30v  1 a 1 65 ]
 "9
@@ -1060,9 +1067,9 @@ CONV_DONE 4
 {
 "1820
 [v vfprintf@cfmt cfmt `*.32uc  1 a 2 53 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "1817
-[v vfprintf@fp fp `*.30S2080  1 p 1 49 ]
+[v vfprintf@fp fp `*.30S2086  1 p 1 49 ]
 [v vfprintf@fmt fmt `*.32Cuc  1 p 2 50 ]
 [v vfprintf@ap ap `*.30*.30v  1 p 1 52 ]
 "1840
@@ -1070,18 +1077,18 @@ CONV_DONE 4
 "1177
 [v _vfpfcnvrt vfpfcnvrt `(v  1 s 1 vfpfcnvrt ]
 {
-[u S2099 . 4 `i 1 sint 2 0 `ui 1 uint 2 0 `d 1 f 4 0 ]
+[u S2105 . 4 `i 1 sint 2 0 `ui 1 uint 2 0 `d 1 f 4 0 ]
 "1188
-[v vfpfcnvrt@convarg convarg `S2099  1 a 4 43 ]
+[v vfpfcnvrt@convarg convarg `S2105  1 a 4 43 ]
 "1179
 [v vfpfcnvrt@cp cp `*.32uc  1 a 2 47 ]
 "1180
 [v vfpfcnvrt@done done `a  1 a 1 42 ]
 "1179
 [v vfpfcnvrt@c c `uc  1 a 1 41 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "1177
-[v vfpfcnvrt@fp fp `*.30S2080  1 p 1 36 ]
+[v vfpfcnvrt@fp fp `*.30S2086  1 p 1 36 ]
 [v vfpfcnvrt@fmt fmt `*.30*.32uc  1 p 1 37 ]
 [v vfpfcnvrt@ap ap `*.30*.30v  1 p 1 38 ]
 "1814
@@ -1096,9 +1103,9 @@ CONV_DONE 4
 [v xtoa@c c `uc  1 a 1 33 ]
 "1067
 [v xtoa@p p `a  1 a 1 30 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "1055
-[v xtoa@fp fp `*.30S2080  1 p 1 24 ]
+[v xtoa@fp fp `*.30S2086  1 p 1 24 ]
 [v xtoa@d d `ui  1 p 2 25 ]
 "1153
 } 0
@@ -1110,9 +1117,9 @@ CONV_DONE 4
 [v utoa@w w `i  1 a 2 28 ]
 "1007
 [v utoa@p p `a  1 a 1 27 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "1001
-[v utoa@fp fp `*.30S2080  1 p 1 24 ]
+[v utoa@fp fp `*.30S2086  1 p 1 24 ]
 [v utoa@d d `ui  1 p 2 25 ]
 "1047
 } 0
@@ -1121,9 +1128,9 @@ CONV_DONE 4
 {
 "195
 [v pad@i i `i  1 a 2 22 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "193
-[v pad@fp fp `*.30S2080  1 p 1 16 ]
+[v pad@fp fp `*.30S2086  1 p 1 16 ]
 [v pad@buf buf `*.39uc  1 p 2 17 ]
 [v pad@p p `i  1 p 2 19 ]
 "226
@@ -1137,9 +1144,9 @@ CONV_DONE 4
 [v fputs@c c `uc  1 a 1 13 ]
 "8
 [v fputs@s s `*.39Cuc  1 p 2 10 ]
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fputs@fp fp `*.30S2048  1 p 1 12 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fputs@fp fp `*.30S2054  1 p 1 12 ]
 "19
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\lwmod.c
@@ -1156,9 +1163,9 @@ CONV_DONE 4
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
-[v ___lwdiv@quotient quotient `ui  1 a 2 6 ]
+[v ___lwdiv@quotient quotient `ui  1 a 2 7 ]
 "11
-[v ___lwdiv@counter counter `uc  1 a 1 8 ]
+[v ___lwdiv@counter counter `uc  1 a 1 6 ]
 "7
 [v ___lwdiv@dividend dividend `ui  1 p 2 2 ]
 [v ___lwdiv@divisor divisor `ui  1 p 2 4 ]
@@ -1182,9 +1189,9 @@ CONV_DONE 4
 "478
 [v ctoa@w w `i  1 a 2 15 ]
 [v ctoa@l l `i  1 a 2 13 ]
-[s S2080 _IO_FILE 0 ]
+[s S2086 _IO_FILE 0 ]
 "476
-[v ctoa@fp fp `*.30S2080  1 p 1 10 ]
+[v ctoa@fp fp `*.30S2086  1 p 1 10 ]
 [v ctoa@c c `uc  1 p 1 11 ]
 "509
 } 0
@@ -1192,9 +1199,9 @@ CONV_DONE 4
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 2 ]
-[u S2045 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
-[s S2048 _IO_FILE 11 `S2045 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
-[v fputc@fp fp `*.30S2048  1 p 1 4 ]
+[u S2051 . 2 `*.39uc 1 buffer 2 0 `*.39Cuc 1 source 2 0 ]
+[s S2054 _IO_FILE 11 `S2051 1 . 2 0 `i 1 count 2 2 `[3]uc 1 ungetbuf 3 4 `i 1 ungetcnt 2 7 `i 1 limit 2 9 ]
+[v fputc@fp fp `*.30S2054  1 p 1 4 ]
 "24
 } 0
 "7 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\putch.c
@@ -1202,32 +1209,32 @@ CONV_DONE 4
 {
 "9
 } 0
-"748 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"730 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _clear_diagnostic_codes clear_diagnostic_codes `(v  1 e 1 0 ]
 {
-"750
+"732
 [v clear_diagnostic_codes@opt_sel opt_sel `i  1 a 2 12 ]
-"822
+"804
 } 0
-"289
+"290
 [v _readADC readADC `(ui  1 e 2 0 ]
 {
-"294
+"295
 } 0
-"303
+"304
 [v _parsing_notif parsing_notif `(v  1 e 1 0 ]
 {
-"306
+"307
 } 0
-"296
+"297
 [v _display_mm display_mm `(v  1 e 1 0 ]
 {
-"301
+"302
 } 0
-"307
+"308
 [v _clear_parsing_notif clear_parsing_notif `(v  1 e 1 0 ]
 {
-"310
+"311
 } 0
 "362 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_write_string LCD_write_string `(v  1 e 1 0 ]
@@ -1257,22 +1264,22 @@ CONV_DONE 4
 [v LCD_cursor_set@row row `uc  1 p 1 6 ]
 "169
 } 0
-"181 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"182 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _UART1_SendString UART1_SendString `(v  1 e 1 0 ]
 {
-"182
+"183
 [v UART1_SendString@i i `ui  1 a 2 7 ]
-"181
+"182
 [v UART1_SendString@string string `*.32uc  1 p 2 3 ]
-"185
+"186
 } 0
-"187
+"188
 [v _UART1_SendChar UART1_SendChar `(v  1 e 1 0 ]
 {
 [v UART1_SendChar@c c `uc  1 p 1 wreg ]
 [v UART1_SendChar@c c `uc  1 p 1 wreg ]
 [v UART1_SendChar@c c `uc  1 p 1 2 ]
-"190
+"191
 } 0
 "231 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_configure_cursor_blink LCD_configure_cursor_blink `(v  1 e 1 0 ]
@@ -1283,15 +1290,15 @@ CONV_DONE 4
 [v LCD_configure_cursor_blink@state state `uc  1 p 1 5 ]
 "243
 } 0
-"97 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"98 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _input_init input_init `(v  1 e 1 0 ]
 {
-"108
+"109
 } 0
-"119
+"120
 [v _UART1_Init UART1_Init `(v  1 e 1 0 ]
 {
-"153
+"154
 } 0
 "106 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\LCD.c
 [v _LCD_init LCD_init `(v  1 e 1 0 ]
@@ -1317,13 +1324,13 @@ CONV_DONE 4
 {
 "39
 } 0
-"111 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
+"112 C:\Users\luqui\OneDrive\Documents\GitHub\ECE3301FinalProject\OBDII_PIC18F46k22.X\OBCII_PIC18F46K22.c
 [v _ADC_init ADC_init `(v  1 e 1 0 ]
 {
-"116
+"117
 } 0
-"157
+"158
 [v _UART_ISR UART_ISR `IIH(v  1 e 1 0 ]
 {
-"179
+"180
 } 0

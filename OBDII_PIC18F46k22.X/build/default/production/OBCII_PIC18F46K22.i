@@ -10382,26 +10382,44 @@ unsigned char hex_char_to_value(char c) {
 }
 
 void print_RPM(void){
-
     UART1_SendString("010C\r");
-    while(!message_complete) {
 
+    while(!message_complete) {
         if (PORTCbits.RC5 == 0) {
             _delay((unsigned long)((20)*(16000000/4000.0)));
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
                 display_mm();
                 menu_sel = -1;
-                break;
+                return;
             }
         }
         parsing_notif();
     }
     clear_parsing_notif();
 
-    A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
-    RPM = ((A_rpm * 256) + B_rpm) / 4;
+
+    char clean_buffer[32];
+    uint8_t j = 0;
+    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
+        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
+            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
+            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
+            clean_buffer[j++] = buffer[i];
+        }
+    }
+    clean_buffer[j] = '\0';
+
+
+    char* rpm_ptr = strstr(clean_buffer, "410C");
+    if (rpm_ptr && strlen(rpm_ptr) >= 8) {
+        A_rpm = (hex_char_to_value(rpm_ptr[4]) << 4) | hex_char_to_value(rpm_ptr[5]);
+        B_rpm = (hex_char_to_value(rpm_ptr[6]) << 4) | hex_char_to_value(rpm_ptr[7]);
+        RPM = ((A_rpm << 8) | B_rpm) / 4;
+    } else {
+        RPM = 0;
+    }
+
 
     sprintf(rpm_string, "%u", RPM);
 
@@ -10416,6 +10434,7 @@ void print_RPM(void){
     buffer_count = 0;
     message_complete = 0;
 }
+
 
 void print_Vbatt(void) {
 
@@ -10454,30 +10473,47 @@ void print_Vbatt(void) {
 }
 
 void print_AI_Temp(void){
-
     UART1_SendString("010F\r");
-     while(!message_complete) {
+
+    while(!message_complete) {
         if (PORTCbits.RC5 == 0) {
             _delay((unsigned long)((20)*(16000000/4000.0)));
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
                 display_mm();
                 menu_sel = -1;
-                break;
+                return;
             }
         }
-
         parsing_notif();
     }
     clear_parsing_notif();
 
-    LCD_cursor_set(2,13);
-    LCD_write_string("   ");
 
-    A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    air_intake_temp = A_air_intake - 40;
+    char clean_buffer[32];
+    uint8_t j = 0;
+    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
+        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
+            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
+            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
+            clean_buffer[j++] = buffer[i];
+        }
+    }
+    clean_buffer[j] = '\0';
+
+
+    char* ait_ptr = strstr(clean_buffer, "410F");
+    if (ait_ptr && strlen(ait_ptr) >= 6) {
+        A_air_intake = (hex_char_to_value(ait_ptr[4]) << 4) | hex_char_to_value(ait_ptr[5]);
+        air_intake_temp = A_air_intake - 40;
+    } else {
+        air_intake_temp = 0;
+    }
+
 
     sprintf(air_intake_string, "%u", air_intake_temp);
+    LCD_cursor_set(2,13);
+    LCD_write_string("   ");
 
     LCD_cursor_set(1,13);
     LCD_write_string("AIT");
@@ -10489,6 +10525,7 @@ void print_AI_Temp(void){
     buffer_count = 0;
     message_complete = 0;
 }
+
 
 void live_reading_mode(void){
             print_RPM();
@@ -10629,7 +10666,7 @@ void diagnostic_trouble_codes(void){
     }
 
 
-    if (dtc_index == 0 || strstr(buffer, "SEARCHING...STOPPED") != ((void*)0)) {
+    if (dtc_index == 0) {
         LCD_clear();
         LCD_cursor_set(1,1);
         LCD_write_string("No DTCs Found");
@@ -10639,6 +10676,7 @@ void diagnostic_trouble_codes(void){
             LCD_cursor_set(1,1);
             LCD_write_string("DTC(s) Found:");
             LCD_cursor_set(2,1);
+
             LCD_write_string(dtc_codes[dtc_index]);
 
         }

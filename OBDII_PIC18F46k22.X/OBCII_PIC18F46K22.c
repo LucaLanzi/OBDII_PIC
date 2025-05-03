@@ -437,40 +437,59 @@ unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
 }
 
 void print_RPM(void){ // Request and display RPM OBDII PID
-
     UART1_SendString("010C\r");
+
     while(!message_complete) {
-        // Wait here until full reply received
-        if (PORTCbits.RC5 == 0) { //back function
+        if (PORTCbits.RC5 == 0) {
             __delay_ms(20);
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
-                display_mm(); // Go back to main menu display
-                menu_sel = -1; // reset mode
-                break; // break out of inner while(1)
+                display_mm();
+                menu_sel = -1;
+                return;
             }
         }
         parsing_notif();
     }
     clear_parsing_notif();
 
-    A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]); //shift the 4th index value over 4 bits and or it with the 5th to make the full byte
-    B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]); //shift the 6th index value over 4 bits and or it with the 7th to make the 2nd full bye
-    RPM = ((A_rpm * 256) + B_rpm) / 4; //Do the math to find RPM speed
-    
-    sprintf(rpm_string, "%u", RPM); // Turn RPM number we grabbed from converted hex values into a string
+    // Step 1: Remove unwanted characters and store clean hex characters
+    char clean_buffer[32];
+    uint8_t j = 0;
+    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
+        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
+            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
+            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
+            clean_buffer[j++] = buffer[i];
+        }
+    }
+    clean_buffer[j] = '\0';
+
+    // Step 2: Find the 410C response
+    char* rpm_ptr = strstr(clean_buffer, "410C");
+    if (rpm_ptr && strlen(rpm_ptr) >= 8) {
+        A_rpm = (hex_char_to_value(rpm_ptr[4]) << 4) | hex_char_to_value(rpm_ptr[5]);
+        B_rpm = (hex_char_to_value(rpm_ptr[6]) << 4) | hex_char_to_value(rpm_ptr[7]);
+        RPM = ((A_rpm << 8) | B_rpm) / 4;
+    } else {
+        RPM = 0; // Handle error or "no data"
+    }
+
+    // Step 3: Display result
+    sprintf(rpm_string, "%u", RPM);
 
     LCD_cursor_set(2,1);
-    LCD_write_string("     "); //clear the data entry
+    LCD_write_string("     "); // Clear
 
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
     LCD_cursor_set(2,1);
     LCD_write_string(rpm_string);
 
-    buffer_count = 0;     // Clear buffer for next message
-    message_complete = 0; // Ready for next
+    buffer_count = 0;
+    message_complete = 0;
 }
+
 
 void print_Vbatt(void) { // Request and display VBatt AT Command
 
@@ -509,30 +528,47 @@ void print_Vbatt(void) { // Request and display VBatt AT Command
 }
 
 void print_AI_Temp(void){ //Request and display Air Intake Temp PID
-
     UART1_SendString("010F\r");
-     while(!message_complete) {
-        if (PORTCbits.RC5 == 0) { //back function
+
+    while(!message_complete) {
+        if (PORTCbits.RC5 == 0) {
             __delay_ms(20);
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
-                display_mm(); // Go back to main menu display
-                menu_sel = -1; // reset mode
-                break; // break out of inner while(1)
+                display_mm();
+                menu_sel = -1;
+                return;
             }
         }
-        // Wait here until full reply received
         parsing_notif();
     }
     clear_parsing_notif();
 
-    LCD_cursor_set(2,13);
-    LCD_write_string("   "); //clear the data entry
+    // Step 1: Clean incoming buffer
+    char clean_buffer[32];
+    uint8_t j = 0;
+    for (uint8_t i = 0; i < buffer_count && j < sizeof(clean_buffer) - 1; i++) {
+        if ((buffer[i] >= '0' && buffer[i] <= '9') ||
+            (buffer[i] >= 'A' && buffer[i] <= 'F') ||
+            (buffer[i] >= 'a' && buffer[i] <= 'f')) {
+            clean_buffer[j++] = buffer[i];
+        }
+    }
+    clean_buffer[j] = '\0';
 
-    A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    air_intake_temp = A_air_intake - 40;
-    
-    sprintf(air_intake_string, "%u", air_intake_temp); // Turn RPM number we grabbed from converted hex values into a string
+    // Step 2: Find the response "410F"
+    char* ait_ptr = strstr(clean_buffer, "410F");
+    if (ait_ptr && strlen(ait_ptr) >= 6) {
+        A_air_intake = (hex_char_to_value(ait_ptr[4]) << 4) | hex_char_to_value(ait_ptr[5]);
+        air_intake_temp = A_air_intake - 40;
+    } else {
+        air_intake_temp = 0; // Fallback in case parsing fails
+    }
+
+    // Step 3: Display it
+    sprintf(air_intake_string, "%u", air_intake_temp);
+    LCD_cursor_set(2,13);
+    LCD_write_string("   ");
 
     LCD_cursor_set(1,13);
     LCD_write_string("AIT");
@@ -541,9 +577,10 @@ void print_AI_Temp(void){ //Request and display Air Intake Temp PID
     LCD_cursor_set(2,15);
     LCD_write_string("C");
 
-    buffer_count = 0;     // Clear buffer for next message
-    message_complete = 0; // Ready for next
+    buffer_count = 0;
+    message_complete = 0;
 }
+
 
 void live_reading_mode(void){ //Function that calls all three from above
             print_RPM(); //Print RPM Values

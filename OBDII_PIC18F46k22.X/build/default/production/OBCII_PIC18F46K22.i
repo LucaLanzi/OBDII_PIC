@@ -9993,6 +9993,7 @@ void ADC_init(void);
 
 
 
+    unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B);
     void live_reading_mode(void);
     void print_RPM(void);
     void print_Vbatt(void);
@@ -10002,6 +10003,7 @@ void ADC_init(void);
     unsigned int RPM;
     char rpm_string[16];
 
+    unsigned char extract_single_pid_byte(const char* pid, uint8_t* A);
     void print_AI_Temp(void);
     char air_intake_string[16];
     unsigned int A_air_intake;
@@ -10373,7 +10375,7 @@ void main_menu(void){
         _delay((unsigned long)((50)*(16000000/4000.0)));
     }
 }
-# 432 "OBCII_PIC18F46K22.c"
+# 434 "OBCII_PIC18F46K22.c"
 unsigned char hex_char_to_value(char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
@@ -10381,33 +10383,53 @@ unsigned char hex_char_to_value(char c) {
     return 0;
 }
 
-void print_RPM(void){
+
+unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) {
+    char* ptr = strstr(buffer, pid);
+    if (ptr) {
+        unsigned int a = 0, b = 0;
+        if (sscanf(ptr + strlen(pid), "%x %x", &a, &b) == 2) {
+            *A = (uint8_t)a;
+            *B = (uint8_t)b;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+void print_RPM(void) {
+
+    memset(buffer, 0, sizeof(buffer));
+    buffer_count = 0;
+    message_complete = 0;
 
     UART1_SendString("010C\r");
-    while(!message_complete) {
 
+    while(!message_complete) {
         if (PORTCbits.RC5 == 0) {
             _delay((unsigned long)((20)*(16000000/4000.0)));
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
                 display_mm();
                 menu_sel = -1;
-                break;
+                return;
             }
         }
         parsing_notif();
     }
     clear_parsing_notif();
 
-    A_rpm = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    B_rpm = (hex_char_to_value(buffer[6]) << 4) | hex_char_to_value(buffer[7]);
-    RPM = ((A_rpm * 256) + B_rpm) / 4;
+    uint8_t A = 0, B = 0;
+    if (extract_two_pid_bytes("41 0C", &A, &B)) {
+        RPM = ((A << 8) | B) / 4;
+    } else {
+        RPM = 0;
+    }
 
     sprintf(rpm_string, "%u", RPM);
-
     LCD_cursor_set(2,1);
     LCD_write_string("     ");
-
     LCD_cursor_set(1,1);
     LCD_write_string("RPM");
     LCD_cursor_set(2,1);
@@ -10416,6 +10438,7 @@ void print_RPM(void){
     buffer_count = 0;
     message_complete = 0;
 }
+
 
 void print_Vbatt(void) {
 
@@ -10453,32 +10476,45 @@ void print_Vbatt(void) {
     message_complete = 0;
 }
 
-void print_AI_Temp(void){
+unsigned char extract_single_pid_byte(const char* pid, uint8_t* A) {
+    char* ptr = strstr(buffer, pid);
+    if (ptr) {
+        unsigned int a = 0;
+        if (sscanf(ptr + strlen(pid), "%x", &a) == 1) {
+            *A = (uint8_t)a;
+            return 1;
+        }
+    }
+    return 0;
+}
 
+void print_AI_Temp(void) {
     UART1_SendString("010F\r");
-     while(!message_complete) {
+
+    while(!message_complete) {
         if (PORTCbits.RC5 == 0) {
             _delay((unsigned long)((20)*(16000000/4000.0)));
             if (PORTCbits.RC5 == 0) {
                 LCD_clear();
                 display_mm();
                 menu_sel = -1;
-                break;
+                return;
             }
         }
-
         parsing_notif();
     }
     clear_parsing_notif();
 
-    LCD_cursor_set(2,13);
-    LCD_write_string("   ");
-
-    A_air_intake = (hex_char_to_value(buffer[4]) << 4) | hex_char_to_value(buffer[5]);
-    air_intake_temp = A_air_intake - 40;
+    uint8_t A = 0;
+    if (extract_single_pid_byte("41 0F", &A)) {
+        air_intake_temp = A - 40;
+    } else {
+        air_intake_temp = 0;
+    }
 
     sprintf(air_intake_string, "%u", air_intake_temp);
-
+    LCD_cursor_set(2,13);
+    LCD_write_string("   ");
     LCD_cursor_set(1,13);
     LCD_write_string("AIT");
     LCD_cursor_set(2,13);
@@ -10490,10 +10526,12 @@ void print_AI_Temp(void){
     message_complete = 0;
 }
 
+
 void live_reading_mode(void){
             print_RPM();
             print_Vbatt();
             print_AI_Temp();
+
 }
 
 
@@ -10530,7 +10568,7 @@ void print_ELMVer(void) {
 }
 
 void print_SAEVer(void){
-    UART1_SendString("0108\r");
+    UART1_SendString("ATDP\r");
 
     while(!message_complete) {
 
@@ -10548,7 +10586,7 @@ void print_SAEVer(void){
     clear_parsing_notif();
 
     LCD_cursor_set(2,1);
-    LCD_write_string("SAE:");
+    LCD_write_string("P:");
     LCD_write_string(buffer);
 
 
@@ -10558,42 +10596,18 @@ void print_SAEVer(void){
 
 void display_system_info (void){
     LCD_cursor_set(1,4);
-    LCD_write_string("            ");
     LCD_cursor_set(2,5);
-    LCD_write_string("             ");
     print_ELMVer();
     print_SAEVer();
 }
 
 
-void decode_dtc(unsigned int b1, unsigned int b2, char* dtc) {
-    char type;
+void diagnostic_trouble_codes(void) {
 
-    switch ((b1 & 0xC0) >> 6) {
-        case 0: type = 'P'; break;
-        case 1: type = 'C'; break;
-        case 2: type = 'B'; break;
-        case 3: type = 'U'; break;
-        default: type = '?'; break;
-    }
+    buffer_count = 0;
+    message_complete = 0;
+    memset(buffer, 0, sizeof(buffer));
 
-    sprintf(dtc, "%c%01X%02X", type, (b1 & 0x3F) >> 4, ((b1 & 0x0F) << 8 | b2));
-
-
-
-
-
-}
-
-void diagnostic_trouble_codes(void){
-
-    int dtc_index = 0;
-    int i = 0;
-
-    LCD_cursor_set(1,1);
-    LCD_write_string("DTC's Requested");
-    LCD_cursor_set(2,1);
-    LCD_write_string("Loading...");
     UART1_SendString("03\r");
 
     while (!message_complete) {
@@ -10601,51 +10615,20 @@ void diagnostic_trouble_codes(void){
     }
     clear_parsing_notif();
 
+    LCD_clear();
+    LCD_cursor_set(1, 1);
+    LCD_write_string("Raw DTC's:");
 
-    while (!(buffer[i] == '4' && buffer[i+1] == '3')) {
-        i++;
-        if (buffer[i] == '>' || buffer[i+1] == '>') return;
+    LCD_cursor_set(2, 1);
+    for (int i = 0; i < 16 && buffer[i] != '\0'; i++) {
+        if (buffer[i] == '\r' || buffer[i] == '\n' || buffer[i] == '>') break;
+        LCD_write_char(buffer[i]);
     }
-    i += 2;
-
-
-    while (buffer[i] != '>' && dtc_index < 10) {
-        if (buffer[i] == ' ' || buffer[i] == '\r' || buffer[i] == '\n') {
-            i++;
-            continue;
-        }
-
-        if (buffer[i+3] == '>') break;
-
-        char byte1_str[3] = { buffer[i], buffer[i+1], '>' };
-        char byte2_str[3] = { buffer[i+2], buffer[i+3], '>' };
-        unsigned int byte1 = 0, byte2 = 0;
-
-        sscanf(byte1_str, "%x", &byte1);
-        sscanf(byte2_str, "%x", &byte2);
-        decode_dtc((uint8_t)byte1, (uint8_t)byte2, dtc_codes[dtc_index]);
-        dtc_index++;
-        i += 4;
-    }
-
-
-    if (dtc_index == 0 || strstr(buffer, "SEARCHING...STOPPED") != ((void*)0)) {
-        LCD_clear();
-        LCD_cursor_set(1,1);
-        LCD_write_string("No DTCs Found");
-    }
-    if(dtc_index >= 1) {
-            LCD_clear();
-            LCD_cursor_set(1,1);
-            LCD_write_string("DTC(s) Found:");
-            LCD_cursor_set(2,1);
-            LCD_write_string(dtc_codes[dtc_index]);
-
-        }
 
     buffer_count = 0;
     message_complete = 0;
 }
+
 
 
 

@@ -727,8 +727,8 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U3"
-				(at 5.08 7.62 0)
+			(property "Reference" "U"
+				(at -5.334 5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -736,7 +736,7 @@
 				)
 			)
 			(property "Value" "STN1110"
-				(at -2.286 7.366 0)
+				(at -2.286 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -784,6 +784,24 @@
 				)
 			)
 			(symbol "STN1110_1_1"
+				(pin input line
+					(at -8.89 -5.08 0)
+					(length 2.54)
+					(name "+Vbatt"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 				(pin output line
 					(at 8.89 3.81 180)
 					(length 2.54)
@@ -2189,7 +2207,7 @@
 	)
 	(rectangle
 		(start 13.335 80.01)
-		(end 86.36 104.775)
+		(end 85.09 108.585)
 		(stroke
 			(width 0)
 			(type default)
@@ -2342,6 +2360,26 @@
 			(justify left top)
 		)
 		(uuid "817a2eda-ca4e-4699-bc2f-a35439915e54")
+	)
+	(text_box "if 3.3v output we can use it\n"
+		(exclude_from_sim no)
+		(at 52.705 102.235 0)
+		(size 19.05 5.08)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "c091becc-5050-4c69-829b-25e0dd0782ce")
 	)
 	(text_box "MCU\n"
 		(exclude_from_sim no)
@@ -2538,6 +2576,10 @@
 		(uuid "6a8c2dab-02e5-42d9-9ca9-039dffd3a38e")
 	)
 	(no_connect
+		(at 53.34 97.79)
+		(uuid "87f59323-132e-431e-8c1f-f2aeb93822f1")
+	)
+	(no_connect
 		(at 267.97 78.74)
 		(uuid "88fa781c-267c-4c43-b1b7-5563cc1d93bf")
 	)
@@ -2627,7 +2669,7 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 97.79) (xy 73.66 97.79)
+			(xy 71.12 97.79) (xy 74.93 97.79)
 		)
 		(stroke
 			(width 0)
@@ -3246,7 +3288,7 @@
 		(uuid "26105f12-1908-4838-a0ca-7ca7ff785485")
 	)
 	(label "RC6_TXP_RXU"
-		(at 69.85 91.44 0)
+		(at 71.12 91.44 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3406,7 +3448,7 @@
 		(uuid "e8322637-c8f5-4165-be45-376079a09cb5")
 	)
 	(label "RC7_RXP_TXU"
-		(at 69.85 88.9 0)
+		(at 71.12 88.9 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3891,7 +3933,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 73.66 97.79 0)
+		(at 74.93 97.79 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3900,7 +3942,7 @@
 		(fields_autoplaced yes)
 		(uuid "2e333be3-bfab-4951-904d-0c17e4d90748")
 		(property "Reference" "#PWR016"
-			(at 73.66 104.14 0)
+			(at 74.93 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3909,7 +3951,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 73.66 102.87 0)
+			(at 74.93 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3917,7 +3959,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 73.66 97.79 0)
+			(at 74.93 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3926,7 +3968,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 73.66 97.79 0)
+			(at 74.93 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3935,7 +3977,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 73.66 97.79 0)
+			(at 74.93 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4228,7 +4270,7 @@
 	)
 	(symbol
 		(lib_id "OBDII_UART:STN1110")
-		(at 60.96 92.71 0)
+		(at 62.23 92.71 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4236,7 +4278,7 @@
 		(dnp no)
 		(uuid "4d553d32-3e8c-44ff-b402-501e99d4a6eb")
 		(property "Reference" "U3"
-			(at 66.04 85.09 0)
+			(at 67.31 85.09 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4244,7 +4286,7 @@
 			)
 		)
 		(property "Value" "STN1110"
-			(at 58.674 85.344 0)
+			(at 59.944 85.344 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4252,7 +4294,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 60.96 92.71 0)
+			(at 62.23 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4261,7 +4303,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.scantool.net/scantool/downloads/234/stn1100-frpm-preliminary.pdf?srsltid=AfmBOoo-ck3aRutfNohtRgrJahpXeoSJl7bUUqXrZD0vmXV2ENzVUR-f"
-			(at 60.96 92.71 0)
+			(at 62.23 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4270,7 +4312,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 60.96 92.71 0)
+			(at 62.23 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4286,6 +4328,9 @@
 		)
 		(pin "3"
 			(uuid "247c4b85-8324-46ce-b835-1110f45bf333")
+		)
+		(pin "4"
+			(uuid "679c422e-8342-49c0-aaf5-3f3c224bb438")
 		)
 		(instances
 			(project ""

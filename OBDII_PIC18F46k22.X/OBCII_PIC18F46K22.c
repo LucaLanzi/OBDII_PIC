@@ -439,12 +439,12 @@ unsigned char hex_char_to_value(char c) {  // Hex char to value handler function
 }
 
 // Tries to extract two data bytes following a response like "41 0C"
-unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) {
-    char* ptr = strstr(buffer, pid);
-    if (ptr) {
+unsigned char extract_two_pid_bytes(const char* pid, uint8_t* A, uint8_t* B) { //Function to break down two PID bytes
+    char* ptr = strstr(buffer, pid); //creates a char pointer, and assigns it to the value of the buffer that matches the values lookingfor in PID, in this case it is A and B
+    if (ptr) { //if the value PTR has some value
         unsigned int a = 0, b = 0;
-        if (sscanf(ptr + strlen(pid), "%x %x", &a, &b) == 2) {
-            *A = (uint8_t)a;
+        if (sscanf(ptr + strlen(pid), "%x %x", &a, &b) == 2) { //look along the PTR char and looks into the hexadecimal values and stores the values in a and b
+            *A = (uint8_t)a; //saves them as ints to be able to do math with them
             *B = (uint8_t)b;
             return 1; // success
         }
@@ -476,8 +476,8 @@ void print_RPM(void) {
     clear_parsing_notif();
 
     uint8_t A = 0, B = 0;
-    if (extract_two_pid_bytes("41 0C", &A, &B)) {
-        RPM = ((A << 8) | B) / 4;
+    if (extract_two_pid_bytes("41 0C", &A, &B)) { //look for the two bytes we are looking for
+        RPM = ((A << 8) | B) / 4; //Use the values we extracted for math
     } else {
         RPM = 0; // fallback
     }
@@ -535,7 +535,7 @@ unsigned char extract_single_pid_byte(const char* pid, uint8_t* A) {
     char* ptr = strstr(buffer, pid);
     if (ptr) {
         unsigned int a = 0;
-        if (sscanf(ptr + strlen(pid), "%x", &a) == 1) {
+        if (sscanf(ptr + strlen(pid), "%x", &a) == 1) { //similar to previous one, we look along the PID requested value and try to find what matches the PID
             *A = (uint8_t)a;
             return 1; // success
         }
@@ -642,7 +642,7 @@ void print_SAEVer(void){
 
     LCD_cursor_set(2,1);
     LCD_write_string("P:");
-    LCD_write_string(buffer); //If we do have a V, 
+    LCD_write_string(buffer); 
     
 
     buffer_count = 0;     // Clear buffer for next message
@@ -675,7 +675,7 @@ void diagnostic_trouble_codes(void) {
     LCD_write_string("Raw DTC's:");
 
     LCD_cursor_set(2, 1);
-    for (int i = 0; i < 16 && buffer[i] != '\0'; i++) {
+    for (int i = 0; i < 16 && buffer[i] != '\0'; i++) { //iterate through the DTC string we recieved and print it but if it has any of hte following below skip it
         if (buffer[i] == '\r' || buffer[i] == '\n' || buffer[i] == '>') break;
         LCD_write_char(buffer[i]);  // Display raw char
     }

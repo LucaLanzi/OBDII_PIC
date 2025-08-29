@@ -1,5 +1,5 @@
 # ECE 3301 Final Project: OBDII Scanner using the PIC18F46K22 #
-### By Luca Lanzillotta and Zihong Zheng ###
+### By Luca Lanzillotta ###
 *Abstract:*
 * [*Link to original Cornell Project*](https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/s2012/ppv5/index.html)
 * Create an OBD II scanner that is compatible with any ISO OBD II standard to read basic vehicle telemetry and diagnostics. The design will utilize a Sparkfun OBD II to UART intpreter board and will utilize half duplex capabilities to send requests from the PIC18F46K22 and receive data to display on an LCD. Additionally the board will include buttons to navigate a menu to send and receive specific requests such as live data, diagnostic codes, clear diagnostic codes, and system information relating to the ELM327, which will all be displayable on an 2x16 LCD.
